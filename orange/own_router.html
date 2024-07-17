@@ -222,7 +222,10 @@ table ip6 mangle {
 <a data-tooltip-position="top" aria-label="https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/new/?topicseen#new" rel="noopener" class="external-link" href="https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/new/?topicseen#new" target="_blank">Filtrer les raw socket avec nftables ?</a><br>
 <strong>note : with netdev egress rules, netfilter mangle rules or traffic-control (tc script) are NO MORE NECESSARY</strong></li>
 </ul></div><div><pre dir="auto"><code># netdev (for requests ipv4/ipv6)
-# note : not tested, need to tryout (tc script could NOT be required anymore)...
+# orange dhcp client requests (ipv4/ipv6)
+# since recent kernel (6.x) with netdev egress filter (mangle rules or tc are NO MORE NECESSARY)
+# note : not really tested, need to tryout (tc script could NOT be required anymore)...
+# WARNING : these rules need to be load BEFORE dhcp client requests  !
 table netdev filter {
         chain egress {
                 type filter hook egress devices = $iface_wan priority filter; policy accept;
