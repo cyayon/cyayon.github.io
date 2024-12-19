@@ -99,5 +99,5 @@ terraform.rc
 #.anonymize.sh
 #.security.sh
 #.git-anonymize.sh
-.git-security.sh
+#.git-security.sh
 
