@@ -9,8 +9,11 @@ Version 20241205
 ## Links
 
 [http://xbest.pl/index.php?p5117,ont-gpon-lxt-010h-d-leox-1x2-5ge-1xgpon-sc-apc](http://xbest.pl/index.php?p5117,ont-gpon-lxt-010h-d-leox-1x2-5ge-1xgpon-sc-apc)
+
 [https://lafibre.info/remplacer-livebox/mise-en-route-leox-lxt-010h-d/252/](https://lafibre.info/remplacer-livebox/mise-en-route-leox-lxt-010h-d/252/)
+
 [https://lafibre.info/remplacer-livebox/trouver-la-valeur-hw_hwver-pour-leox-lxt-01g-d-lxt-010h-d/](https://lafibre.info/remplacer-livebox/trouver-la-valeur-hw_hwver-pour-leox-lxt-01g-d-lxt-010h-d/)
+
 [https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf](https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf)
 
 
@@ -82,7 +85,7 @@ Note: If you encounter some DHCP issues and everything seems right, try to chang
 
 3. OMCC compliance
 **This param seems to be important on some OLT. Try to skip this, but use if you encounter issues...** 
-See [https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf] (cf. ONU-G ME #256, ONU2-G ME #257, Software Image ME #7)
+See [https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf](https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf) (cf. ONU-G ME #256, ONU2-G ME #257, Software Image ME #7)
 80 : (default) do not work well
 B0 : (HG8010H) do not work well too
 A0 : everything is OK
