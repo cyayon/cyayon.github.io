@@ -8,10 +8,10 @@ tags:
 Version 20241205
 ## Links
 
-[http://xbest.pl/index.php?p5117,ont-gpon-lxt-010h-d-leox-1x2-5ge-1xgpon-sc-apc]
-[https://lafibre.info/remplacer-livebox/mise-en-route-leox-lxt-010h-d/252/]
-[https://lafibre.info/remplacer-livebox/trouver-la-valeur-hw_hwver-pour-leox-lxt-01g-d-lxt-010h-d/]
-[https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf]
+[http://xbest.pl/index.php?p5117,ont-gpon-lxt-010h-d-leox-1x2-5ge-1xgpon-sc-apc](http://xbest.pl/index.php?p5117,ont-gpon-lxt-010h-d-leox-1x2-5ge-1xgpon-sc-apc)
+[https://lafibre.info/remplacer-livebox/mise-en-route-leox-lxt-010h-d/252/](https://lafibre.info/remplacer-livebox/mise-en-route-leox-lxt-010h-d/252/)
+[https://lafibre.info/remplacer-livebox/trouver-la-valeur-hw_hwver-pour-leox-lxt-01g-d-lxt-010h-d/](https://lafibre.info/remplacer-livebox/trouver-la-valeur-hw_hwver-pour-leox-lxt-01g-d-lxt-010h-d/)
+[https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf](https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf)
 
 
 ## Defaults
