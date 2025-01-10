@@ -5,7 +5,7 @@ tags:
 # ONT LEOX-GPON-LXT-010H-D
 
 
-Version 20241205
+Version 20250110
 ## Links
 
 [http://xbest.pl/index.php?p5117,ont-gpon-lxt-010h-d-leox-1x2-5ge-1xgpon-sc-apc](http://xbest.pl/index.php?p5117,ont-gpon-lxt-010h-d-leox-1x2-5ge-1xgpon-sc-apc)
@@ -15,6 +15,8 @@ Version 20241205
 [https://lafibre.info/remplacer-livebox/trouver-la-valeur-hw_hwver-pour-leox-lxt-01g-d-lxt-010h-d/](https://lafibre.info/remplacer-livebox/trouver-la-valeur-hw_hwver-pour-leox-lxt-01g-d-lxt-010h-d/)
 
 [https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf](https://wiki-archive.opencord.org/attachments/1966449/2557137.pdf)
+
+Manufacturer : marcinkuczera https://lafibre.info/profile/marcinkuczera/ (marcin.kuczera at leolabs.pl)
 
 
 ## Defaults

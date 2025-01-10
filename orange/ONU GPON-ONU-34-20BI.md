@@ -4,12 +4,15 @@ tags:
 ---
 # ONU GPON-ONU-34-20BI
 
-Version 20241220
+Version 20250110
 ## Links 
-https://www.fs.com/fr/products/133619.html
-https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/
-https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/
-https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/#enabling-data_1g_8q_us1280_ds512ini-omci-mib-file-for-2500-mbps-profiles
+[https://www.fs.com/fr/products/133619.html](https://www.fs.com/fr/products/133619.html)
+
+[https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/](https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/)
+
+[https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/](https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/)
+
+[https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/#enabling-data_1g_8q_us1280_ds512ini-omci-mib-file-for-2500-mbps-profiles](https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/#enabling-data_1g_8q_us1280_ds512ini-omci-mib-file-for-2500-mbps-profiles)
 
 
 ## Mikrotik RouterOS
@@ -303,9 +306,11 @@ fw_printenv mib_file
 
 ### Speed issues
 
-https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/#enabling-data_1g_8q_us1280_ds512ini-omci-mib-file-for-2500-mbps-profiles
-https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/msg992075/#msg992075
-https://github.com/akhamar/orange-2500mbps-G010SP/blob/master/README.md
+[https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/#enabling-data_1g_8q_us1280_ds512ini-omci-mib-file-for-2500-mbps-profiles](https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/#enabling-data_1g_8q_us1280_ds512ini-omci-mib-file-for-2500-mbps-profiles)
+
+[https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/msg992075/#msg992075](https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/msg992075/#msg992075)
+[https://github.com/akhamar/orange-2500mbps-G010SP/blob/master/README.md](https://github.com/akhamar/orange-2500mbps-G010SP/blob/master/README.md)
+
 
 DO NOT FORGET TO FORCE full-duplex 2.5Gbps on CRS305/310 : 
 ```
@@ -358,7 +363,7 @@ linear LDO converter (active/inactive)             (inactive)
 
 
 ## Others commands
-https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/
+[https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/](https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/)
 
 ```
 sfp_i2c -s <sn> -i 3 # SN on SFP side to RouterOS
@@ -368,7 +373,7 @@ uci show
 ```
 
 ## Other Enhancements
-https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/
+[https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/](https://hack-gpon.github.io/ont-fs-com-gpon-onu-stick-with-mac/)
 
 ### TX Fault / Serial
 
