@@ -500,6 +500,7 @@ This is optional in 2023, and not really required (DSCP 48 match with 6 on layer
 note : if it do not work with new-dscp=48, try new-dscp=6
 
 - original version :
+
 ```other
 /ipv6 firewall mangle
 add action=change-dscp chain=output comment="orange1 icmp6 133RS DSCP6" dst-address=ff00::/8 icmp-options=133:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
@@ -509,6 +510,7 @@ add action=change-dscp chain=output comment="orange1 dhcp6 DSCP6" dst-port=547 n
 ```
 
 - better version with POSTROUTING (you could also use OUTPUT chain) :
+
 ```other
 /ip firewall mangle
 add action=change-dscp chain=postrouting comment="dhcp4 DSCP6" dst-port=67 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=68
@@ -541,6 +543,7 @@ add action=accept chain=prio_orange_dhcp6 comment="ACCEPT"
 note : to check interface status, use `networkctl -s status <iface>`
 
 - /etc/systemd/network/wan1.network :
+
 ```other
 [Match]
 Name=wan1
@@ -555,6 +558,7 @@ UseDNS=false
 ```
 
 - /etc/systemd/network/orange1.netdev :
+
 ```other
 [NetDev]
 Name=orange1
@@ -566,6 +570,7 @@ EgressQOSMaps=6-6 # systemd v253 only
 ```
 
 - /etc/systemd/network/orange1.network :
+
 ```other
 [Match]
 Name=orange1
@@ -629,6 +634,7 @@ Announce=no
 ```
 
 - /etc/system/systemd-networkd.service.d/10-debug.conf :
+
 ```other
 [Service]
 Environment=SYSTEMD_LOG_LEVEL=debug
@@ -641,6 +647,7 @@ note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPrio
 ### Mikrotik
 
 - ipv4 
+
 ```
 /ip/dhcp-client/print detail
 	interface=vlan832-orange1.wan1 add-default-route=no use-peer-dns=no use-peer-ntp=no dhcp-options=hostname,clientid,authsend,userclass,vendor-class-identifier
@@ -679,6 +686,7 @@ note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPrio
 ```
 
 - ipv6 
+
 ```
 /ipv6/dhcp-client/print detail
 	interface=vlan832-orange1.wan1 status=bound duid="0x000300xxxxxxxxx" dhcp-server-v6=fe80::ba0:bab request=prefix add-default-route=yes default-route-distance=1 use-peer-dns=no use-interface-duid=yes rapid-commit=no dhcp-options=authsend,userclass,class-identifier pool-name="pool6-wan1" pool-prefix-length=64 prefix-hint=::/0
@@ -752,6 +760,7 @@ Do not forget to :
 - if necessary and to avoid /etc/resolv.conf overwrite, use `chattr +i /etc/resolv.conf`
 
 - launch command lines :
+
 ```other
 iface="orange1"
 cfgdir=...
@@ -762,6 +771,7 @@ dhclient -6 -cf ${cfgdir}/${iface}_6.conf -pf ${piddir}/${iface}_6.pid -lf ${lea
 ```
 
 - /etc/dhclient/orange1\_4.conf :
+
 ```other
 option rfc3118-authentication code 90 = string;
 interface "orange1" {
@@ -807,16 +817,19 @@ This utility must be used with dhcp client utility (like dhclient or dhpcd, NOT 
 [https://lafibre.info/remplacer-livebox/petit-ld\_preload-pour-amateurs-de-setsockopt/](https://lafibre.info/remplacer-livebox/petit-ld_preload-pour-amateurs-de-setsockopt/)
 
 compilation :
+
 ```bash
 gcc -shared -ldl -fPIC so_priority.c -o so_priority.so
 ```
 
 usage :
+
 ```shell
 SO_PRIORITY_DEBUG=1 SO_PRIORITY_VALUE=6 LD_PRELOAD=/path/to/so_priority.so program arg1 arg2
 ```
 
 source code :
+
 ```cpp
 /*
         Set SO_PRIORITY right after each socket() call.
@@ -921,6 +934,7 @@ int socket(int domain, int type, int protocol) {
 ```
 
 Archlinux PKGBUILD :
+
 ```other
 # https://git.kindwolf.org/so_priority.so/
 # https://lafibre.info/remplacer-livebox/petit-ld_preload-pour-amateurs-de-setsockopt/
@@ -964,6 +978,7 @@ package() {
 - Finally try to regenerate authentication options (90 for DHCPv4 and 11 for DHCPv6). Sometimes, it could be necessary to regenerate authentication options, after a few months for example...
 
 - For COS 6 verification check the first line tcpdump trace, check :
+
 ```other
 '[vlan ${vlan}, p X]' : ..., ethertype 802.1Q (0x8100), length XXX: vlan ${vlan}, p X, ethertype IPv4 (0x0800), ...
 ```
@@ -973,6 +988,7 @@ package() {
 [https://ipv6.web.cern.ch/content/linux-client-doesnt-get-ipv6-address-dhcpv6](https://ipv6.web.cern.ch/content/linux-client-doesnt-get-ipv6-address-dhcpv6)
 
 tcpdump command lines :
+
 ```shell
 # prefer :
 tcpdump -vnei wan1 '(udp port 546 or port 547) or icmp6'
@@ -1006,6 +1022,7 @@ DHCP6 Client IAID: 0x8864a065
 DHCP6 Client DUID: DUID-LL:000144d4540axxxx0000
 
 tcpdump sample trace :
+
 ```other
 dhcp6 solicit   (xid=6461b1 (rapid-commit) (IA_PD IAID:22882960xx T1:0 T2:0) (Client-FQDN) (user-class) (option-request opt_82) (client-ID hwaddr type 1 44d4540axxxx)
 dhcp6 advertise (xid=6461b1 (IA_PD IAID:22882960xx T1:83812 T2:207360 (IA_PD-prefix 2a01:xxxx::/56 pltime:259200 vltime:259200)) (server-ID vid 0000055844455348) (client-ID hwaddr type 1 44d4540axxxx)
@@ -1023,6 +1040,7 @@ For example, you will get : \*15
 Now convert hex value 15 to decimal and you get IAID=21
 
 routerOS command line to snif interface and send to a remote host :
+
 ```other
 xxxxxx] > /tool/sniffer/export 
 # apr/20/2023 19:01:18 by RouterOS 7.6
