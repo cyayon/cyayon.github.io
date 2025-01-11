@@ -5,7 +5,7 @@ tags:
 ---
 #  Bring Your Own Router Orange ISP
 
-Version 20250110
+Version 20250111
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
@@ -223,6 +223,7 @@ The following change DSCP and COS for ipv6 NS/NA/RS packets. From systemd v253, 
 **But, you always have to modify COS(PCP) and DSCP for dhcpv6 (and icmpv6). Todo this use the previous nftables rules.**
 
 - original version (prefer next/simpler/better version) :
+
 ```other
 iface = orange1.832
 table inet firewall {
@@ -260,6 +261,7 @@ table inet firewall {
 
 - a simpler (better?) version (note the new netdev/egress filter at the end) :
 	note: it should be better to untrack mangled packets https://wiki.nftables.org/wiki-nftables/index.php/Mangling_packet_headers (not tested)  
+	
 ```other
 # ipv4 (for renew)
 table ip mangle {
@@ -299,6 +301,7 @@ Since recent kernels, a new method exist with netdev egress filter : [Filtrer le
 **with netdev egress rules, netfilter mangle rules or traffic-control (tc script) are NO MORE NECESSARY**
 
 note: check the alternative for ICMPv6 (type or daddr)
+
 ```
 # orange dhcp client requests (ipv4/ipv6)
 # since recent kernel (6.x) with netdev egress filter (mangle rules or tc are NO MORE NECESSARY)
@@ -320,6 +323,7 @@ You MUST modify COS/DSCP before the very FIRST DHCP request. To do this, it is n
 To inject nftables netdev/egress nftables rules on interface creation process, we could use the following systemd service unit.
 
 /etc/systemd/system/netdev-egress@.service (not FULLY tested, prefer other alternative below) :
+
 ``` 
 [Unit]
 Description=netdev-egress pre-requisite for %i
@@ -333,7 +337,9 @@ ExecStart=/etc/systemd/scripts/netdev-egress %i
 RemainAfterExit=yes
 TimeoutSec=10
 ```
+
 A BETTER tested version (should be running just after interface link UP and before dhcp client requests):
+
 ```
 [Unit]
 Description=netdev-egress pre-requisite for %i
@@ -352,6 +358,7 @@ WantedBy=sys-subsystem-net-devices-%i.device
 
 
 /etc/systemd/scripts/netdev-egress (change `iface=orange1` as required) :
+
 ```
 #!/bin/sh
 # apply netdev/egress priority for orange dhcp client requests
@@ -399,6 +406,7 @@ networkctl -s status $iface
 ```
 
 Finally, enable service unit : `systemctl enable netdev-egress@<vlan832-interface>` and show logs `journalctl -xeu netdev-egress@vlan832` :
+
 ```
 [...]  
 systemd-networkd[1071]: orange1: Gained IPv6LL  
@@ -425,6 +433,7 @@ If you want to use bridge filters : ISP Fiber --- Router (DHCP clients + bridge 
 note : fe00::/7 == fe80::/10 + ff02::/16
 
 - on switch (CRS/CCR211x) with switch rules (before ROS 7.15) :
+
 ```other
 /interface ethernet switch rule
 add comment="orange1 dhcp4 COS6" dst-port=67 mac-protocol=ip new-vlan-priority=6 ports=sfp1.router protocol=udp switch=switch1 vlan-id=832
@@ -436,6 +445,7 @@ add comment="orange1 arp COS6" mac-protocol=arp new-vlan-priority=6 ports=sfp1.r
 
 - on switch (CRS/CCR211x) with switch rules (after ROS 7.15 - modify PCP and DSCP) :
 	note : the following is for a CRS310, you must disable tx-manager only on disabled ports (not used), and enable on router port (ingress traffic)
+	
 ```
 /interface ethernet switch set 0 qos-hw-offloading=yes  
 /interface ethernet switch qos profile add comment="orange PCP6 DSCP48_CS6" dscp=48 name=orange-prio-bng pcp=6 traffic-class=6  
@@ -459,6 +469,7 @@ add comment="orange1 arp COS6" mac-protocol=arp new-vlan-priority=6 ports=sfp1.r
 
 - since ROS 7.16 it is necessary to define a param to keep PCP and DSCP (and NOT ignore) that could be defined before reaching the switch (CRS/CCR211x). For example, if you ALREADY change PCP and DSCP on a previous equipment (firewall mangle or dhcp clients for example) and if `trust-l2`and `trust-l3`are not defined (ignore by default), the switch will reset packets to prio 0 (and dhcp clients will not be able to authenticate to Orange).
 	https://lafibre.info/remplacer-livebox/news-mikrotik-7-16-breaking-changes-qos-trust-l2l3
+	
 ```
 /interface ethernet switch qos port  print 
 /interface ethernet switch qos port  
@@ -468,6 +479,7 @@ add comment="orange1 arp COS6" mac-protocol=arp new-vlan-priority=6 ports=sfp1.r
 ```
 
 If you have TV, add also these rules :
+
 ```
 /interface ethernet switch qos profile add name=orange-prio-tv pcp=5 traffic-class=5
 /interface ethernet switch rule add comment="orange TV PCP5" mac-protocol=ip new-qos-profile=orange-prio-tv ports=sfp1.router switch=switch1 vlan-id=840
@@ -475,6 +487,7 @@ If you have TV, add also these rules :
 
 
 - on router (CCR2004 - WITHOUT switch chipset ) with bridge filters :
+
 ```other
 /interface bridge filter
 add action=set-priority chain=output comment="orange1 dhcp4 COS6" disabled=yes dst-port=67 ip-protocol=udp log=yes log-prefix="orange1 COS6_DHCP4" mac-protocol=ip new-priority=6 out-interface=bridge-wan1 passthrough=yes
@@ -484,6 +497,7 @@ add action=set-priority chain=output comment="orange1 arp COS6" disabled=yes log
 ```
 
 - firewall mangle rules are ONLY for DHCPv6 client requests (IPv6 do not use RAW SOCKETS for DHCP) :
+
 ```other
 /ipv6 firewall mangle
 add action=set-priority chain=output comment="orange1 icmp6 133RS COS6" dst-address=ff00::/8 icmp-options=133:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
@@ -792,6 +806,7 @@ interface "orange1" {
 ```
 
 - /etc/dhclient/orange1\_6.conf :
+
 ```other
 option dhcp6.auth code 11 = string;
 option dhcp6.userclass code 15 = string;
@@ -978,7 +993,6 @@ package() {
 - Finally try to regenerate authentication options (90 for DHCPv4 and 11 for DHCPv6). Sometimes, it could be necessary to regenerate authentication options, after a few months for example...
 
 - For COS 6 verification check the first line tcpdump trace, check :
-
 ```other
 '[vlan ${vlan}, p X]' : ..., ethertype 802.1Q (0x8100), length XXX: vlan ${vlan}, p X, ethertype IPv4 (0x0800), ...
 ```
