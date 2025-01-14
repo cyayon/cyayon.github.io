@@ -5,7 +5,7 @@ tags:
 ---
 #  Bring Your Own Router Orange ISP
 
-Version 20250111
+Version 20250114
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
@@ -187,9 +187,8 @@ tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 dst fe00::
 **This step is optional.**
 
 [https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/](https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/)
-[https://linuxreviews.org/Type\_of\_Service_(ToS)_and\_DSCP\_Values](https://linuxreviews.org/Type_of_Service_(ToS)_and_DSCP_Values)
 This version of tc script change COS and DSCP to 6, it should work but it has NOT been tested and work in progress.
-note DSCP : CS6 = 48 (dec)  = 0xc0 (TOS-hex)
+note: DSCP CS6 = 48 (dec)  = 0xc0 (TOS-hex)
 
 script based on tc : 
 ```shell
@@ -728,7 +727,8 @@ note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPrio
 0 name="class-identifier" code=16 value="0x0000040e0005736167656d" raw-value="0000040e0005736167656d"
 1 name="userclass" code=15 value="0x002b46535644534c5xxxxxxx" raw-value="002b46535644534c5f6c697665626f782e4xxxxx"
 2 name="authsend" code=11 value="0x00000000000000000000001A0900xxxxxx" raw-value="00000000000000000000001a0900xxx"
- ```
+```
+
 
 ### dhcpcd
 
@@ -737,7 +737,7 @@ dhcpcd is using NetworkConfiguration
 [https://roy.marples.name/projects/dhcpcd](https://roy.marples.name/projects/dhcpcd) 
 [https://github.com/NetworkConfiguration/dhcpcd](https://github.com/NetworkConfiguration/dhcpcd)
 
-```other
+```
 noipv4ll
 nohook hostname resolv.conf timesyncd.conf
 allowinterfaces orange1
@@ -1047,7 +1047,6 @@ dhcp6 reply     (xid=76595c (IA_PD IAID:22882960xx T1:86413 T2:207360 (IA_PD-pre
 ### Mikrotik
 
 Sometimes, when switching hardware or interface on the same fiber link, you will encounter IAID issue. In this case ipv6 DHCP client will give you NO PREFIX answer from DHCP server.
-[https://wiki.mikrotik.com/wiki/Manual:IPv6/DHCP\_Client](https://wiki.mikrotik.com/wiki/Manual:IPv6/DHCP_Client)
 To determine what IAID will be used, convert internal ID of an interface on which DHCP client is running from hex to decimal. For example, DHCP client is running on interface pppoe-out1. To get internal ID use following command :
 `/interface> :put \[find name="vlan832-orange1"]`
 For example, you will get : \*15
@@ -1192,7 +1191,8 @@ There are lot of sources which helped me to write this article. Here are the mos
 [https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/](https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/)
 [https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/](https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/)
 [https://lafibre.info/remplacer-livebox/index-des-solutions-de-remplacement-de-la-livebox/](https://lafibre.info/remplacer-livebox/index-des-solutions-de-remplacement-de-la-livebox/)
-https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/
-https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/24/
+[https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/](https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/)
+[https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/24/](https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/24/)
+
 
 _Special thanks to [lafibre.info](https://lafibre.info) forum and its members !_
