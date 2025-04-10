@@ -2,18 +2,33 @@
 tags:
   - nbux/orange
   - nbux/mikrotik
+
 ---
+
 #  Bring Your Own Router Orange ISP
 
-Version 20250114
+Version 20250410
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
 ## Requirements
 You must already have a working ONT/ONU registered on Orange fiber infrastructure. ONT/ONU are registering on Orange infrastructure with serial number.
-For informations, Orange use serial\_number and vendor\_id to allow a ONT/ONU to register.  
+For informations, Orange use serial\_number and vendor\_id to allow a ONT/ONU to register.
 You could see this other article [https://medium.com/@cyayon/configure-ont-leox-lxt-010h-d-for-orange-isp-4ef4b793ca7b](https://medium.com/@cyayon/configure-ont-leox-lxt-010h-d-for-orange-isp-4ef4b793ca7b).
 To configure properly your ONU/ONT, check dedicated topics and forums...
+
+
+## Basics
+
+For memories, the good SFP power values should be in the following ranges :
+- GPON  : 
+TX  0.5 -> 5 dBm  
+RX -30 -> -8 dBm  
+  
+- XGSPON  :
+TX 4 -> 9 dBm
+RX -28 -> -9 dBm
+
 
 ## 2023 evolutions
 
@@ -157,7 +172,7 @@ In consequence, you CANNOT use netfilter mangle rules to change COS/PCP and DSCP
 **IMPORTANT NOTICE : Since kernel 5.7, the netfilter netdev egress filter could match DHCP packets. See below netfilter nftables egress filter, it could be fun to try without tc script…**
 
 
-On Linux L2 filtering can be done with tc (traffic-control) tool. On Mikrotik router there switch rules or bridge filters. 
+On Linux L2 filtering can be done with tc (traffic-control) tool. On Mikrotik router there switch rules or bridge filters.
 
 ### linux tc
 ```shell
@@ -190,7 +205,7 @@ tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 dst fe00::
 This version of tc script change COS and DSCP to 6, it should work but it has NOT been tested and work in progress.
 note: DSCP CS6 = 48 (dec)  = 0xc0 (TOS-hex)
 
-script based on tc : 
+script based on tc :
 ```shell
 #!/bin/sh
 iface="orange1"
@@ -211,13 +226,13 @@ tc filter add dev $iface parent 1: prio 2 protocol ipv6 u32 match ip6 protocol 1
 tc filter add dev $iface parent 1: prio 3 protocol arp u32 match u8 0 0 action skbedit priority $tc_cos # arp
 tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 dst fe00::/7 match ip6 protocol 58 0xff action skbedit priority 0:6 pipe action pedit ex munge ip6 traffic_class set $tc_tos retain $tc_retain # icmpv6_dst_DSCP (fe00::/7 = fe80::/10 + ff02::/16)
 # for information - no dscp
-#tc filter add dev $iface parent 1: prio 3 protocol ipv6 u32 match ip6 protocol 17 0xff match ip6 sport 546 0xffff match ip6 dport 547 0xffff action skbedit priority $tc_cos # dhcpv6 
+#tc filter add dev $iface parent 1: prio 3 protocol ipv6 u32 match ip6 protocol 17 0xff match ip6 sport 546 0xffff match ip6 dport 547 0xffff action skbedit priority $tc_cos # dhcpv6
 #tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 dst fe00::/7 match ip6 protocol 58 0xff action skbedit priority $tc_cos # icmpv6 dst (fe00::/7 = fe80::/10 + ff02::/16)
 ```
 
 ### nftables mangle
 
-[https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/](https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/) 
+[https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/](https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/)
 The following change DSCP and COS for ipv6 NS/NA/RS packets. From systemd v253, new options exist to modify COS and DSCP to 6 on dhcpv4 ([https://github.com/systemd/systemd/pull/25904](https://github.com/systemd/systemd/pull/25904)).
 **But, you always have to modify COS(PCP) and DSCP for dhcpv6 (and icmpv6). Todo this use the previous nftables rules.**
 
@@ -227,40 +242,40 @@ The following change DSCP and COS for ipv6 NS/NA/RS packets. From systemd v253, 
 iface = orange1.832
 table inet firewall {
 	chain prio_orange {
-		meta nfproto ipv4 
-			meta priority set 0:0 
+		meta nfproto ipv4
+			meta priority set 0:0
 			ip dscp set cs0
 
-    	meta nfproto ipv6 
-    		meta priority set 0:0 
+    	meta nfproto ipv6
+    		meta priority set 0:0
     		ip6 dscp set cs0
-    	ip6 daddr { fe80::/10, ff02::/16 } 
+    	ip6 daddr { fe80::/10, ff02::/16 }
     		icmpv6 type {
     			nd-router-solicit,
     			nd-neighbor-solicit,
     			nd-neighbor-advert
-    		} 
-    		meta priority set 0:6 
+    		}
+    		meta priority set 0:6
     		ip6 dscp set cs6
-    	ip6 daddr { fe80::/10, ff02::/16 } 
-    		udp sport 546 
-    		udp dport 547 
-    		meta priority set 0:6 
+    	ip6 daddr { fe80::/10, ff02::/16 }
+    		udp sport 546
+    		udp dport 547
+    		meta priority set 0:6
     		ip6 dscp set cs6
     }
-    
+
     chain mangle_postrouting {
     	type filter hook postrouting priority mangle
     	policy accept
-    
+
     	oifname $iface rt ipsec missing jump prio_orange
     }
 }
 ```
 
 - a simpler (better?) version (note the new netdev/egress filter at the end) :
-	note: it should be better to untrack mangled packets https://wiki.nftables.org/wiki-nftables/index.php/Mangling_packet_headers (not tested)  
-	
+	note: it should be better to untrack mangled packets https://wiki.nftables.org/wiki-nftables/index.php/Mangling_packet_headers (not tested)
+
 ```other
 # ipv4 (for renew)
 table ip mangle {
@@ -294,7 +309,7 @@ table ip6 mangle {
 
 ### nftables netdev
 
-Before kernel 6.x, nftables was NOT able to modify ipv4 DHCP packets, because they are using RAW sockets. 
+Before kernel 6.x, nftables was NOT able to modify ipv4 DHCP packets, because they are using RAW sockets.
 
 Since recent kernels, a new method exist with netdev egress filter : [Filtrer les raw socket avec nftables ?](https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/new/?topicseen#new)
 **with netdev egress rules, netfilter mangle rules or traffic-control (tc script) are NO MORE NECESSARY**
@@ -318,12 +333,12 @@ table netdev filter {
 }
 ```
 
-You MUST modify COS/DSCP before the very FIRST DHCP request. To do this, it is necessary to execute a script just AFTER the creation of the VLAN (832) interface (in our case, orange1). 
+You MUST modify COS/DSCP before the very FIRST DHCP request. To do this, it is necessary to execute a script just AFTER the creation of the VLAN (832) interface (in our case, orange1).
 To inject nftables netdev/egress nftables rules on interface creation process, we could use the following systemd service unit.
 
 /etc/systemd/system/netdev-egress@.service (not FULLY tested, prefer other alternative below) :
 
-``` 
+```
 [Unit]
 Description=netdev-egress pre-requisite for %i
 After=network.target network-online.target
@@ -350,7 +365,7 @@ Type=oneshot
 ExecStart=/etc/systemd/scripts/netdev-egress %i
 RemainAfterExit=true
 TimeoutSec=10
-  
+
 [Install]
 WantedBy=sys-subsystem-net-devices-%i.device
 ```
@@ -407,11 +422,11 @@ networkctl -s status $iface
 Finally, enable service unit : `systemctl enable netdev-egress@<vlan832-interface>` and show logs `journalctl -xeu netdev-egress@vlan832` :
 
 ```
-[...]  
-systemd-networkd[1071]: orange1: Gained IPv6LL  
-[...]  
-systemd-networkd[1071]: orange1: DHCP: received delegated prefix xxxx::/56  
-[...]  
+[...]
+systemd-networkd[1071]: orange1: Gained IPv6LL
+[...]
+systemd-networkd[1071]: orange1: DHCP: received delegated prefix xxxx::/56
+[...]
 systemd-networkd[1071]: orange1: DHCPv4 address xxxx/24, gateway xxxx.1 acquired from yy.yy.yy.yy.yy
 ```
 
@@ -424,7 +439,7 @@ In consequence, you CANNOT use netfilter mangle rules to change PCP and DSCP. Yo
 
 Moreover, Mikrotik limit its switch rules to INGRESS, switch rules cannot be used for EGRESS. In other terms, to change COS/PCP and DSCP on DHCPv4 requests you must use a different device (switch/router) in front of your main router.
 
-To bypass this limitation, you can use bridge filters (instead of switch rules), BUT it is not recommended in performance point view because the CPU will be in charge of these filters. 
+To bypass this limitation, you can use bridge filters (instead of switch rules), BUT it is not recommended in performance point view because the CPU will be in charge of these filters.
 
 If you want to use switch rules : ISP Fiber --- Switch (switch rules) --- Router (DHCP clients)
 If you want to use bridge filters : ISP Fiber --- Router (DHCP clients + bridge filters)
@@ -444,37 +459,37 @@ add comment="orange1 arp COS6" mac-protocol=arp new-vlan-priority=6 ports=sfp1.r
 
 - on switch (CRS/CCR211x) with switch rules (after ROS 7.15 - modify PCP and DSCP) :
 	note : the following is for a CRS310, you must disable tx-manager only on disabled ports (not used), and enable on router port (ingress traffic)
-	
+
 ```
-/interface ethernet switch set 0 qos-hw-offloading=yes  
-/interface ethernet switch qos profile add comment="orange PCP6 DSCP48_CS6" dscp=48 name=orange-prio-bng pcp=6 traffic-class=6  
-  
-/interface ethernet switch qos port  
-	set sfp-sfpplus4 tx-manager=offline  
+/interface ethernet switch set 0 qos-hw-offloading=yes
+/interface ethernet switch qos profile add comment="orange PCP6 DSCP48_CS6" dscp=48 name=orange-prio-bng pcp=6 traffic-class=6
+
+/interface ethernet switch qos port
+	set sfp-sfpplus4 tx-manager=offline
 	set sfp1 tx-manager=offline
-	set sfp2 tx-manager=offline 
-	set sfp3 tx-manager=offline 
-	set sfp4 tx-manager=offline 
+	set sfp2 tx-manager=offline
+	set sfp3 tx-manager=offline
+	set sfp4 tx-manager=offline
 	set sfp5 tx-manager=offline
-  
-/interface ethernet switch l3hw-settings  set icmp-reply-on-error=no  
-  
-/interface ethernet switch rule  
-	add comment="orange1 arp QOS" mac-protocol=arp new-qos-profile=orange-prio-bng ports=sfpplus1.router switch=switch1 vlan-id=832  
-	add comment="orange1 dhcp4 QOS" dst-port=67 src-port=68 mac-protocol=ip new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=udp switch=switch1 vlan-id=832  
+
+/interface ethernet switch l3hw-settings  set icmp-reply-on-error=no
+
+/interface ethernet switch rule
+	add comment="orange1 arp QOS" mac-protocol=arp new-qos-profile=orange-prio-bng ports=sfpplus1.router switch=switch1 vlan-id=832
+	add comment="orange1 dhcp4 QOS" dst-port=67 src-port=68 mac-protocol=ip new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=udp switch=switch1 vlan-id=832
 	add comment="orange1 dhcp6 QOS" dst-port=547 src-port=546 mac-protocol=ipv6 new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=udp switch=switch1 vlan-id=832
 	add comment="orange1 icmp6 QOS" dst-address6=fe00::/7 mac-protocol=ipv6 new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=icmpv6 switch=switch1 vlan-id=832
 ```
 
 - since ROS 7.16 it is necessary to define a param to keep PCP and DSCP (and NOT ignore) that could be defined before reaching the switch (CRS/CCR211x). For example, if you ALREADY change PCP and DSCP on a previous equipment (firewall mangle or dhcp clients for example) and if `trust-l2`and `trust-l3`are not defined (ignore by default), the switch will reset packets to prio 0 (and dhcp clients will not be able to authenticate to Orange).
 	https://lafibre.info/remplacer-livebox/news-mikrotik-7-16-breaking-changes-qos-trust-l2l3
-	
+
 ```
-/interface ethernet switch qos port  print 
-/interface ethernet switch qos port  
-	set sfp1.router trust-l2=keep trust-l3=keep  
+/interface ethernet switch qos port  print
+/interface ethernet switch qos port
+	set sfp1.router trust-l2=keep trust-l3=keep
 	set sfp2.orange1-ont trust-l2=keep trust-l3=keep
-	set sfp3.orange1-onu trust-l2=keep trust-l3=keep  
+	set sfp3.orange1-onu trust-l2=keep trust-l3=keep
 ```
 
 If you have TV, add also these rules :
@@ -659,14 +674,14 @@ note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPrio
 
 ### Mikrotik
 
-- ipv4 
+- ipv4
 
 ```
 /ip/dhcp-client/print detail
 	interface=vlan832-orange1.wan1 add-default-route=no use-peer-dns=no use-peer-ntp=no dhcp-options=hostname,clientid,authsend,userclass,vendor-class-identifier
-     
+
      script=
-	     :if ($bound=1) do={        
+	     :if ($bound=1) do={
 		    /log info "dhcp4-client script begin"
 		    # multiwan
 		    /routing rule set [find where action=lookup table=route-wan1 ] src-address=$"lease-address"
@@ -698,12 +713,12 @@ note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPrio
 5 name="hostname" code=12 value="$(HOSTNAME)" raw-value="xxxxxx"
 ```
 
-- ipv6 
+- ipv6
 
 ```
 /ipv6/dhcp-client/print detail
 	interface=vlan832-orange1.wan1 status=bound duid="0x000300xxxxxxxxx" dhcp-server-v6=fe80::ba0:bab request=prefix add-default-route=yes default-route-distance=1 use-peer-dns=no use-interface-duid=yes rapid-commit=no dhcp-options=authsend,userclass,class-identifier pool-name="pool6-wan1" pool-prefix-length=64 prefix-hint=::/0
-	
+
 	script=
 		:if ($"pd-valid" = 1) do={
 			/log info "dhcp6-client script begin"
@@ -734,7 +749,7 @@ note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPrio
 
 dhcpcd is using NetworkConfiguration
 
-[https://roy.marples.name/projects/dhcpcd](https://roy.marples.name/projects/dhcpcd) 
+[https://roy.marples.name/projects/dhcpcd](https://roy.marples.name/projects/dhcpcd)
 [https://github.com/NetworkConfiguration/dhcpcd](https://github.com/NetworkConfiguration/dhcpcd)
 
 ```
@@ -780,7 +795,7 @@ iface="orange1"
 cfgdir=...
 leasedir=...
 piddir=...
-dhclient -4 -cf ${cfgdir}/${iface}_4.conf -pf ${piddir}/${iface}_4.pid -lf ${leasedir}/${iface}_4.leases $iface 
+dhclient -4 -cf ${cfgdir}/${iface}_4.conf -pf ${piddir}/${iface}_4.pid -lf ${leasedir}/${iface}_4.leases $iface
 dhclient -6 -cf ${cfgdir}/${iface}_6.conf -pf ${piddir}/${iface}_6.pid -lf ${leasedir}/${iface}_6.leases -P -nw $iface
 ```
 
@@ -928,10 +943,10 @@ int socket(int domain, int type, int protocol) {
         sockfd = so_priority_socket(domain, type, protocol);
         /* Do not call setsockopt() if socket() failed: */
         if (sockfd < 0) return sockfd;
-    
+
         /* Time for the actual work: */
         socket_errno = errno;
-    
+
         if (!so_priority_known) so_priority_set_options();
         ret = setsockopt(sockfd, SOL_SOCKET, SO_PRIORITY, &so_priority_value, sizeof(so_priority_value));
         /* Ignore setsockopt() errors, except for debugging purposes. */
@@ -942,7 +957,7 @@ int socket(int domain, int type, int protocol) {
                 if (ret < 0) dprintf(2, "; errno is %d: %s", setsockopt_errno, strerror(setsockopt_errno));
                 dprintf(2, "\n");
         }
-    
+
         errno = socket_errno;
         return sockfd;
 }
@@ -987,7 +1002,7 @@ package() {
 
 ## Debug & Troubleshoot
 
-- If you get no answer from Orange DHCP server and everything seems to be ok, try to force release multiple times and disconnect a few minutes the ONT (fiber link) to force DHCP lease expiration. 
+- If you get no answer from Orange DHCP server and everything seems to be ok, try to force release multiple times and disconnect a few minutes the ONT (fiber link) to force DHCP lease expiration.
 - In some case, you just have to **remove dhcp client lease file** (see relative documentation of each dhcp client).
 - Sometimes, when switching hardware or interface on the same fiber link, you will encounter IAID issue. In this case the DHCPv6 server (ISP) will give NO PREFIX answer. You have to disconnect fiber link for at least 10-20min. Then reconnect and retry DHCP requests. You should have no issue with DHCPv4. Check also option 17 (vendor\_opt) answer, if everything is correct, try again to disconnect fiber link for a few minutes.
 - Finally try to regenerate authentication options (90 for DHCPv4 and 11 for DHCPv6). Sometimes, it could be necessary to regenerate authentication options, after a few months for example...
@@ -1026,7 +1041,7 @@ In DHCP response, there is an option (DHCPv4 [125] et DHCPv6 [17|vendor\_opts_])
 The standard flow (everything except DHCP related traffic) QOS MUST be 0 (zero)
 Everything related to DHCP (DHCPv4/6 init|renew ; ICMPv6 ; ARP) QOS MUST be 6 (six)
 
-### Systemd-networkd 
+### Systemd-networkd
 
 - use DUIDType=link-layer
 - from tcpdump : client-ID hwaddr 44d4540axxxx ; IA\_PD-prefix 2a01::xxxx::/56 ; IA\_PD IAID:22882960xx
@@ -1066,124 +1081,167 @@ set file-limit=100000KiB filter-interface=br-wan filter-ip-protocol=udp filter-p
 ```
 
 
-### VLAN 2800 mapping 
+### VLAN 2800 mapping
 
-In some cases, the ONU/ONT is mapping the VLAN 832 on VLAN 2800. See the post https://github.com/Anime4000/RTL960x/issues/282#issuecomment-2089248396. 
+In some cases, the ONU/ONT is mapping the VLAN 832 on VLAN 2800. See the post https://github.com/Anime4000/RTL960x/issues/282#issuecomment-2089248396.
 You have to connect on the ONU/ONT and use command `omcicli`:
 
 ```
-# omcicli mib get 84  
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  
-VlanTagFilterData  
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  
-=================================  
-EntityID: 0x1102  
-FilterTbl[0]: PRI 0,CFI 0, VID 2800  
-FwdOp:  0x10  
-NumOfEntries: 1  
-=================================  
-=================================  
-EntityID: 0x1103  
-FilterTbl[0]: PRI 0,CFI 0, VID 835  
-FwdOp:  0x10  
-NumOfEntries: 1  
-=================================  
-=================================  
-EntityID: 0x1104  
-FilterTbl[0]: PRI 0,CFI 0, VID 852  
-FwdOp:  0x10  
-NumOfEntries: 1  
-=================================  
-=================================  
-EntityID: 0x110b  
-FilterTbl[0]: PRI 0,CFI 0, VID 835  
-FilterTbl[2]: PRI 0,CFI 0, VID 852  
-FilterTbl[4]: PRI 0,CFI 0, VID 2800  
-FwdOp:  0x10  
-NumOfEntries: 3  
-=================================  
+# omcicli mib get 84
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+VlanTagFilterData
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+=================================
+EntityID: 0x1102
+FilterTbl[0]: PRI 0,CFI 0, VID 2800
+FwdOp:  0x10
+NumOfEntries: 1
+=================================
+=================================
+EntityID: 0x1103
+FilterTbl[0]: PRI 0,CFI 0, VID 835
+FwdOp:  0x10
+NumOfEntries: 1
+=================================
+=================================
+EntityID: 0x1104
+FilterTbl[0]: PRI 0,CFI 0, VID 852
+FwdOp:  0x10
+NumOfEntries: 1
+=================================
+=================================
+EntityID: 0x110b
+FilterTbl[0]: PRI 0,CFI 0, VID 835
+FilterTbl[2]: PRI 0,CFI 0, VID 852
+FilterTbl[4]: PRI 0,CFI 0, VID 2800
+FwdOp:  0x10
+NumOfEntries: 3
+=================================
 
-# omcicli mib get 171  
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  
-ExtVlanTagOperCfgData  
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  
-=================================  
-EntityId: 0x101  
-AssociationType: 2  
-ReceivedFrameVlanTagOperTableMaxSize: 0  
-InputTPID: 0x8100  
-OutputTPID: 0x8100  
-DsMode: 0  
-ReceivedFrameVlanTaggingOperTable  
-INDEX 0  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 7,VID 851, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 7,VID 852, TPID 2  
-INDEX 1  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 6,VID 851, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 5,VID 852, TPID 2  
-INDEX 2  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 5,VID 851, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 4,VID 852, TPID 2  
-INDEX 3  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 4,VID 851, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 4,VID 852, TPID 2  
-INDEX 4  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 3,VID 851, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 3,VID 852, TPID 2  
-INDEX 5  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 2,VID 851, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 2,VID 852, TPID 2  
-INDEX 6  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 1,VID 851, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 1,VID 852, TPID 2  
-INDEX 7  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 0,VID 851, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 0,VID 852, TPID 2  
-INDEX 8  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 8,VID 835, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 8,VID 835, TPID 2  
-INDEX 9  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 8,VID 832, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1  
-Treatment Inner   : PRI 8,VID 2800, TPID 2  
-INDEX 10  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 15,VID 0, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3  
-Treatment Inner   : PRI 15,VID 0, TPID 2  
-INDEX 11  
-Filter Outer   : PRI 14,VID 4096, TPID 5  
-Filter Inner   : PRI 14,VID 4096, TPID 0, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3  
-Treatment Inner   : PRI 15,VID 4096, TPID 3  
-INDEX 12  
-Filter Outer   : PRI 15,VID 4096, TPID 0  
-Filter Inner   : PRI 14,VID 4096, TPID 5, EthType 0x00  
-Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3  
-Treatment Inner   : PRI 15,VID 4096, TPID 2  
+# omcicli mib get 171
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ExtVlanTagOperCfgData
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+=================================
+EntityId: 0x101
+AssociationType: 2
+ReceivedFrameVlanTagOperTableMaxSize: 0
+InputTPID: 0x8100
+OutputTPID: 0x8100
+DsMode: 0
+ReceivedFrameVlanTaggingOperTable
+INDEX 0
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 7,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 7,VID 852, TPID 2
+INDEX 1
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 6,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 5,VID 852, TPID 2
+INDEX 2
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 5,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 4,VID 852, TPID 2
+INDEX 3
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 4,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 4,VID 852, TPID 2
+INDEX 4
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 3,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 3,VID 852, TPID 2
+INDEX 5
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 2,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 2,VID 852, TPID 2
+INDEX 6
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 1,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 1,VID 852, TPID 2
+INDEX 7
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 0,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 0,VID 852, TPID 2
+INDEX 8
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 8,VID 835, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 8,VID 835, TPID 2
+INDEX 9
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 8,VID 832, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 8,VID 2800, TPID 2
+INDEX 10
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 15,VID 0, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3
+Treatment Inner   : PRI 15,VID 0, TPID 2
+INDEX 11
+Filter Outer   : PRI 14,VID 4096, TPID 5
+Filter Inner   : PRI 14,VID 4096, TPID 0, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3
+Treatment Inner   : PRI 15,VID 4096, TPID 3
+INDEX 12
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 14,VID 4096, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3
+Treatment Inner   : PRI 15,VID 4096, TPID 2
 AssociatedMePoint: 0x101
 ```
 
 If you are in this case, you just have to change the VLAN 832 with 2800 in your router configuration.
+
+## Annexes
+
+### DHCP Option 125
+
+Here’s how to generate it correctly, from right to left:
+
+1. Take the model name of your box as a plain text string, for example "Livebox 7", and convert it to hexadecimal:
+	"Livebox 7" → 4c697665626f782037
+
+2. In front of that, prepend the half-length of the hex string, expressed in hexadecimal. In this case, the string 4c697665626f782037 has 18 characters, and 18 / 2 = 9 = 0x09, so we prepend 09.
+
+3. In front of that, prepend 06, which is the “tag 6”.
+
+4. Take the ONT serial number as a plain text string, for example "SMBS02C3D435", and convert it to hexadecimal:
+    "SMBS02C3D435" → 534d42533032433344343335
+
+5. Prepend the half-length of the resulting hex string. It has 24 characters, so 24 / 2 = 12 = 0x0c, hence we prepend 0c.
+
+6. Prepend 05, which is the “tag 5”.
+
+7. Take the MAC address in uppercase, without separators, and keep only the first 6 characters. Convert this 6-character string to hexadecimal. For example, "581DD8" becomes 353831444438.
+
+8. Prepend the half-length of the resulting hex string. It’s always 6 bytes (12 hex characters), so we prepend 06.
+
+9. Prepend 04, which is the “tag 4”.
+
+10. Prepend the half-length of everything you’ve written so far (after the fixed header, see below). In this example, we’ve written:
+
+	- Tag 4: 2 (tag + length) + 12 = 14 chars
+	- Tag 5: 2 + 24 = 26 chars
+	- Tag 6: 2 + 18 = 20 chars
+	- Total: 14 + 26 + 20 = 60 hex characters = 30 bytes → 0x21
+_(Note: it seems the total is actually 66 characters in your example, so 66 / 2 = 33 =_ _0x21)_
+
+11. Finally, prepend the fixed header: 00000de9    
+
+So in this example, option 125 becomes:
+
+```
+00000de9210406353831444438050c534d4253303243334434333506094c697665626f782037
+```
+
 
 ## Sources
 There are lot of sources which helped me to write this article. Here are the most importants.
@@ -1193,6 +1251,7 @@ There are lot of sources which helped me to write this article. Here are the mos
 [https://lafibre.info/remplacer-livebox/index-des-solutions-de-remplacement-de-la-livebox/](https://lafibre.info/remplacer-livebox/index-des-solutions-de-remplacement-de-la-livebox/)
 [https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/](https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/)
 [https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/24/](https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/24/)
+[https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/5112/?PHPSESSID=05am86kho55au6drtc1fubo8qm](https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/5112/?PHPSESSID=05am86kho55au6drtc1fubo8qm)
 
 
 _Special thanks to [lafibre.info](https://lafibre.info) forum and its members !_
