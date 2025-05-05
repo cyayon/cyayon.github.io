@@ -1,13 +1,15 @@
+source: Bear.app
+
 ---
 tags:
   - nbux/orange
   - nbux/mikrotik
+  - publish
 
 ---
+# Bring Your Own Router Orange ISP
 
-#  Bring Your Own Router Orange ISP
-
-Version 20250410
+Version 20250505
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
@@ -59,6 +61,7 @@ string2hex(FSVDSL\_livebox.Internet.softathome.Livebox4) -\> "46535644534c5f6c69
 user-class string = "2b" + string2hex() ; ipv6 string = "00" + "ipv4 string"
 
 **WARNING : take care of case (livebox vs Livebox)**
+
 ```other
 [ipv4:77] : "FSVDSL_livebox.Internet.softathome.Livebox4" or "0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7834"
 [ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7834"
@@ -67,19 +70,19 @@ user-class string = "2b" + string2hex() ; ipv6 string = "00" + "ipv4 string"
 [ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7835"
 
 [ipv4:77] : "FSVDSL_livebox.Internet.softathome.Livebox6" or "0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
-[ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
-```
+[ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"```
 
 **WARNING : if dhcp client use raw or not, final (and true) string to have in tcpdump sniff should be (for LB6) :**
+
 ```other
 [ipv4:77] : "4d2c2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
-[ipv6:15] : "000f002d002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
-```
+[ipv6:15] : "000f002d002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"```
 
 - note vendor-opts : vendor-opts (or vendor\_opts for vendor specific informations, IS NOT REQUIRED) [17] : "00:00:05:58:00:06:00:0e:49:50:56:36:5f:52:45:51:55:45:53:54:45:44" or "0x000005580006000e495056365f524551554553544544”, entreprise id "Orange" 4 octets 00000558 + 2 octets code 0006 + 14 octets data: 495056365f524551554553544544 ("IPV6\_REQUESTED")
 - note systemd-networkd : each string must converted from "aa:bb:cc:dd:ee:....." to xaaxbbxbbxccxddxeex...." (replace ":" with "x") `echo "aa:bb:cc:dd:ee" | sed 's/^/\\\x/ ; s/:/\\\x/g'`
 
 systemd-network sample config :
+
 ```other
 [DHCPv4]
 ClientIdentifier=mac
@@ -93,8 +96,7 @@ UserClass=FSVDSL_livebox.Internet.softathome.Livebox6
 #UserClass=\x00\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x36
 #SendOption=15:string:\x00\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x36
 SendOption=11:string:\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1A\x09\x00\x00\x05\x58\x01\x03\x41\x01\x0D\x66\x74\x69...
-SendOption=16:string:\x00\x00\x04\x0e\x00\x05\x73\x61\x67\x65\x6d
-```
+SendOption=16:string:\x00\x00\x04\x0e\x00\x05\x73\x61\x67\x65\x6d```
 
 ### ORO
 
@@ -115,6 +117,7 @@ For Orange, it is NOT mandatory to include option 11 in SOLLICIT/REQUEST request
 note : You could also use [https://jsfiddle.net/kgersen/3mnsc6wy/](https://jsfiddle.net/kgersen/3mnsc6wy/)
 
 shell script to generate authentication string :
+
 ```shell
 #!/bin/bash
 # You could also use https://jsfiddle.net/kgersen/3mnsc6wy/
@@ -159,8 +162,7 @@ str2=`echo "00:00:00:00:00:00:00:00:00:00:00:1A:09:00:00:05:58:01:03:41:01:0D${s
 echo "add code=90 name=authsend value=0x${str2}"
 echo "## DHCPv6"
 echo "/ipv6 dhcp-client option"
-echo "add code=11 name=authsend value=0x${str2}"
-```
+echo "add code=11 name=authsend value=0x${str2}"```
 
 ## Class-Of-Service
 
@@ -175,6 +177,7 @@ In consequence, you CANNOT use netfilter mangle rules to change COS/PCP and DSCP
 On Linux L2 filtering can be done with tc (traffic-control) tool. On Mikrotik router there switch rules or bridge filters.
 
 ### linux tc
+
 ```shell
 #!/bin/sh
 iface="orange1"
@@ -194,8 +197,7 @@ tc filter add dev $iface parent 1: prio 3 protocol 0x806 u32 match u32 0 0 actio
 tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 dst fe00::/7 match ip6 protocol 58 ff action skbedit priority $tc_cos # icmpv6_dst (fe00::/7 = fe80::/10 + ff02::/16)
 # for information
 #tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 protocol 58 ff action skbedit priority $tc_cos # icmpv6
-#tc filter add dev $iface parent 1: prio 5 protocol ip u32 match ip protocol 1 ff action skbedit priority $tc_cos # icmpv4 - SHOULD NOT BE USED !
-```
+#tc filter add dev $iface parent 1: prio 5 protocol ip u32 match ip protocol 1 ff action skbedit priority $tc_cos # icmpv4 - SHOULD NOT BE USED !```
 
 #### DSCP
 
@@ -206,6 +208,7 @@ This version of tc script change COS and DSCP to 6, it should work but it has NO
 note: DSCP CS6 = 48 (dec)  = 0xc0 (TOS-hex)
 
 script based on tc :
+
 ```shell
 #!/bin/sh
 iface="orange1"
@@ -227,8 +230,7 @@ tc filter add dev $iface parent 1: prio 3 protocol arp u32 match u8 0 0 action s
 tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 dst fe00::/7 match ip6 protocol 58 0xff action skbedit priority 0:6 pipe action pedit ex munge ip6 traffic_class set $tc_tos retain $tc_retain # icmpv6_dst_DSCP (fe00::/7 = fe80::/10 + ff02::/16)
 # for information - no dscp
 #tc filter add dev $iface parent 1: prio 3 protocol ipv6 u32 match ip6 protocol 17 0xff match ip6 sport 546 0xffff match ip6 dport 547 0xffff action skbedit priority $tc_cos # dhcpv6
-#tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 dst fe00::/7 match ip6 protocol 58 0xff action skbedit priority $tc_cos # icmpv6 dst (fe00::/7 = fe80::/10 + ff02::/16)
-```
+#tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 dst fe00::/7 match ip6 protocol 58 0xff action skbedit priority $tc_cos # icmpv6 dst (fe00::/7 = fe80::/10 + ff02::/16)```
 
 ### nftables mangle
 
@@ -237,6 +239,7 @@ The following change DSCP and COS for ipv6 NS/NA/RS packets. From systemd v253, 
 **But, you always have to modify COS(PCP) and DSCP for dhcpv6 (and icmpv6). Todo this use the previous nftables rules.**
 
 - original version (prefer next/simpler/better version) :
+
 
 ```other
 iface = orange1.832
@@ -270,11 +273,11 @@ table inet firewall {
 
     	oifname $iface rt ipsec missing jump prio_orange
     }
-}
-```
+}```
 
 - a simpler (better?) version (note the new netdev/egress filter at the end) :
 	note: it should be better to untrack mangled packets https://wiki.nftables.org/wiki-nftables/index.php/Mangling_packet_headers (not tested)
+
 
 ```other
 # ipv4 (for renew)
@@ -303,8 +306,7 @@ table ip6 mangle {
     	type filter hook postrouting priority mangle; policy accept;
         oifname $iface ip6 daddr { fe80::/10, ff02::/16 } counter jump prio_orange comment "mangle6-postrouting_orange"
    }
-}
-```
+}```
 
 
 ### nftables netdev
@@ -313,8 +315,11 @@ Before kernel 6.x, nftables was NOT able to modify ipv4 DHCP packets, because th
 
 Since recent kernels, a new method exist with netdev egress filter : [Filtrer les raw socket avec nftables ?](https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/new/?topicseen#new)
 **with netdev egress rules, netfilter mangle rules or traffic-control (tc script) are NO MORE NECESSARY**
+https://nftables.org/projects/nftables/files/changes-nftables-1.1.3.txt
 
 note: check the alternative for ICMPv6 (type or daddr)
+
+- method 1
 
 ```
 # orange dhcp client requests (ipv4/ipv6)
@@ -323,20 +328,57 @@ note: check the alternative for ICMPv6 (type or daddr)
 # WARNING : these rules need to be loaded BEFORE dhcp client requests  !
 table netdev filter {
         chain egress {
-                type filter hook egress devices = $iface_wan priority filter; policy accept;
+                type filter hook egress devices = $iface_wan_orange priority filter; policy accept;
                 icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } meta priority set 0:6 ip6 dscp set cs6 counter comment "egress_prio_orange_ICMP6"
                 #icmpv6 daddr { fe00::/7 } meta priority set 0:6 ip6 dscp set cs6 counter comment "egress_prio_orange_ICMP6"
                 udp dport 547 meta priority set 0:6 ip6 dscp set cs6 counter comment "egress_prio_orange_DHCP6"
                 udp dport 67 meta priority set 0:6 ip dscp set cs6 counter comment "egress_prio_orange_DHCP4"
                 ether type arp meta priority set 0:6 counter comment "egress_prio_orange_ARP"
         }
-}
+}```
+
+- method 2
+
 ```
+table netdev filter  
+flush table netdev filter  
+  
+table netdev filter {  
+    chain egress {  
+		type filter hook egress device = $iface_wan_orange priority filter; policy accept;  
+		vlan id 832 udp dport 547 vlan pcp set 6 ip6 dscp set cs6 counter  
+		vlan id 832 udp dport 67 vlan pcp set 6 ip dscp set cs6 counter  
+        vlan id 832 icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } vlan pcp set 6 ip6 dscp set cs6 counter  
+        vlan id 832 vlan type arp vlan pcp set 6 counter  
+    }  
+}```
+
+- method 3
+
+```
+table netdev filter  
+flush table netdev filter  
+  
+table netdev filter {  
+    chain prio_orange {  
+        udp dport 547 vlan pcp set 6 ip6 dscp set cs6 counter  
+        udp dport 67 vlan pcp set 6 ip dscp set cs6 counter  
+        icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } vlan pcp set 6 ip6 dscp set cs6 counter  
+        vlan type arp vlan pcp set 6 counter  
+    }  
+  
+   chain egress {  
+       type filter hook egress device = $iface_wan_orange priority filter; policy accept;  
+       vlan id 832 jump prio_orange  
+   }  
+}```
+
 
 You MUST modify COS/DSCP before the very FIRST DHCP request. To do this, it is necessary to execute a script just AFTER the creation of the VLAN (832) interface (in our case, orange1).
 To inject nftables netdev/egress nftables rules on interface creation process, we could use the following systemd service unit.
 
 /etc/systemd/system/netdev-egress@.service (not FULLY tested, prefer other alternative below) :
+
 
 ```
 [Unit]
@@ -349,10 +391,10 @@ Type=oneshot
 ExecStartPre=/usr/lib/systemd/systemd-networkd-wait-online --interface=%i --operational-state=off --timeout=8
 ExecStart=/etc/systemd/scripts/netdev-egress %i
 RemainAfterExit=yes
-TimeoutSec=10
-```
+TimeoutSec=10```
 
 A BETTER tested version (should be running just after interface link UP and before dhcp client requests):
+
 
 ```
 [Unit]
@@ -367,11 +409,11 @@ RemainAfterExit=true
 TimeoutSec=10
 
 [Install]
-WantedBy=sys-subsystem-net-devices-%i.device
-```
+WantedBy=sys-subsystem-net-devices-%i.device```
 
 
 /etc/systemd/scripts/netdev-egress (change `iface=orange1` as required) :
+
 
 ```
 #!/bin/sh
@@ -416,10 +458,10 @@ nft list table netdev filter
 echo ; echo "networkctl renew $iface"
 networkctl renew $iface
 echo ; echo "networkctl status $iface"
-networkctl -s status $iface
-```
+networkctl -s status $iface```
 
 Finally, enable service unit : `systemctl enable netdev-egress@<vlan832-interface>` and show logs `journalctl -xeu netdev-egress@vlan832` :
+
 
 ```
 [...]
@@ -427,8 +469,7 @@ systemd-networkd[1071]: orange1: Gained IPv6LL
 [...]
 systemd-networkd[1071]: orange1: DHCP: received delegated prefix xxxx::/56
 [...]
-systemd-networkd[1071]: orange1: DHCPv4 address xxxx/24, gateway xxxx.1 acquired from yy.yy.yy.yy.yy
-```
+systemd-networkd[1071]: orange1: DHCPv4 address xxxx/24, gateway xxxx.1 acquired from yy.yy.yy.yy.yy```
 
 
 ### Mikrotik
@@ -448,17 +489,18 @@ note : fe00::/7 == fe80::/10 + ff02::/16
 
 - on switch (CRS/CCR211x) with switch rules (before ROS 7.15) :
 
+
 ```other
 /interface ethernet switch rule
 add comment="orange1 dhcp4 COS6" dst-port=67 mac-protocol=ip new-vlan-priority=6 ports=sfp1.router protocol=udp switch=switch1 vlan-id=832
 add comment="orange1 dhcp6 COS6" dst-port=547 mac-protocol=ipv6 new-vlan-priority=6 ports=sfp1.router protocol=udp switch=switch1 vlan-id=832
 add comment="orange1 icmp6 COS6" dst-address6=fe00::/7 mac-protocol=ipv6 new-vlan-priority=6 ports=sfp1.router protocol=icmp switch=switch1 vlan-id=832
-add comment="orange1 arp COS6" mac-protocol=arp new-vlan-priority=6 ports=sfp1.router switch=switch1 vlan-id=832
-```
+add comment="orange1 arp COS6" mac-protocol=arp new-vlan-priority=6 ports=sfp1.router switch=switch1 vlan-id=832```
 
 
 - on switch (CRS/CCR211x) with switch rules (after ROS 7.15 - modify PCP and DSCP) :
 	note : the following is for a CRS310, you must disable tx-manager only on disabled ports (not used), and enable on router port (ingress traffic)
+
 
 ```
 /interface ethernet switch set 0 qos-hw-offloading=yes
@@ -478,47 +520,46 @@ add comment="orange1 arp COS6" mac-protocol=arp new-vlan-priority=6 ports=sfp1.r
 	add comment="orange1 arp QOS" mac-protocol=arp new-qos-profile=orange-prio-bng ports=sfpplus1.router switch=switch1 vlan-id=832
 	add comment="orange1 dhcp4 QOS" dst-port=67 src-port=68 mac-protocol=ip new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=udp switch=switch1 vlan-id=832
 	add comment="orange1 dhcp6 QOS" dst-port=547 src-port=546 mac-protocol=ipv6 new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=udp switch=switch1 vlan-id=832
-	add comment="orange1 icmp6 QOS" dst-address6=fe00::/7 mac-protocol=ipv6 new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=icmpv6 switch=switch1 vlan-id=832
-```
+	add comment="orange1 icmp6 QOS" dst-address6=fe00::/7 mac-protocol=ipv6 new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=icmpv6 switch=switch1 vlan-id=832```
 
 - since ROS 7.16 it is necessary to define a param to keep PCP and DSCP (and NOT ignore) that could be defined before reaching the switch (CRS/CCR211x). For example, if you ALREADY change PCP and DSCP on a previous equipment (firewall mangle or dhcp clients for example) and if `trust-l2`and `trust-l3`are not defined (ignore by default), the switch will reset packets to prio 0 (and dhcp clients will not be able to authenticate to Orange).
 	https://lafibre.info/remplacer-livebox/news-mikrotik-7-16-breaking-changes-qos-trust-l2l3
+
 
 ```
 /interface ethernet switch qos port  print
 /interface ethernet switch qos port
 	set sfp1.router trust-l2=keep trust-l3=keep
 	set sfp2.orange1-ont trust-l2=keep trust-l3=keep
-	set sfp3.orange1-onu trust-l2=keep trust-l3=keep
-```
+	set sfp3.orange1-onu trust-l2=keep trust-l3=keep```
 
 If you have TV, add also these rules :
 
+
 ```
 /interface ethernet switch qos profile add name=orange-prio-tv pcp=5 traffic-class=5
-/interface ethernet switch rule add comment="orange TV PCP5" mac-protocol=ip new-qos-profile=orange-prio-tv ports=sfp1.router switch=switch1 vlan-id=840
-```
+/interface ethernet switch rule add comment="orange TV PCP5" mac-protocol=ip new-qos-profile=orange-prio-tv ports=sfp1.router switch=switch1 vlan-id=840```
 
 
 - on router (CCR2004 - WITHOUT switch chipset ) with bridge filters :
+
 
 ```other
 /interface bridge filter
 add action=set-priority chain=output comment="orange1 dhcp4 COS6" disabled=yes dst-port=67 ip-protocol=udp log=yes log-prefix="orange1 COS6_DHCP4" mac-protocol=ip new-priority=6 out-interface=bridge-wan1 passthrough=yes
 add action=set-priority chain=output comment="orange1 dhcp6 COS6" disabled=yes dst-port=547 ip-protocol=udp log=yes log-prefix="orange1 COS6_DHCP6" mac-protocol=ipv6 new-priority=6 out-interface=bridge-wan1 passthrough=yes
 add action=set-priority chain=output comment="orange1 icmp6 COS6" disabled=yes ip-protocol=icmpv6 log-prefix="orange1 COS6_ICMP6" mac-protocol=ipv6 new-priority=6 out-interface=bridge-wan1 passthrough=yes
-add action=set-priority chain=output comment="orange1 arp COS6" disabled=yes log=yes log-prefix="orange1 COS6_ARP" mac-protocol=arp new-priority=6 out-interface=bridge-wan1 passthrough=yes
-```
+add action=set-priority chain=output comment="orange1 arp COS6" disabled=yes log=yes log-prefix="orange1 COS6_ARP" mac-protocol=arp new-priority=6 out-interface=bridge-wan1 passthrough=yes```
 
 - firewall mangle rules are ONLY for DHCPv6 client requests (IPv6 do not use RAW SOCKETS for DHCP) :
+
 
 ```other
 /ipv6 firewall mangle
 add action=set-priority chain=output comment="orange1 icmp6 133RS COS6" dst-address=ff00::/8 icmp-options=133:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
 add action=set-priority chain=output comment="orange1 icmp6 136NA COS6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
 add action=set-priority chain=output comment="orange1 icmp6 135NS COS6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
-add action=set-priority chain=output comment="orange1 dhcp6 COS6" dst-port=547 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=546
-```
+add action=set-priority chain=output comment="orange1 dhcp6 COS6" dst-port=547 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=546```
 
 #### DSCP
 
@@ -529,15 +570,16 @@ note : if it do not work with new-dscp=48, try new-dscp=6
 
 - original version :
 
+
 ```other
 /ipv6 firewall mangle
 add action=change-dscp chain=output comment="orange1 icmp6 133RS DSCP6" dst-address=ff00::/8 icmp-options=133:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
 add action=change-dscp chain=output comment="orange1 icmp6 136NA DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
 add action=change-dscp chain=output comment="orange1 icmp6 135NS DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
-add action=change-dscp chain=output comment="orange1 dhcp6 DSCP6" dst-port=547 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=546
-```
+add action=change-dscp chain=output comment="orange1 dhcp6 DSCP6" dst-port=547 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=546```
 
 - better version with POSTROUTING (you could also use OUTPUT chain) :
+
 
 ```other
 /ip firewall mangle
@@ -561,8 +603,7 @@ add action=accept chain=prio_orange_icmp6 comment="ACCEPT"
 /ipv6 firewall mangle
 add action=set-priority chain=prio_orange_dhcp6 comment="dhcp6 COS6" new-priority=6 passthrough=yes
 add action=change-dscp chain=prio_orange_dhcp6 comment="dhcp6 DSCP6" new-dscp=48 passthrough=yes
-add action=accept chain=prio_orange_dhcp6 comment="ACCEPT"
-```
+add action=accept chain=prio_orange_dhcp6 comment="ACCEPT"```
 
 ## DHCP clients
 
@@ -571,6 +612,7 @@ add action=accept chain=prio_orange_dhcp6 comment="ACCEPT"
 note : to check interface status, use `networkctl -s status <iface>`
 
 - /etc/systemd/network/wan1.network :
+
 
 ```other
 [Match]
@@ -582,10 +624,10 @@ Description=WAN1 Orange1
 VLAN=orange1
 IPv6AcceptRA=no
 [DHCP]
-UseDNS=false
-```
+UseDNS=false```
 
 - /etc/systemd/network/orange1.netdev :
+
 
 ```other
 [NetDev]
@@ -594,10 +636,10 @@ Kind=vlan
 MACAddress=<livebox_macaddr>
 [VLAN]
 Id=832
-EgressQOSMaps=6-6 # systemd v253 only
-```
+EgressQOSMaps=6-6 # systemd v253 only```
 
 - /etc/systemd/network/orange1.network :
+
 
 ```other
 [Match]
@@ -658,15 +700,14 @@ UseDomains=no
 SubnetId=0x2
 UplinkInterface=:self
 Announce=no
-#Assign=no
-```
+#Assign=no```
 
 - /etc/system/systemd-networkd.service.d/10-debug.conf :
 
+
 ```other
 [Service]
-Environment=SYSTEMD_LOG_LEVEL=debug
-```
+Environment=SYSTEMD_LOG_LEVEL=debug```
 
 note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPriority] exists to modify COS and DSCP to 6 on DHCPv4 ([https://github.com/systemd/systemd/pull/25904](https://github.com/systemd/systemd/pull/25904)).
 
@@ -675,6 +716,7 @@ note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPrio
 ### Mikrotik
 
 - ipv4
+
 
 ```
 /ip/dhcp-client/print detail
@@ -710,10 +752,10 @@ note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPrio
      raw-value="00000000000000000000001a090000055801034101xxxxxxxxxx"
 3 name="clientid_duid" code=61 value="0xff$(CLIENT_DUID)" raw-value="ff"
 4 name="clientid" code=61 value="0x01$(CLIENT_MAC)" raw-value="01"
-5 name="hostname" code=12 value="$(HOSTNAME)" raw-value="xxxxxx"
-```
+5 name="hostname" code=12 value="$(HOSTNAME)" raw-value="xxxxxx"```
 
 - ipv6
+
 
 ```
 /ipv6/dhcp-client/print detail
@@ -741,8 +783,7 @@ note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPrio
 /ipv6/dhcp-client/option/print detail
 0 name="class-identifier" code=16 value="0x0000040e0005736167656d" raw-value="0000040e0005736167656d"
 1 name="userclass" code=15 value="0x002b46535644534c5xxxxxxx" raw-value="002b46535644534c5f6c697665626f782e4xxxxx"
-2 name="authsend" code=11 value="0x00000000000000000000001A0900xxxxxx" raw-value="00000000000000000000001a0900xxx"
-```
+2 name="authsend" code=11 value="0x00000000000000000000001A0900xxxxxx" raw-value="00000000000000000000001a0900xxx"```
 
 
 ### dhcpcd
@@ -751,6 +792,7 @@ dhcpcd is using NetworkConfiguration
 
 [https://roy.marples.name/projects/dhcpcd](https://roy.marples.name/projects/dhcpcd)
 [https://github.com/NetworkConfiguration/dhcpcd](https://github.com/NetworkConfiguration/dhcpcd)
+
 
 ```
 noipv4ll
@@ -776,8 +818,7 @@ interface orange1
 	nooption 33 57
 	authprotocol token 0x123/0x456
 	authtoken 0x456 "" forever 64:68:63:70:6c:69:76:65:62:6f:78:66:72:32:35:30
-	authtoken 0x123 "" forever 1a:09:00:00:05:58:01:03:41:01:0d:66:74:69:2f:...
-```
+	authtoken 0x123 "" forever 1a:09:00:00:05:58:01:03:41:01:0d:66:74:69:2f:...```
 
 ### ISC dhclient
 
@@ -790,16 +831,17 @@ Do not forget to :
 
 - launch command lines :
 
+
 ```other
 iface="orange1"
 cfgdir=...
 leasedir=...
 piddir=...
 dhclient -4 -cf ${cfgdir}/${iface}_4.conf -pf ${piddir}/${iface}_4.pid -lf ${leasedir}/${iface}_4.leases $iface
-dhclient -6 -cf ${cfgdir}/${iface}_6.conf -pf ${piddir}/${iface}_6.pid -lf ${leasedir}/${iface}_6.leases -P -nw $iface
-```
+dhclient -6 -cf ${cfgdir}/${iface}_6.conf -pf ${piddir}/${iface}_6.pid -lf ${leasedir}/${iface}_6.leases -P -nw $iface```
 
 - /etc/dhclient/orange1\_4.conf :
+
 
 ```other
 option rfc3118-authentication code 90 = string;
@@ -817,10 +859,10 @@ interface "orange1" {
   request subnet-mask, routers, broadcast-address;
   #request subnet-mask, routers, domain-name-servers, domain-name, broadcast-address, dhcp-lease-time, dhcp-renewal-time, dhcp-rebinding-time, rfc3118-authentication;
   #request subnet-mask, broadcast-address, dhcp-lease-time, dhcp-renewal-time, dhcp-rebinding-time, rfc3118-authentication;
-}
-```
+}```
 
 - /etc/dhclient/orange1\_6.conf :
+
 
 ```other
 option dhcp6.auth code 11 = string;
@@ -835,8 +877,7 @@ interface "orange1" {
   send dhcp6.auth 00:00:00:00:00:00:00:00:<authentication_string>;
   send dhcp6.client-id 00:03:00:01:<livebox_mac>;
   also request dhcp6.auth, dhcp6.vendorclass, dhcp6.userclass, dhcp6.vendor-opts;
-}
-```
+}```
 
 ### so\_priority
 
@@ -848,17 +889,18 @@ This utility must be used with dhcp client utility (like dhclient or dhpcd, NOT 
 
 compilation :
 
+
 ```bash
-gcc -shared -ldl -fPIC so_priority.c -o so_priority.so
-```
+gcc -shared -ldl -fPIC so_priority.c -o so_priority.so```
 
 usage :
 
+
 ```shell
-SO_PRIORITY_DEBUG=1 SO_PRIORITY_VALUE=6 LD_PRELOAD=/path/to/so_priority.so program arg1 arg2
-```
+SO_PRIORITY_DEBUG=1 SO_PRIORITY_VALUE=6 LD_PRELOAD=/path/to/so_priority.so program arg1 arg2```
 
 source code :
+
 
 ```cpp
 /*
@@ -960,10 +1002,10 @@ int socket(int domain, int type, int protocol) {
 
         errno = socket_errno;
         return sockfd;
-}
-```
+}```
 
 Archlinux PKGBUILD :
+
 
 ```other
 # https://git.kindwolf.org/so_priority.so/
@@ -997,8 +1039,7 @@ package() {
         for s in *.so; do
                 install -Dm755 $s "$pkgdir/usr/lib/so_priority/$s"
         done
-}
-```
+}```
 
 ## Debug & Troubleshoot
 
@@ -1008,15 +1049,16 @@ package() {
 - Finally try to regenerate authentication options (90 for DHCPv4 and 11 for DHCPv6). Sometimes, it could be necessary to regenerate authentication options, after a few months for example...
 
 - For COS 6 verification check the first line tcpdump trace, check :
+
 ```other
-'[vlan ${vlan}, p X]' : ..., ethertype 802.1Q (0x8100), length XXX: vlan ${vlan}, p X, ethertype IPv4 (0x0800), ...
-```
+'[vlan ${vlan}, p X]' : ..., ethertype 802.1Q (0x8100), length XXX: vlan ${vlan}, p X, ethertype IPv4 (0x0800), ...```
 
 - For ipv6 DUID/IAID/Prefix debug :
-[https://www.linuxquestions.org/questions/showthread.php?p=6259784#post6259784](https://www.linuxquestions.org/questions/showthread.php?p=6259784#post6259784)
+[https://www.linuxquestions.org/questions/showthread.php?p=6259784<span class="mkstyledtag">#post6259784](https://www.linuxquestions.org/questions/showthread.php?p=6259784#</span>post6259784)
 [https://ipv6.web.cern.ch/content/linux-client-doesnt-get-ipv6-address-dhcpv6](https://ipv6.web.cern.ch/content/linux-client-doesnt-get-ipv6-address-dhcpv6)
 
 tcpdump command lines :
+
 
 ```shell
 # prefer :
@@ -1025,8 +1067,7 @@ tcpdump -vnei wan1 '(udp port 546 or port 547) or icmp6'
 tcpdump -i wan1 -ne -vv "(udp port 546 and port 547)"
 tcpdump -i wan1 -vvv -n ip6  “(udp port 546 and port 547)”
 tcpdump -vnes0 -i wan1 udp port 67 or port 68 or port 546 or port 547
-tcpdump -vvvvv -ttt -i wan1 'icmp6 and (ip6[40] = 134 or ip6[40] = 133 or ip6[40] = 135 or ip6[40] = 136 or ip6[40] = 129 or ip6[40] = 128 or ip6[40] = 3 or ip6[40] = 2 or ip6[40] = 1)' -w /tmp/capture.pcap # use wireshark to analyse /tmp/capture.pcap
-```
+tcpdump -vvvvv -ttt -i wan1 'icmp6 and (ip6[40] = 134 or ip6[40] = 133 or ip6[40] = 135 or ip6[40] = 136 or ip6[40] = 129 or ip6[40] = 128 or ip6[40] = 3 or ip6[40] = 2 or ip6[40] = 1)' -w /tmp/capture.pcap # use wireshark to analyse /tmp/capture.pcap```
 
 - For DHCP response :
 [https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/24/](https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/24/)
@@ -1052,12 +1093,12 @@ DHCP6 Client DUID: DUID-LL:000144d4540axxxx0000
 
 tcpdump sample trace :
 
+
 ```other
 dhcp6 solicit   (xid=6461b1 (rapid-commit) (IA_PD IAID:22882960xx T1:0 T2:0) (Client-FQDN) (user-class) (option-request opt_82) (client-ID hwaddr type 1 44d4540axxxx)
 dhcp6 advertise (xid=6461b1 (IA_PD IAID:22882960xx T1:83812 T2:207360 (IA_PD-prefix 2a01:xxxx::/56 pltime:259200 vltime:259200)) (server-ID vid 0000055844455348) (client-ID hwaddr type 1 44d4540axxxx)
 dhcp6 request   (xid=76595c (server-ID vid 0000055844455348) (IA_PD IAID:22882960xx T1:0 T2:0 (IA_PD-prefix 2a01:xxxx::/56 pltime:0 vltime:0)) (Client-FQDN) (user-class) (client-ID hwaddr type 1 44d4540axxxx)
-dhcp6 reply     (xid=76595c (IA_PD IAID:22882960xx T1:86413 T2:207360 (IA_PD-prefix 2a01:xxxx::/56 pltime:259200 vltime:259200)) (server-ID vid 0000055844455348) (client-ID hwaddr type 1 44d4540axxxx)
-```
+dhcp6 reply     (xid=76595c (IA_PD IAID:22882960xx T1:86413 T2:207360 (IA_PD-prefix 2a01:xxxx::/56 pltime:259200 vltime:259200)) (server-ID vid 0000055844455348) (client-ID hwaddr type 1 44d4540axxxx)```
 
 ### Mikrotik
 
@@ -1069,6 +1110,7 @@ Now convert hex value 15 to decimal and you get IAID=21
 
 routerOS command line to snif interface and send to a remote host :
 
+
 ```other
 xxxxxx] > /tool/sniffer/export 
 # apr/20/2023 19:01:18 by RouterOS 7.6
@@ -1077,14 +1119,14 @@ xxxxxx] > /tool/sniffer/export 
 # model = CCR2004-1G-12S+2XS
 # serial number = xxxxxxx
 /tool sniffer
-set file-limit=100000KiB filter-interface=br-wan filter-ip-protocol=udp filter-port=bootps,bootpc,546,547 filter-stream=yes memory-limit=5000KiB memory-scroll=no streaming-enabled=yes streaming-server=192.168.xxx.xxx
-```
+set file-limit=100000KiB filter-interface=br-wan filter-ip-protocol=udp filter-port=bootps,bootpc,546,547 filter-stream=yes memory-limit=5000KiB memory-scroll=no streaming-enabled=yes streaming-server=192.168.xxx.xxx```
 
 
 ### VLAN 2800 mapping
 
 In some cases, the ONU/ONT is mapping the VLAN 832 on VLAN 2800. See the post https://github.com/Anime4000/RTL960x/issues/282#issuecomment-2089248396.
 You have to connect on the ONU/ONT and use command `omcicli`:
+
 
 ```
 # omcicli mib get 84
@@ -1195,8 +1237,7 @@ Filter Outer   : PRI 15,VID 4096, TPID 0
 Filter Inner   : PRI 14,VID 4096, TPID 5, EthType 0x00
 Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3
 Treatment Inner   : PRI 15,VID 4096, TPID 2
-AssociatedMePoint: 0x101
-```
+AssociatedMePoint: 0x101```
 
 If you are in this case, you just have to change the VLAN 832 with 2800 in your router configuration.
 
@@ -1238,9 +1279,9 @@ _(Note: it seems the total is actually 66 characters in your example, so 66 / 2 
 
 So in this example, option 125 becomes:
 
+
 ```
-00000de9210406353831444438050c534d4253303243334434333506094c697665626f782037
-```
+00000de9210406353831444438050c534d4253303243334434333506094c697665626f782037```
 
 
 ## Sources
@@ -1255,3 +1296,5 @@ There are lot of sources which helped me to write this article. Here are the mos
 
 
 _Special thanks to [lafibre.info](https://lafibre.info) forum and its members !_
+
+<span class="mkstyledtag">#nbux/orange</span> <span class="mkstyledtag">#nbux/mikrotik</span> <span class="mkstyledtag">#publish</span>
