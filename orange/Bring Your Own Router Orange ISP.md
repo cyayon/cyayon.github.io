@@ -1,15 +1,6 @@
-source: Bear.app
-
----
-tags:
-  - nbux/orange
-  - nbux/mikrotik
-  - publish
-
----
 # Bring Your Own Router Orange ISP
 
-Version 20250505
+Version 20250715
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
@@ -66,19 +57,22 @@ user-class string = "2b" + string2hex() ; ipv6 string = "00" + "ipv4 string"
 
 [ipv4:77] : "FSVDSL_livebox.Internet.softathome.Livebox6" or "0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
 [ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
+
+[ipv4:77] : "FSVDSL_livebox.Internet.softathome.Livebox7" or "0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837"
+[ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837"
 ```
 
-**WARNING : if dhcp client use raw or not, final (and true) string to have in tcpdump sniff should be (for LB6) :**
+**WARNING : if dhcp client use raw or not, final (and true) string to have in tcpdump sniff should be (for LB7) :**
 
 ```other
-[ipv4:77] : "4d2c2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
-[ipv6:15] : "000f002d002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
+[ipv4:77] : "4d2c2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837"
+[ipv6:15] : "000f002d002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837"
 ```
 
 - note vendor-opts : vendor-opts (or vendor\_opts for vendor specific informations, IS NOT REQUIRED) [17] : "00:00:05:58:00:06:00:0e:49:50:56:36:5f:52:45:51:55:45:53:54:45:44" or "0x000005580006000e495056365f524551554553544544”, entreprise id "Orange" 4 octets 00000558 + 2 octets code 0006 + 14 octets data: 495056365f524551554553544544 ("IPV6\_REQUESTED")
 - note systemd-networkd : each string must converted from "aa:bb:cc:dd:ee:....." to xaaxbbxbbxccxddxeex...." (replace ":" with "x") `echo "aa:bb:cc:dd:ee" | sed 's/^/\\\x/ ; s/:/\\\x/g'`
 
-systemd-network sample config :
+systemd-network sample config (for LB6)  :
 
 ```other
 [DHCPv4]
@@ -583,12 +577,17 @@ add action=change-dscp chain=output comment="orange1 dhcp6 DSCP6" dst-port=547 n
 - better version with POSTROUTING (you could also use OUTPUT chain) :
 
 ```other
+/ipv6 firewall mangle
+add action=set-priority chain=prio_orange_dhcp6 comment="dhcp6 COS6" new-priority=6 passthrough=yes
+add action=change-dscp chain=prio_orange_dhcp6 comment="dhcp6 DSCP6" new-dscp=48 passthrough=yes
+add action=accept chain=prio_orange_dhcp6 comment="ACCEPT"
+
 /ip firewall mangle
 add action=change-dscp chain=postrouting comment="dhcp4 DSCP6" dst-port=67 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=68
 
 /ipv6 firewall mangle
 add action=jump chain=postrouting comment="jump prio_orange_icmp6" dst-address=fe00::/7 jump-target=prio_orange_icmp6 out-interface=bridge-wan1 protocol=icmp6
-add action=jump chain=postrouting comment="jump prio_orange_dhcp6" dst-address=ff00::/8 dst-port=547 jump-target=prio_orange_dhcp6 out-interface=bridge-wan1 protocol=udp src-port=546
+add action=jump chain=postrouting comment="jump prio_orange_dhcp6" dst-address=fe00::/7 dst-port=547 jump-target=prio_orange_dhcp6 out-interface=bridge-wan1 protocol=udp src-port=546
 # you could also change DSCP6(48) for all COS6 packets (and remove all change-dscp rules in prio_orange_* chains)
 #add action=change-dscp chain=postrouting comment="DSCP6 for all COS6" new-dscp=48 out-interface=bridge-wan1 passthrough=no priority=6
 
@@ -597,15 +596,38 @@ add action=set-priority chain=prio_orange_icmp6 comment="icmp6 136NA COS6" dst-a
 add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 136NA DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-dscp=48 passthrough=yes protocol=icmp6
 add action=set-priority chain=prio_orange_icmp6 comment="icmp6 135NS COS6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-priority=6 passthrough=yes protocol=icmp6
 add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 135NS DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-dscp=48 passthrough=yes protocol=icmp6
-add action=set-priority chain=prio_orange_icmp6 comment="icmp6 133RS COS6" dst-address=ff00::/8 icmp-options=133:0-255 new-priority=6 passthrough=yes protocol=icmp6
-add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 133RS DSCP6" dst-address=ff00::/8 icmp-options=133:0-255 new-dscp=48 passthrough=yes protocol=icmp6
+add action=set-priority chain=prio_orange_icmp6 comment="icmp6 133RS COS6" dst-address=fe00::/7 icmp-options=133:0-255 new-priority=6 passthrough=yes protocol=icmp6
+add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 133RS DSCP6" dst-address=fe00::/7 icmp-options=133:0-255 new-dscp=48 passthrough=yes protocol=icmp6
 add action=accept chain=prio_orange_icmp6 comment="ACCEPT"
+```
+
+#### Lastest RouterOS 7.20
+
+Since RouterOS version 7.20, there is an option in dhcp client (ipv4) to set COS (vlan-priority). This option set the COS for RAW ipv4 sockets. Then, you could finaly use firewall mangle rules to set COS (and DSCP) for ipv6 (which are NOT RAW). No more switch rules or bridge filters are required.
+In the following code block, OUTPUT is used, but you could also use POSTROUTING chain…
+
+```other
+# DO NOT FORGET TO SET VLAN-PRIORITY IN DHCP4 CLIENT PROPERTIES TO 6
+
+/ip firewall mangle
+add action=set-priority chain=prio_orange_dhcp comment="dhcp COS6" new-priority=6 passthrough=yes
+add action=change-dscp chain=prio_orange_dhcp comment="dhcp DSCP48" new-dscp=48 passthrough=yes
+add action=accept chain=prio_orange_dhcp comment="ACCEPT"
 
 /ipv6 firewall mangle
-add action=set-priority chain=prio_orange_dhcp6 comment="dhcp6 COS6" new-priority=6 passthrough=yes
-add action=change-dscp chain=prio_orange_dhcp6 comment="dhcp6 DSCP6" new-dscp=48 passthrough=yes
-add action=accept chain=prio_orange_dhcp6 comment="ACCEPT"
+add action=set-priority chain=prio_orange_dhcp comment="dhcp COS6" new-priority=6 passthrough=yes
+add action=change-dscp chain=prio_orange_dhcp comment="dhcp DSCP48" new-dscp=48 passthrough=yes
+add action=accept chain=prio_orange_dhcp comment="ACCEPT"
+
+/ip firewall mangle
+add action=jump chain=output comment="orange dhcp4" dst-port=67 jump-target=prio_orange_dhcp out-interface=orange1 protocol=udp src-port=68
+
+/ipv6 firewall mangle
+add action=jump chain=output comment="orange icmp6" dst-address=fe00::/7 jump-target=prio_orange_dhcp out-interface=orange1 protocol=icmp6
+add action=jump chain=output comment="orange dhcp6" dst-address=fe00::/7 dst-port=547 jump-target=prio_orange_dhcp out-interface=orange1 protocol=udp src-port=546
 ```
+
+
 
 ## DHCP clients
 
