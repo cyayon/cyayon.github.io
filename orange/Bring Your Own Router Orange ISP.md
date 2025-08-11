@@ -1,6 +1,6 @@
 # Bring Your Own Router Orange ISP
 
-Version 20250715
+Version 20250811
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
@@ -310,71 +310,49 @@ Since recent kernels, a new method exist with netdev egress filter : [Filtrer le
 **with netdev egress rules, netfilter mangle rules or traffic-control (tc script) are NO MORE NECESSARY**
 https://nftables.org/projects/nftables/files/changes-nftables-1.1.3.txt
 
-note: check the alternative for ICMPv6 (type or daddr)
+There are 2 methods to change dscp/cos/pcp on nftables netdev egress. The first method (recommended) is to apply egress on physical interface (parent of vlan interface 832). The second is to apply on vlan 832 interface.
 
-- method 1
-
+- method1: use physical interface
+note: 'meta priority set 0:6' should NOT be required if phy version ('vlan pcp set 6' already done the right thing)
 ```
-# orange dhcp client requests (ipv4/ipv6)
-# since recent kernel (6.x) with netdev egress filter (mangle rules or tc are NO MORE NECESSARY)
-# note : not really tested, need to tryout (tc script could NOT be required anymore)...
-# WARNING : these rules need to be loaded BEFORE dhcp client requests  !
-table netdev filter {
-        chain egress {
-                type filter hook egress devices = $iface_wan_orange priority filter; policy accept;
-                icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } meta priority set 0:6 ip6 dscp set cs6 counter comment "egress_prio_orange_ICMP6"
-                #icmpv6 daddr { fe00::/7 } meta priority set 0:6 ip6 dscp set cs6 counter comment "egress_prio_orange_ICMP6"
-                udp dport 547 meta priority set 0:6 ip6 dscp set cs6 counter comment "egress_prio_orange_DHCP6"
-                udp dport 67 meta priority set 0:6 ip dscp set cs6 counter comment "egress_prio_orange_DHCP4"
-                ether type arp meta priority set 0:6 counter comment "egress_prio_orange_ARP"
-        }
+chain prio_orange_phy {
+	icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } vlan pcp set 6 meta priority set 0:6 ip6 dscp set cs6 counter comment "prio_orange_ICMP6"
+	udp dport 547 vlan pcp set 6 meta priority set 0:6 ip6 dscp set cs6 counter comment "prio_orange_DHCP6"
+	udp dport 67 vlan pcp set 6 meta priority set 0:6 ip dscp set cs6 counter comment "prio_orange_DHCP4"
+	vlan type arp vlan pcp set 6 counter comment "prio_orange_ARP"
 }
 ```
-
-- method 2
-
+$iface_wan1 = physical interface interface (parent of vlan 832 interface)
 ```
-table netdev filter  
-flush table netdev filter  
-  
-table netdev filter {  
-    chain egress {  
-		type filter hook egress device = $iface_wan_orange priority filter; policy accept;  
-		vlan id 832 udp dport 547 vlan pcp set 6 ip6 dscp set cs6 counter  
-		vlan id 832 udp dport 67 vlan pcp set 6 ip dscp set cs6 counter  
-        vlan id 832 icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } vlan pcp set 6 ip6 dscp set cs6 counter  
-        vlan id 832 vlan type arp vlan pcp set 6 counter  
-    }  
-}
-```
-
-- method 3
-
-```
-table netdev filter  
-flush table netdev filter  
-  
-table netdev filter {  
-    chain prio_orange {  
-        udp dport 547 vlan pcp set 6 ip6 dscp set cs6 counter  
-        udp dport 67 vlan pcp set 6 ip dscp set cs6 counter  
-        icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } vlan pcp set 6 ip6 dscp set cs6 counter  
-        vlan type arp vlan pcp set 6 counter  
-    }  
-  
-   chain egress {  
-       type filter hook egress device = $iface_wan_orange priority filter; policy accept;  
-       vlan id 832 jump prio_orange  
-   }  
+chain egress {
+	type filter hook egress devices = $iface_wan1 priority filter; policy accept;
+    vlan id 832 jump prio_orange_phy comment "egress-prio_orange_phy"
 }
 ```
 
 
-You MUST modify COS/DSCP before the very FIRST DHCP request. To do this, it is necessary to execute a script just AFTER the creation of the VLAN (832) interface (in our case, orange1).
-To inject nftables netdev/egress nftables rules on interface creation process, we could use the following systemd service unit.
+- method2: use vlan interface (832)
+note: no ‘vlan pcp set 6’ in this version, ‘meta priority set 0:6’ is required
+```
+chain prio_orange_vlan {
+	icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } meta priority set 0:6 ip6 dscp set cs6 counter comment "prio_orange_ICMP6"
+	udp dport 547 meta priority set 0:6 ip6 dscp set cs6 counter comment "prio_orange_DHCP6"
+	udp dport 67 meta priority set 0:6 ip dscp set cs6 counter comment "prio_orange_DHCP4"
+	ether type arp meta priority set 0:6 counter comment "prio_orange_ARP"
+}
+```
+$iface_wan1 = virtual vlan interface (832)
+```
+chain egress {
+	type filter hook egress devices = $iface_wan1 priority filter; policy accept;
+    jump prio_orange_vlan comment "egress-prio_orange_vlan"
+}
+```
+
+
+You MUST modify COS/DSCP before the very FIRST DHCP request. To do this, it is necessary to execute a script just AFTER the creation of the VLAN (832) interface (in our case, orange1). To inject nftables netdev/egress nftables rules on interface creation process, we could use the following systemd service unit.
 
 /etc/systemd/system/netdev-egress@.service (not FULLY tested, prefer other alternative below) :
-
 ```
 [Unit]
 Description=netdev-egress pre-requisite for %i
@@ -390,7 +368,6 @@ TimeoutSec=10
 ```
 
 A BETTER tested version (should be running just after interface link UP and before dhcp client requests):
-
 ```
 [Unit]
 Description=netdev-egress pre-requisite for %i
@@ -409,7 +386,7 @@ WantedBy=sys-subsystem-net-devices-%i.device
 
 
 /etc/systemd/scripts/netdev-egress (change `iface=orange1` as required) :
-
+note: this script apply on vlan interface (not physical) and is binded to its creation via systemd-networkd
 ```shell
 #!/bin/sh
 # apply netdev/egress priority for orange dhcp client requests
