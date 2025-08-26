@@ -722,6 +722,7 @@ To strictly follow Orange recommendation, you have to renew authentications stri
 **Currently, it is NOT mandatory, but it could be one day…**
 
 - /etc/networkd-orange/networkd-orange-env.sh
+
 ```bash
 #!/bin/bash
 
@@ -802,6 +803,7 @@ log INFO "      Destination = ${IN_OUT_PATH}/${FILE_NAME}"
 
 
 - /etc/systemd/system/networkd-orange-env.service
+
 ```
 [Unit]
 Description=Generate networkd-orange.env before systemd-networkd
@@ -820,6 +822,7 @@ WantedBy=systemd-networkd.service
 ```
 
 - /etc/networkd-orange/networkd-orange-env.env (change values as required)
+
 ```bash
 # Orange variables
 LOGIN=fti/XXXXX
@@ -833,6 +836,7 @@ FILE_NAME="orange.env"
 ```
 
 - /etc/networkd-orange/networkd-orange-env.template
+
 ```
 # IPV4
 VendorClassIdentifier4=${VENDOR_CLASS_IDENTIFIER_4}
@@ -847,12 +851,14 @@ Authentication=${AUTHENTICATION_STR}
 ```
 
 - modify (or copy) systemd-networkd.service and add
+
 ```
 [Service]
 EnvironmentFile=/etc/networkd-orange/orange.env
 ```
 
 - update you systemd-networkd orange config file (/etc/systemd/network/orange.network for example)
+
 ```
 [DHCPv4]
 VendorClassIdentifier=$VendorClassIdentifier4
@@ -866,6 +872,7 @@ SendOption=SendOption=11:string:$Authentication
 ```
 
 - install service
+
 ```
 chmod 750 /etc/networkd-orange/networkd-orange-env.sh
 chmod 640 /etc/networkd-orange/networkd-orange-env.env
@@ -876,6 +883,7 @@ systemctl restart systemd-networkd
 ```
 
 The result should be:
+
 ```
 systemd[1]: Starting networkd-orange-env.service - Generate /etc/networkd-orange/network.env before systemd-networkd...
 [6368]: INFO  Orange parameters
