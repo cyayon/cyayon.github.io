@@ -1,13 +1,12 @@
 # Bring Your Own Router Orange ISP
 
-Version 20250811
+Version 20250826
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
 ## Requirements
 You must already have a working ONT/ONU registered on Orange fiber infrastructure. ONT/ONU are registering on Orange infrastructure with serial number.
 For informations, Orange use serial\_number and vendor\_id to allow a ONT/ONU to register.
-You could see this other article [https://medium.com/@cyayon/configure-ont-leox-lxt-010h-d-for-orange-isp-4ef4b793ca7b](https://medium.com/@cyayon/configure-ont-leox-lxt-010h-d-for-orange-isp-4ef4b793ca7b).
 To configure properly your ONU/ONT, check dedicated topics and forums...
 
 
@@ -311,6 +310,7 @@ Since recent kernels, a new method exist with netdev egress filter : [Filtrer le
 https://nftables.org/projects/nftables/files/changes-nftables-1.1.3.txt
 
 There are 2 methods to change dscp/cos/pcp on nftables netdev egress. The first method (recommended) is to apply egress on physical interface (parent of vlan interface 832). The second is to apply on vlan 832 interface.
+Note: we are using netdev table, in this case we are applying settings on low level network device stack. You can specify « ^vlan id 832 » or not, it will work in both case. For this documentation, we will keep it for clarification.
 
 - method1: use physical interface
 note: 'meta priority set 0:6' should NOT be required if phy version ('vlan pcp set 6' already done the right thing)
@@ -322,7 +322,7 @@ chain prio_orange_phy {
 	vlan type arp vlan pcp set 6 counter comment "prio_orange_ARP"
 }
 ```
-$iface_wan1 = physical interface interface (parent of vlan 832 interface)
+$iface_wan1 = physical interface interface (parent of vlan 832 interface). Remember that you are using netdev and in this case, you can remove (or not) « ^vlan id 832 ».
 ```
 chain egress {
 	type filter hook egress devices = $iface_wan1 priority filter; policy accept;
@@ -674,10 +674,10 @@ SocketPriority=6 # systemd v253 only
 # prefer DUIDType=link-layer (mac_addr of interface MUST be equal to livebox_macaddr>) ; try DUIDRawData=00:03:00:01:<livebox_macaddr> (should work) or DUIDRawData=00:03:00::<livebox_macaddr> (should not work) ; reset ONT could be required
 #DUIDRawData=00:03:00:01:<livebox_macaddr>
 DUIDType=link-layer
-# UserClass and SendOption=15:string: are equivalent
-UserClass=FSVDSL_livebox.Internet.softathome.Livebox6
-#UserClass=\x00\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x36
+# UserClass == Option=15 are equivalents, Option 16 == VendorClassIdentifier (use only 16:string on DHCPv6)
+#UserClass=FSVDSL_livebox.Internet.softathome.Livebox6
 #SendOption=15:string:\x00\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x36
+UserClass=\x00\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x36
 SendOption=11:string:<authentication_string>
 SendOption=16:string:\x00\x00\x04\x0e\x00\x05\x73\x61\x67\x65\x6d
 UseHostname=no
@@ -713,6 +713,186 @@ Environment=SYSTEMD_LOG_LEVEL=debug
 note : since systemd v253, new options [EgressQOSMaps, IPServiceType, SocketPriority] exists to modify COS and DSCP to 6 on DHCPv4 ([https://github.com/systemd/systemd/pull/25904](https://github.com/systemd/systemd/pull/25904)).
 
 **WARNING : You always have to modify COS and DSCP for DHCPv6 (and ICMPv6). Todo this use the previous nftables rules (see paragraph).**
+
+#### Authentication Strings
+
+[Remplacer la livebox par systemd-networkd / nftables](https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/msg1128224/#msg1128224)
+
+To strictly follow Orange recommendation, you have to renew authentications strings each time. Here is the requirements to do this with native systemd-netword environment file feature. 
+**Currently, it is NOT mandatory, but it could be one day…**
+
+- /etc/networkd-orange/networkd-orange-env.sh
+```bash
+#!/bin/bash
+
+set -eu
+
+log() {
+    local level="$1"
+    shift
+    printf '%-5s %s\n' "$level" "$*"
+}
+
+# Destination
+IN_OUT_PATH="${IN_OUT_PATH:-/etc/networkd-orange}"
+FILE_NAME="${FILE_NAME:-orange.env}"
+
+# Orange vars
+LOGIN="${LOGIN:-<default>}"
+PASSWORD="${PASSWORD:-<default>}"
+LIVEBOX_VERSION="${LIVEBOX_VERSION:-<default>}"
+LIVEBOX_HARDWARE="${LIVEBOX_HARDWARE:-<default>}"
+log INFO "Orange parameters"
+log INFO "      Login:            ********"
+log INFO "      Password:         ********"
+log INFO "      Livebox Version:  ${LIVEBOX_VERSION}"
+log INFO "      Livebox Hardware: ${LIVEBOX_HARDWARE}"
+
+# Check for default values
+if [ $LOGIN == "<default>" ]; then
+        log WARN "      * LOGIN is default value !"
+fi
+
+if [ $PASSWORD == "<default>" ]; then
+        log WARN "      * PASSWORD is default value !"
+fi
+
+if [ $LIVEBOX_VERSION == "<default>" ]; then
+        log WARN "      * LIVEBOX_VERSION is default value !"
+fi
+
+if [ $LIVEBOX_HARDWARE == "<default>" ]; then
+        log WARN "      * LIVEBOX_HARDWARE is default value !"
+fi
+
+# Forge DHCP option 90
+tohex() {
+  for h in $(echo $1 | sed "s/\(.\)/\1 /g"); do printf %02x \'$h; done
+}
+
+addsep() {
+  echo $(echo $1 | sed "s/\(.\)\(.\)/:\1\2/g")
+}
+
+r=$(dd if=/dev/urandom bs=1k count=1 2>&1 | md5sum | cut -c1-16)
+id=${r:0:1}
+h=3c12$(tohex ${r})0313$(tohex ${id})$(echo -n ${id}${PASSWORD}${r} | md5sum | cut -c1-32)
+log INFO "Generating Orange DHCP values"
+
+# vendor class
+export VENDOR_CLASS_IDENTIFIER_4=${LIVEBOX_HARDWARE}
+export VENDOR_CLASS_IDENTIFIER_6=00:00:04:0e:00:05$(addsep $(tohex ${LIVEBOX_HARDWARE}))
+log INFO "      Vendor class has been generated"
+
+# user class
+export USER_CLASS_4=+FSVDSL_livebox.Internet.softathome.Livebox${LIVEBOX_VERSION}
+export USER_CLASS_6=00$(addsep $(tohex "+FSVDSL_livebox.Internet.softathome.Livebox${LIVEBOX_VERSION}"))
+log INFO "      User class has been generated"
+
+# option 90
+export AUTHENTICATION_STR=00:00:00:00:00:00:00:00:00:00:00:1a:09:00:00:05:58:01:03:41:01:0d$(addsep $(tohex ${LOGIN})${h})
+log INFO "      Option 90 has been generated"
+
+# Generate DHCP option for networkd
+envsubst < ${IN_OUT_PATH}/${FILE_NAME}.template > ${IN_OUT_PATH}/${FILE_NAME}
+log INFO "Generating env vars files"
+log INFO "      Source = ${IN_OUT_PATH}/${FILE_NAME}.template"
+log INFO "      Destination = ${IN_OUT_PATH}/${FILE_NAME}"
+```
+
+
+- /etc/systemd/system/networkd-orange-env.service
+```
+[Unit]
+Description=Generate networkd-orange.env before systemd-networkd
+Before=systemd-networkd.service
+Requires=network-pre.target
+DefaultDependencies=no
+
+[Service]
+EnvironmentFile=/etc/networkd-orange/networkd-orange-env.env
+Type=oneshot
+ExecStart=/etc/networkd-orange/networkd-orange-env.sh
+UMask=0077
+
+[Install]
+WantedBy=systemd-networkd.service
+```
+
+- /etc/networkd-orange/networkd-orange-env.env (change values as required)
+```bash
+# Orange variables
+LOGIN=fti/XXXXX
+PASSWORD=XXXXXXX
+LIVEBOX_VERSION=6
+LIVEBOX_HARDWARE=sagem
+
+# Destination and filename (template + gen file)
+IN_OUT_PATH="/etc/networkd-orange"
+FILE_NAME="orange.env"
+```
+
+- /etc/networkd-orange/networkd-orange-env.template
+```
+# IPV4
+VendorClassIdentifier4=${VENDOR_CLASS_IDENTIFIER_4}
+UserClass4=${USER_CLASS_4}
+
+# IPV6
+VendorClassIdentifier6=${VENDOR_CLASS_IDENTIFIER_6}
+UserClass6=${USER_CLASS_6}
+
+# Global
+Authentication=${AUTHENTICATION_STR}
+```
+
+- modify (or copy) systemd-networkd.service and add
+```
+[Service]
+EnvironmentFile=/etc/networkd-orange/orange.env
+```
+
+- update you systemd-networkd orange config file (/etc/systemd/network/orange.network for example)
+```
+[DHCPv4]
+VendorClassIdentifier=$VendorClassIdentifier4
+UserClass=$UserClass4
+SendOption=90:string:$Authentication
+
+[DHCPv6]
+VendorClassIdentifier=$VendorClassIdentifier6
+UserClass=$UserClass6
+SendOption=SendOption=11:string:$Authentication
+```
+
+- install service
+```
+chmod 750 /etc/networkd-orange/networkd-orange-env.sh
+chmod 640 /etc/networkd-orange/networkd-orange-env.env
+chown root:root /etc/networkd-orange/networkd-orange-env.env
+chmod 644 /etc/systemd/system/networkd-orange-env.service
+systemctl enable /etc/systemd/system/networkd-orange-env.service
+systemctl restart systemd-networkd 
+```
+
+The result should be:
+```
+systemd[1]: Starting networkd-orange-env.service - Generate /etc/networkd-orange/network.env before systemd-networkd...
+[6368]: INFO  Orange parameters
+[6368]: INFO          Login:            ********
+[6368]: INFO          Password:         ********
+[6368]: INFO          Livebox version:  6
+[6368]: INFO          Livebox hardware: sagem
+[6368]: INFO  Generating Orange DHCP values
+[6368]: INFO          Vendor class has been generated
+[6368]: INFO          User class has been generated
+[6368]: INFO          Option 90 has been generated
+[6368]: INFO  Generating env vars files
+[6368]: INFO          Source = /etc/networkd-orange/networkd-orange.template
+[6368]: INFO          Destination = /etc/networkd-orange/orange.env
+systemd[1]: networkd-orange-env.service: Deactivated successfully.
+systemd[1]: Finished networkd-orange-env.service - Generate /etc/networkd-orange/orange.env before systemd-networkd.
+```
 
 ### Mikrotik
 
@@ -1296,7 +1476,6 @@ There are lot of sources which helped me to write this article. Here are the mos
 [https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/](https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/)
 [https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/24/](https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/24/)
 [https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/5112/?PHPSESSID=05am86kho55au6drtc1fubo8qm](https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/5112/?PHPSESSID=05am86kho55au6drtc1fubo8qm)
-
 
 _Special thanks to [lafibre.info](https://lafibre.info) forum and its members !_
 
