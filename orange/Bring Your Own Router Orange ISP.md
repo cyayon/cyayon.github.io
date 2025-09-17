@@ -1,6 +1,6 @@
 # Bring Your Own Router Orange ISP
 
-Version 20250826
+Version 20250917
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
@@ -21,8 +21,8 @@ For memories, the good SFP power values should be in the following ranges :
 
 [https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/](https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/)
 
->[!INFO]
->Since December 2022, the following DHCP options are MANDATORY !
+> [!IMPORTANT] 
+> Since December 2022, the following DHCP options are MANDATORY !
 
 ### ipv4
 - user-class [77] : "FSVDSL\_livebox.Internet.softathome.Livebox6" or "2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
@@ -164,6 +164,8 @@ However, DSCP is not mandatory but recommended.
 **DHCPv4 clients use RAW SOCKETS for DISCOVER/REQUEST (init) requests and BSD/UDP SOCKETS for RENEW requests.
 In consequence, you CANNOT use netfilter mangle rules to change COS/PCP and DSCP. You MUST use L2 filtering.**
 **IMPORTANT NOTICE : Since kernel 5.7, the netfilter netdev egress filter could match DHCP packets. See below netfilter nftables egress filter, it could be fun to try without tc script…**
+
+**ALL OUTPUT PACKETS (from router) MUST BE ZERO (0 !) COS/DSCP TAGGUED. If it is not the case, the flows will be drastically limited !**  
 
 
 On Linux L2 filtering can be done with tc (traffic-control) tool. On Mikrotik router there switch rules or bridge filters.
@@ -311,6 +313,9 @@ https://nftables.org/projects/nftables/files/changes-nftables-1.1.3.txt
 
 There are 2 methods to change dscp/cos/pcp on nftables netdev egress. The first method (recommended) is to apply egress on physical interface (parent of vlan interface 832). The second is to apply on vlan 832 interface.
 Note: we are using netdev table, in this case we are applying settings on low level network device stack. You can specify « ^vlan id 832 » or not, it will work in both case. For this documentation, we will keep it for clarification.
+
+Note: we will using `vlan pcp set 6` instead of `meta priority set 0:6 + egress-qos-map` just because it is easier. DO NOT FORGET that in all case `egress-qos-map` is required, but it can be set natively with systemd-netword via `EgressQOSMaps=6-6` (since systemd v253).
+
 
 - method1: use physical interface
 note: 'meta priority set 0:6' should NOT be required if phy version ('vlan pcp set 6' already done the right thing)
@@ -578,33 +583,33 @@ add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 133RS DSCP6" dst-a
 add action=accept chain=prio_orange_icmp6 comment="ACCEPT"
 ```
 
-#### Lastest RouterOS 7.20
+#### RouterOS 7.20+
 
-Since RouterOS version 7.20, there is an option in dhcp client (ipv4) to set COS (vlan-priority). This option set the COS for RAW ipv4 sockets. Then, you could finaly use firewall mangle rules to set COS (and DSCP) for ipv6 (which are NOT RAW). No more switch rules or bridge filters are required.
+Since RouterOS version 7.20+, there is an option in dhcp client (ipv4) to set COS (vlan-priority). This option set the COS for RAW ipv4 sockets. Then, you could finaly use firewall mangle rules to set COS (and DSCP) for ipv6 (which are NOT RAW). No more switch rules or bridge filters are required.
 In the following code block, OUTPUT is used, but you could also use POSTROUTING chain…
 
 ```other
-# DO NOT FORGET TO SET VLAN-PRIORITY IN DHCP4 CLIENT PROPERTIES TO 6
+# DO NOT FORGET TO SET VLAN-PRIORITY IN DHCP4 CLIENT
 
 /ip firewall mangle
-add action=set-priority chain=prio_orange_dhcp comment="dhcp COS6" new-priority=6 passthrough=yes
-add action=change-dscp chain=prio_orange_dhcp comment="dhcp DSCP48" new-dscp=48 passthrough=yes
-add action=accept chain=prio_orange_dhcp comment="ACCEPT"
+add action=set-priority chain=prio_orange comment="dhcp COS6" new-priority=6 passthrough=yes
+add action=change-dscp chain=prio_orange comment="dhcp DSCP48" new-dscp=48 passthrough=yes
+add action=accept chain=prio_orange comment="ACCEPT"
 
 /ipv6 firewall mangle
-add action=set-priority chain=prio_orange_dhcp comment="dhcp COS6" new-priority=6 passthrough=yes
-add action=change-dscp chain=prio_orange_dhcp comment="dhcp DSCP48" new-dscp=48 passthrough=yes
-add action=accept chain=prio_orange_dhcp comment="ACCEPT"
+add action=set-priority chain=prio_orange comment="dhcp COS6" new-priority=6 passthrough=yes
+add action=change-dscp chain=prio_orange comment="dhcp DSCP48" new-dscp=48 passthrough=yes
+add action=accept chain=prio_orange comment="ACCEPT"
 
 /ip firewall mangle
-add action=jump chain=output comment="orange dhcp4" dst-port=67 jump-target=prio_orange_dhcp out-interface=orange1 protocol=udp src-port=68
+add action=jump chain=output comment="orange dhcp4" dst-port=67 jump-target=prio_orange out-interface=orange1 protocol=udp src-port=68
 
 /ipv6 firewall mangle
-add action=jump chain=output comment="orange icmp6" dst-address=fe00::/7 jump-target=prio_orange_dhcp out-interface=orange1 protocol=icmp6
-add action=jump chain=output comment="orange dhcp6" dst-address=fe00::/7 dst-port=547 jump-target=prio_orange_dhcp out-interface=orange1 protocol=udp src-port=546
+add action=jump chain=output comment="orange icmp6" dst-address=fe00::/7 jump-target=prio_orange out-interface=orange1 protocol=icmp6
+add action=jump chain=output comment="orange dhcp6" dst-address=fe00::/7 dst-port=547 jump-target=prio_orange out-interface=orange1 protocol=udp src-port=546
 ```
 
-
+**note: ARP packets should also be modified (new-priority=6 and new-dscp=48), but it seems there is no firewall setting to do this. Let’s see if DHCP4 setting is sufficient…**
 
 ## DHCP clients
 
