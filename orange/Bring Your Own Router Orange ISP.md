@@ -1,6 +1,6 @@
 # Bring Your Own Router Orange ISP
 
-Version 20250917
+Version 20251003
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
@@ -42,8 +42,9 @@ For memories, the good SFP power values should be in the following ranges :
 - note authentication : ipv4 and ipv6 strings MUST be equals
 - note user-class : user-class (ipv4:77 / ipv6:15) must match ipv4 and ipv6 (with different formats)
 
-string2hex(FSVDSL\_livebox.Internet.softathome.Livebox4) -\> "46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7834"
+`string2hex(FSVDSL_livebox.Internet.softathome.Livebox4)` -\> `46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7834`
 user-class string = "2b" + string2hex() ; ipv6 string = "00" + "ipv4 string"
+note: the last digit `4` is the Livebox version (Livebox 4 here), just replace with your version. 
 
 **WARNING : take care of case (livebox vs Livebox)**
 
@@ -589,7 +590,8 @@ Since RouterOS version 7.20+, there is an option in dhcp client (ipv4) to set CO
 In the following code block, OUTPUT is used, but you could also use POSTROUTING chain…
 
 ```other
-# DO NOT FORGET TO SET VLAN-PRIORITY IN DHCP4 CLIENT
+# DO NOT FORGET TO SET VLAN-PRIORITY AND DSCP IN DHCP4 CLIENT
+/ip dhcp-client add dscp=48 interface=orange1 vlan-priority=6
 
 /ip firewall mangle
 add action=set-priority chain=prio_orange comment="dhcp COS6" new-priority=6 passthrough=yes
@@ -605,7 +607,7 @@ add action=accept chain=prio_orange comment="ACCEPT"
 add action=jump chain=output comment="orange dhcp4" dst-port=67 jump-target=prio_orange out-interface=orange1 protocol=udp src-port=68
 
 /ipv6 firewall mangle
-add action=jump chain=output comment="orange icmp6" dst-address=fe00::/7 jump-target=prio_orange out-interface=orange1 protocol=icmp6
+add action=jump chain=output comment="orange icmp6" dst-address=fe00::/7 jump-target=prio_orange out-interface=orange1 protocol=icmpv6
 add action=jump chain=output comment="orange dhcp6" dst-address=fe00::/7 dst-port=547 jump-target=prio_orange out-interface=orange1 protocol=udp src-port=546
 ```
 
