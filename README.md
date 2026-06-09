@@ -41,37 +41,37 @@ I enjoy understanding how things really work under the hood, removing unnecessar
 
 ## Orange Tricks (French ISP)
 
-[Bring Your Own Router for Orange](orange/Bring%20Your%20Own%20Router%20Orange%20ISP.md)  
+[Bring Your Own Router for Orange](https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/Bring%20Your%20Own%20Router%20Orange%20ISP.md)  
 
-[ONU GPON-ONU-34-20BI](orange/ONU%20GPON-ONU-34-20BI.md)
+[ONU GPON-ONU-34-20BI](https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/ONU%20GPON-ONU-34-20BI.md)
 
-[ONT LEOX-GPON-LXT-010H-D](orange/ONT%20LEOX-GPON-LXT-010H-D.md)  
+[ONT LEOX-GPON-LXT-010H-D](https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/ONT%20LEOX-GPON-LXT-010H-D.md)  
 
 
 ## Linux Networking
 
-[Multi-WAN Watchdog](linux/Multi-WAN%20Watchdog.md)
+[Multi-WAN Watchdog](https://codeberg.org/cyayon/cyasssw/src/branch/main/linux/Multi-WAN%20Watchdog.md)
 
-[systemd.networkd Bridge-VLAN-aware ](linux/systemd%20Bridge-VLAN-aware.md)
+[systemd.networkd Bridge-VLAN-aware ](https://codeberg.org/cyayon/cyasssw/src/branch/main/linux/systemd%20Bridge-VLAN-aware.md)
 
 
 ## HomeAssistant (HAOS)
 
-[HAOS Dual-Homed VLAN](haos/HAOS%20Dual-Homed%20VLAN.md)
+[HAOS Dual-Homed VLAN](https://codeberg.org/cyayon/cyasssw/src/branch/main/haos/HAOS%20Dual-Homed%20VLAN.md)
 
 
 ## Mikrotik
 
-[DHCP-Client Watchdog](mikrotik/DHCP-Client%20Watchdog.md)
+[DHCP-Client Watchdog](https://codeberg.org/cyayon/cyasssw/src/branch/main/mikrotik/DHCP-Client%20Watchdog.md)
 
-[DHCP-Client Configs](mikrotik/DHCP-Client%20Configs.md)
+[DHCP-Client Configs](https://codeberg.org/cyayon/cyasssw/src/branch/main/mikrotik/DHCP-Client%20Configs.md)
 
 
 ## Media
 
-[Qobuz Playlist Backup](media/qobuz-backup.md)
+[Qobuz Playlist Backup](https://codeberg.org/cyayon/cyasssw/src/branch/main/media/qobuz-backup.md)
 
-[Spotify Playlist Backup](media/spotify-backup.md)
+[Spotify Playlist Backup](https://codeberg.org/cyayon/cyasssw/src/branch/main/media/spotify-backup.md)
 
 
 
