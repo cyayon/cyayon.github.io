@@ -48,9 +48,9 @@ For the more human side of me: [LinkedIn](https://www.linkedin.com/in/christophe
 
 [ONU GPON-ONU-34-20BI](https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/Orange%20ISP%20ONU%20GPON-ONU-34-20BI.md)
 
-[ONU XGS WAS-110](https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/Orange%20ISP%20ONU%20XGS%20WAS-110.md)  
+[ONU XGS-WAS-110](https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/Orange%20ISP%20ONU%20XGS-WAS-110.md)  
 
-[ONT LEOX-GPON-LXT-010H-D](https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/Orange%20ISP%20ONT%20LEOX-GPON-LXT-010H-D.md)  
+[ONT GPON-LEOX-LXT-010H-D](https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/Orange%20ISP%20ONT%20GPON-LEOX-LXT-010H-D.md)  
 
 
 ## Linux Networking
