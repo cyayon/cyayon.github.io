@@ -1,5 +1,12 @@
 # Christophe Yayon Simple Stupid Static Website
 
+Infrastructure, systems, networking, automation and other perfectly reasonable ways to lose a weekend — with a strong preference for KISS: Keep It Simple, Stupid.
+
+Some random thoughts on my digital rabbit hole, where routers have names, logs have opinions, and “temporary fixes” tend to become infrastructure.
+
+This site is a curated entry point to my technical notes. The source lives on [Codeberg](https://codeberg.org/cyayon/cyasssw), because apparently even my static website needed an upstream.
+
+
 ```text
 
                     _        ____  _                 _      
@@ -24,19 +31,15 @@ __        __   _         _ _
 ```
 
 
-Some random thoughts on my digital rabbit hole, where routers have names, logs have opinions, and “temporary fixes” tend to become infrastructure.
-
-... and don't forget `<nbux>` — Nothing But Unix, mostly by accident...
-
-For the more human side of me: [LinkedIn](https://www.linkedin.com/in/christophe-yayon-3715a64/)
-
-
-
-## Whoami
+## whoami
 
 I'm a Unix-flavored systems tinkerer who still believes simple systems age better than clever ones. 
 
 I enjoy understanding how things really work under the hood, removing unnecessary magic, and building setups that can be debugged at 2 a.m. without needing a committee, a dashboard, or a prayer.
+
+... and don't forget Nothing But Unix `<nbux>`, mostly by accident...
+
+For the more human side of me: [LinkedIn](https://www.linkedin.com/in/christophe-yayon-3715a64/)
 
 
 ## Orange Tricks (French ISP)
