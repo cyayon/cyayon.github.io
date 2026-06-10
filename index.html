@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Christophe Yayon — Simple, Stupid, Static Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Technical notes about infrastructure, networking, automation, and questionable things.">
+  <meta name="author" content="Christophe Yayon">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #111821;
+      --panel-soft: #0f151d;
+      --fg: #d7dee7;
+      --muted: #94a3b8;
+      --accent: #7dd3fc;
+      --accent-2: #a7f3d0;
+      --border: #243244;
+      --code: #060a0f;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(125, 211, 252, 0.10), transparent 32rem),
+        radial-gradient(circle at bottom right, rgba(167, 243, 208, 0.08), transparent 30rem),
+        var(--bg);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 40px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(620px, 1.05fr);
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 42px;
+    }
+
+    .hero-card,
+    .ascii-card,
+    .card,
+    .about,
+    .footer {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(17, 24, 33, 0.92), rgba(15, 21, 29, 0.92));
+      border-radius: 18px;
+      box-shadow: 0 18px 44px var(--shadow);
+    }
+
+    .hero-card {
+      padding: 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-2);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow::before {
+      content: "$";
+      color: var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(2.25rem, 6vw, 4.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      margin: 0 0 18px;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 0 0 18px;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .lead {
+      font-size: 1.15rem;
+      color: var(--fg);
+      margin: 0 0 18px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .badge {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(125, 211, 252, 0.07);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    .ascii-card {
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    pre {
+      display: block;
+      width: max-content;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 18px 36px 18px 18px;
+      overflow-x: auto;
+      border-radius: 12px;
+      background: var(--code);
+      border: 1px solid var(--border);
+      color: #b7f7d4;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: clamp(0.54rem, 0.82vw, 0.72rem);
+      line-height: 1.18;
+      white-space: pre;
+    }
+
+    .about {
+      padding: 26px;
+      margin-bottom: 30px;
+    }
+
+    .about p {
+      margin: 0 0 14px;
+    }
+
+    .about p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      margin: 38px 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::before {
+      content: "#";
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      padding: 22px;
+      min-height: 190px;
+    }
+
+    .card p {
+      margin: 0 0 16px;
+    }
+
+    .links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .links li {
+      margin: 8px 0;
+    }
+
+    .links a::before {
+      content: "→ ";
+      color: var(--accent-2);
+    }
+
+    .footer {
+      margin-top: 36px;
+      padding: 22px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      main {
+        padding-top: 28px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        padding: 24px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main>
+  <section class="hero">
+    <div class="hero-card">
+      <div class="eyebrow">cya@nbux</div>
+      <h2>Christophe Yayon Simple Stupid Static Website</h2>
+
+      <p class="lead">
+        Infrastructure, systems, networking, automation, and other perfectly reasonable ways to lose a weekend —
+        with a strong preference for <strong>KISS</strong>: Keep It Simple, Stupid.
+      </p>
+
+      <p class="muted">
+        Some random thoughts from my digital rabbit hole, where routers have names, logs have opinions,
+        and “temporary fixes” tend to become infrastructure.
+      </p>
+
+      <p class="muted">
+        This site is a curated entry point to my technical notes. The source lives on
+        <a href="https://codeberg.org/cyayon/cyasssw">Codeberg</a>, because apparently even my static website needed an upstream.
+      </p>
+
+      <div class="badges" aria-label="Topics">
+        <span class="badge">infra</span>
+        <span class="badge">network</span>
+        <span class="badge">automation</span>
+        <span class="badge">dev</span>
+        <span class="badge">backup</span>
+        <span class="badge">fix</span>
+      </div>
+    </div>
+
+    <div class="ascii-card" aria-label="ASCII art">
+      <pre>                    _        ____  _                 _
+  ___ _   _  __ _  ( )___   / ___|(_)_ __ ___  _ __ | | ___
+ / __| | | |/ _` | |// __|  \___ \| | &#x27;_ ` _ \| &#x27;_ \| |/ _ \
+| (__| |_| | (_| |   \__ \   ___) | | | | | | | |_) | |  __/
+ \___|\__, |\__,_|   |___/  |____/|_|_| |_| |_| .__/|_|\___|
+      |___/                                   |_|
+ ____  _               _     _   ____  _        _   _
+/ ___|| |_ _   _ _ __ (_) __| | / ___|| |_ __ _| |_(_) ___
+\___ \| __| | | | &#x27;_ \| |/ _` | \___ \| __/ _` | __| |/ __|
+ ___) | |_| |_| | |_) | | (_| |  ___) | || (_| | |_| | (__
+|____/ \__|\__,_| .__/|_|\__,_| |____/ \__\__,_|\__|_|\___|
+                |_|
+__        __   _         _ _
+\ \      / /__| |__  ___(_) |_ ___
+ \ \ /\ / / _ \ &#x27;_ \/ __| | __/ _ \
+  \ V  V /  __/ |_) \__ \ | ||  __/
+   \_/\_/ \___|_.__/|___/_|\__\___|
+ </pre>
+    </div>
+  </section>
+
+  <section class="about">
+    <h2><code>whoami</code></h2>
+
+    <p>
+      I'm a Unix-flavored systems tinkerer who still believes simple systems age better than clever ones.
+    </p>
+
+    <p>
+      I enjoy understanding how things really work under the hood, removing unnecessary magic,
+      and building setups that can be debugged at 2 a.m. without needing a committee,
+      a dashboard, or a prayer.
+    </p>
+
+    <p>
+      ... and don't forget <strong>&lt;nbux&gt;</strong> — Nothing But Unix, mostly by accident.
+    </p>
+
+    <p>
+      <a href="https://www.linkedin.com/in/christophe-yayon-3715a64/">For the more human side of me: LinkedIn</a>
+    </p>
+  </section>
+
+
+  <section class="grid">
+    <article class="card">
+      <h3>Orange Tricks <span class="muted">(French ISP)</span></h3>
+      <p class="muted">Bring-your-own-router notes, ONT/ONU experiments, and French ISP archaeology.</p>
+      <ul class="links">
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/Bring%20Your%20Own%20Router%20Orange%20ISP.md">Bring Your Own Router for Orange</a></li>
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/ONU%20GPON-ONU-34-20BI.md">ONU GPON-ONU-34-20BI</a></li>
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/orange/ONT%20LEOX-GPON-LXT-010H-D.md">ONT LEOX-GPON-LXT-010H-D</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>Linux Networking</h3>
+      <p class="muted">VLANs, multi-WAN, systemd-networkd, route tables, and other packet-moving rituals.</p>
+      <ul class="links">
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/linux/Multi-WAN%20Watchdog.md">Multi-WAN Watchdog</a></li>
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/linux/systemd%20Bridge-VLAN-aware.md">systemd.networkd Bridge-VLAN-aware</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>Home Assistant OS</h3>
+      <p class="muted">Making an appliance-like system behave properly in a segmented network.</p>
+      <ul class="links">
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/haos/HAOS%20Dual-Homed%20VLAN.md">HAOS Dual-Homed VLAN</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>MikroTik</h3>
+      <p class="muted">DHCP clients, IPv6 prefix delegation, ISP quirks, watchdogs, and RouterOS glue.</p>
+      <ul class="links">
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/mikrotik/DHCP-Client%20Watchdog.md">DHCP-Client Watchdog</a></li>
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/mikrotik/DHCP-Client%20Configs.md">DHCP-Client Configs</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>Media</h3>
+      <p class="muted">Playlist backups, APIs, plain files, and a healthy distrust of cloud-only memories.</p>
+      <ul class="links">
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/media/qobuz-backup.md">Qobuz Playlist Backup</a></li>
+        <li><a href="https://codeberg.org/cyayon/cyasssw/src/branch/main/media/spotify-backup.md">Spotify Playlist Backup</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>More to come</h3>
+      <p class="muted">
+        More notes will appear when a temporary fix survives long enough to deserve documentation.
+      </p>
+      <ul class="links">
+        <li><a href="https://codeberg.org/cyayon/cyasssw">Browse the full Codeberg repository</a></li>
+      </ul>
+    </article>
+  </section>
+
+  <footer class="footer">
+    <strong>Static, boring, and proudly over-documented.</strong>
+    <br>
+    This site is mainly hosted on <a href="https://codeberg.org/cyayon/cyasssw">Codeberg</a> and mirrored to <a href="https://cyayon.github.io">GitHub Pages</a> for convenience.
+
+    <div class="footer-links">
+      <a href="https://codeberg.org/cyayon">Codeberg</a>
+      <a href="https://github.com/cyayon">GitHub</a>
+    </div>
+  </footer>
+</main>
+</body>
+</html>
