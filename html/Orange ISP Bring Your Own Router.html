@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <title>Orange ISP Bring Your Own Router</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="bear-note-unique-identifier" content="6C8219B1-52EF-4894-9575-CDD80274E913">
+        <meta name="created" content="2025-05-05T11:02:58+0200">
+        <meta name="modified" content="2026-06-10T11:05:52+0200">
+        <meta name="tags" content="blog/cyasssw, blog/cyasssw/orange, nbux, nbux/mikrotik, nbux/orange, publish, blog">
+        <meta name="last device" content="solaria">
+        
+        <script id="MathJax-script" async
+                src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+        <style>
+             body {
+   --base-background-color: #ffffff;
+   --document-background-color: var(--base-background-color);
+ }
+
+.document-wrapper {
+  /* Constants used to transform theme values to CSS */
+  --transform-line-height-factor: 1.17;
+
+  /* From template */
+  --base-text-color: #444444;
+  --base-text-secondary-color: #888888;
+  --base-text-tertiary-color: #d9d9d9;
+  --base-background-color: #ffffff;
+  --base-background-secondary-color: #F3F5F7;
+  --base-background-tertiary-color: #E4E5E6;
+  --base-stroke-color: #d9d9d9;
+  --base-stroke-secondary-color: #d9d9d9;
+  --base-accent-color: #DD4C4F;
+  --base-highlight-color: ;
+
+  --document-background-color: var(--base-background-color);
+  --document-text-color: var(--base-text-color);
+  --document-text-secondary-color: var(--base-text-secondary-color);
+  --document-text-light-color: var(--base-text-secondary-color);
+  --document-accent-color: var(--base-accent-color);
+  --document-cursor-color: var(--base-accent-color);
+  --document-link-color: var(--base-accent-color);
+  --document-list-marker-color: var(--base-accent-color);
+  --document-marker-color: var(--base-text-tertiary-color);
+  --document-selection-color: var(--base-selection-color);
+  --document-selection-inactive-color: var(--base-background-tertiary-color);
+  --document-text-font: "AvenirNext-Regular";
+  --document-text-size: 15px;
+  --document-line-height-multiplier: calc(
+    1.5 * var(--transform-line-height-factor)
+  );
+
+  --document-headers-text-color: var(--base-text-color);
+  --document-headers-font: "AvenirNext-Medium";
+  --document-headers-modular-scale: 1.125;
+  --document-headers-line-height-multiplier: calc(
+    1.3 * var(--transform-line-height-factor)
+  );
+  --document-headers-add-top-bottom-padding: 1;
+  --document-headers-padding-top-multiplier: 0.5;
+  --document-headers-padding-bottom-multiplier: 0.3;
+
+  --document-code-text-color: var(--base-text-color);
+  --document-code-border-color: var(--base-text-tertiary-color);
+  --document-code-background-color: var(--base-background-secondary-color);
+  --document-code-font: "Menlo-Regular";
+  --document-code-text-size-multiplier: 0.91em;
+
+  --document-code-syntax-highlight-comment: #65798c;
+  --document-code-syntax-highlight-constant: #0095c9;
+  --document-code-syntax-highlight-number: #0095c9;
+  --document-code-syntax-highlight-string: #d12f1b;
+  --document-code-syntax-highlight-entity: #4a838b;
+  --document-code-syntax-highlight-keyword: #ad3da4;
+  --document-code-syntax-highlight-function: #4a838b;
+  --document-code-syntax-highlight-variable: #4a838b;
+
+  --document-task-background-color: var(--base-background-color);
+  --document-task-border-color: var(--base-text-secondary-color);
+  --document-task-check-color: var(--base-text-color);
+
+  --document-tag-background-color: var(--base-background-tertiary-color);
+  --document-tag-text-color: var(--base-text-color);
+  --document-tag-marker-color: var(--base-text-secondary-color);
+
+  --document-highlighter-background-color: #CDF7BD;
+  --document-highlighter-text-color: #102D05;
+
+  --document-highlighter-red-background-color: #FFD5D5;
+  --document-highlighter-red-text-color: #321A00;
+
+  --document-highlighter-blue-background-color: #C9E5FF;
+  --document-highlighter-blue-text-color: #001A32;
+
+  --document-highlighter-green-background-color: #CDF7BD;
+  --document-highlighter-green-text-color: #102D05;
+
+  --document-highlighter-purple-background-color: #FEDAFF;
+  --document-highlighter-purple-text-color: #310032;
+
+  --document-highlighter-yellow-background-color: #FCF195;
+  --document-highlighter-yellow-text-color: #312C01;
+  
+  --document-file-fold-color: var(--base-background-tertiary-color);
+  --document-file-background-color: var(--base-background-secondary-color);
+
+  --document-separator-border-color: var(--base-stroke-secondary-color);
+
+  --document-table-border-color: var(--base-stroke-secondary-color);
+  --document-table-cell-background-color: var(--base-background-color);
+  --document-table-cell-alternate-background-color: var(
+    --base-background-secondary-color
+  );
+  
+  /* Callouts */
+  --document-md-indentation: 32px;
+  --nested-block-marker-skew: -5px;
+  /* Blue */
+  --document-callout-note-background-color: hsla(209, 100%, 89%, 0.15);
+  --document-callout-note-border-color: hsla(209, 80%, 35%, 0.1);
+  --document-callout-note-bar-color: hsla(209, 80%, 35%, 0.8);
+  
+  /* Green */
+  --document-callout-tip-background-color: hsla(103, 78%, 85%, 0.15);
+  --document-callout-tip-border-color: hsla(103, 80%, 35%, 0.1);
+  --document-callout-tip-bar-color: hsla(103, 80%, 35%, 0.8);
+  
+  /* Purple */
+  --document-callout-important-background-color: hsla(298, 100%, 93%, 0.15);
+  --document-callout-important-border-color: hsla(298, 80%, 35%, 0.07);
+  --document-callout-important-bar-color: hsla(298, 80%, 35%, 0.8);
+  
+  /* Yellow */
+  --document-callout-warning-background-color: hsla(54, 94%, 79%, 0.15);
+  --document-callout-warning-border-color: hsla(45, 94%, 50%, 0.15);
+  --document-callout-warning-bar-color: hsla(45, 94%, 50%, 1);
+  
+  /* Red */
+  --document-callout-caution-background-color: hsla(31, 98%, 81%, 0.15);
+  --document-callout-caution-border-color: hsla(31, 98%, 50%, 0.1);
+  --document-callout-caution-bar-color: hsla(31, 98%, 50%, 1);
+}
+
+.document-wrapper,body{background-color:var(--document-background-color)}.document-wrapper h1.setext,.document-wrapper h2.setext{border-bottom:calc(2 * var(--document-hairline-width)) solid var(--document-separator-border-color);padding-bottom:.6em}.document-wrapper blockquote blockquote blockquote blockquote blockquote::before,.document-wrapper blockquote blockquote blockquote::before,.document-wrapper blockquote::before{background-color:var(--document-list-marker-color)}.document-wrapper td[data-alignment="1"],.document-wrapper th{text-align:left}.document-wrapper :after,.document-wrapper a,.document-wrapper abbr,.document-wrapper acronym,.document-wrapper address,.document-wrapper applet,.document-wrapper article,.document-wrapper aside,.document-wrapper audio,.document-wrapper b,.document-wrapper big,.document-wrapper blockquote,.document-wrapper canvas,.document-wrapper caption,.document-wrapper center,.document-wrapper cite,.document-wrapper code,.document-wrapper dd,.document-wrapper del,.document-wrapper details,.document-wrapper dfn,.document-wrapper div,.document-wrapper dl,.document-wrapper dt,.document-wrapper em,.document-wrapper embed,.document-wrapper fieldset,.document-wrapper figcaption,.document-wrapper figure,.document-wrapper footer,.document-wrapper form,.document-wrapper h1,.document-wrapper h2,.document-wrapper h3,.document-wrapper h4,.document-wrapper h5,.document-wrapper h6,.document-wrapper header,.document-wrapper hgroup,.document-wrapper i,.document-wrapper iframe,.document-wrapper ins,.document-wrapper kbd,.document-wrapper label,.document-wrapper legend,.document-wrapper li,.document-wrapper mark,.document-wrapper menu,.document-wrapper nav,.document-wrapper object,.document-wrapper ol,.document-wrapper output,.document-wrapper p,.document-wrapper pre,.document-wrapper q,.document-wrapper ruby,.document-wrapper s,.document-wrapper samp,.document-wrapper section,.document-wrapper small,.document-wrapper span,.document-wrapper strike,.document-wrapper strong,.document-wrapper summary,.document-wrapper table,.document-wrapper tbody,.document-wrapper td,.document-wrapper tfoot,.document-wrapper th,.document-wrapper thead,.document-wrapper time,.document-wrapper tr,.document-wrapper tt,.document-wrapper u,.document-wrapper ul,.document-wrapper var,.document-wrapper video{all:unset}.document-wrapper{--document-inline-padding-top-bottom:0.25em;--document-inline-padding-left-right:0.25em;--header-1-font-size:2em;--header-2-font-size:1.6em;--header-3-font-size:1.27em;--document-hairline-width:calc(var(--document-text-size) / 15);box-sizing:border-box;color:var(--document-text-color);font-family:var(--document-text-font);font-size:var(--document-text-size);line-height:var(--document-line-height-multiplier);min-height:100%;max-width:48em;width:100%;tab-size:4;margin:0 auto;padding:0 2em}body{text-rendering:optimizeLegibility}.document-wrapper:focus-visible{outline:0}.document-wrapper .marker{color:var(--document-marker-color);display:none}.document-wrapper [data-direction="2"]{direction:rtl}.document-wrapper div.footnote,.document-wrapper div.link-definition,.document-wrapper p{display:block}.document-wrapper p.blank-line::before{content:" "}.document-wrapper h1,.document-wrapper h2,.document-wrapper h3,.document-wrapper h4,.document-wrapper h5,.document-wrapper h6{font-family:var(--document-headers-font);display:block;line-height:var(--document-headers-line-height-multiplier)}.document-wrapper h1{font-size:var(--header-1-font-size);padding-block-start:0.8em;padding-block-end:0.33em}.document-wrapper h2{font-size:var(--header-2-font-size);padding-block-start:0.66em;padding-block-end:0.27em}.document-wrapper h3{font-size:var(--header-3-font-size);padding-block-start:0.53em;padding-block-end:0.27em}.document-wrapper code,.document-wrapper pre{font-size:var(--document-code-text-size-multiplier);font-family:var(--document-code-font),monospace}.document-wrapper h4,.document-wrapper h5,.document-wrapper h6{padding-block-start:0.4em;padding-block-end:0.27em}.document-wrapper h1.setext{margin-bottom:.45em}.document-wrapper h2.setext{margin-bottom:.2em}.document-wrapper .fenced-code *,.document-wrapper .fenced-code-content .marker,.document-wrapper .fenced-code-content .space,.document-wrapper .hard-linebreak-marker,.document-wrapper .image .space,.document-wrapper .image-destination,.document-wrapper .image-label,.document-wrapper .image-title,.document-wrapper .indented-code .space,.document-wrapper .link .space,.document-wrapper .link-destination,.document-wrapper .link-label,.document-wrapper .link-title,.document-wrapper .replace .text,.document-wrapper .setext-heading-marker+.line-ending,.document-wrapper .yaml-marker+.line-ending,.document-wrapper li>p>.space:first-child,.document-wrapper tr.delimiter-row{display:none}.document-wrapper ol,.document-wrapper ul{display:block;padding-inline-start:2.13em}.document-wrapper li{display:list-item;color:var(--document-text-color)}.document-wrapper .color-marker,.document-wrapper .entity-marker,.document-wrapper .fenced-code-content,.document-wrapper .fenced-code-content *,.document-wrapper .footnote-separator,.document-wrapper .link-definition-separator,.document-wrapper code.code-inline,.document-wrapper li>p{display:inline}.document-wrapper ul{list-style-type:disc}.document-wrapper li li li li li li li ul,.document-wrapper li li li li li ul,.document-wrapper li li li ul,.document-wrapper li ul{list-style:circle}.document-wrapper li li li li li li ul,.document-wrapper li li li li ul,.document-wrapper li li ul{list-style:disc}.document-wrapper li::marker{color:var(--document-list-marker-color)}.document-wrapper ol{list-style-type:none;counter-reset:custom-list-item calc(var(--data-list-start,1) - 1)}.document-wrapper ol>li{counter-increment:custom-list-item;position:relative}.document-wrapper ol>li::before{content:counter(custom-list-item) ". ";color:var(--document-list-marker-color);position:absolute;transform:translate(calc(-100% - .33em),0)}.document-wrapper ol>li[data-big-number=true]{margin-inline-start:-2.05em}.document-wrapper ol>li[data-big-number=true]::before{position:static;padding-inline-end:0.25em}.document-wrapper ol>li[data-list-type="1"]:before{content:counter(custom-list-item) ") "}.document-wrapper [data-direction="2"] ol>li::before,.document-wrapper ol[data-direction="2"]>li::before{transform:translate(calc(100% + .33em),0)}.document-wrapper li[role=checkbox]{list-style:none;position:relative}.document-wrapper li[aria-checked=true]{color:var(--document-text-secondary-color)}.document-wrapper .todo-checkbox{display:inline-block;margin-left:-1.7em;margin-right:.5em}.document-wrapper .todo-checkbox svg{display:inline-block;margin-bottom:-.3em}.document-wrapper blockquote{display:block;padding-inline-start:2.13em;position:relative}.document-wrapper code,.document-wrapper mark,span.highlighted{padding:var(--document-inline-padding-top-bottom) var(--document-inline-padding-left-right)}.document-wrapper blockquote::before{content:"";position:absolute;top:.2em;left:1em;width:.13em;height:calc(100% - .4em);border:var(--document-hairline-width) solid var(--document-list-marker-color);border-radius:.33em}.document-wrapper code,.document-wrapper pre.fenced-code,.document-wrapper pre.indented-code,.document-wrapper pre.yaml{color:var(--document-code-text-color);background-color:var(--document-code-background-color);border-radius:.25em}.document-wrapper [data-direction="2"] blockquote::before,.document-wrapper blockquote[data-direction="2"]::before{left:0;right:1em}.document-wrapper blockquote blockquote blockquote blockquote blockquote blockquote::before,.document-wrapper blockquote blockquote blockquote blockquote::before,.document-wrapper blockquote blockquote::before{background-color:transparent}.document-wrapper hr{display:block;margin-block-start:calc(var(--document-line-height-multiplier) * 0.5em);margin-block-end:calc(var(--document-line-height-multiplier) * -0.5em);border-top:var(--document-hairline-width) solid var(--document-separator-border-color)}.document-wrapper pre{display:block;white-space:pre-wrap}.document-wrapper pre.indented-code{padding-inline-start:2.13em}.document-wrapper pre.fenced-code,.document-wrapper pre.yaml{padding:0 .5em}.document-wrapper .fenced-code::before{content:"\200B"}.document-wrapper code{font-weight:400;font-style:normal;display:block}.document-wrapper mark code{color:var(--document-text-color);background-color:var(--document-highlighter-background-color)}.document-wrapper em,.document-wrapper i{font-family:AvenirNext-Italic}.document-wrapper b,.document-wrapper strong,.document-wrapper th{font-family:AvenirNext-Bold}.document-wrapper mark,span.highlighted{color:var(--document-highlighter-background-text-color);background-color:var(--document-highlighter-background-color);text-decoration:inherit;unicode-bidi:embed;border-radius:.25em}.document-wrapper mark.red,span.highlighted.red{color:var(--document-highlighter-red-background-text-color);background-color:var(--document-highlighter-red-background-color)}.document-wrapper mark.blue,span.highlighted.blue{color:var(--document-highlighter-blue-background-text-color);background-color:var(--document-highlighter-blue-background-color)}.document-wrapper mark.green,span.highlighted.green{color:var(--document-highlighter-green-background-text-color);background-color:var(--document-highlighter-green-background-color)}.document-wrapper mark.yellow,span.highlighted.yellow{color:var(--document-highlighter-yellow-background-text-color);background-color:var(--document-highlighter-yellow-background-color)}.document-wrapper mark.purple,span.highlighted.purple{color:var(--document-highlighter-purple-background-text-color);background-color:var(--document-highlighter-purple-background-color)}.document-wrapper u{text-decoration:underline;text-decoration-color:var(--document-accent-color);unicode-bidi:embed}.document-wrapper s,.document-wrapper strike{text-decoration:line-through}.document-wrapper a{color:var(--document-link-color);unicode-bidi:embed;cursor:pointer}.document-wrapper a:hover{text-decoration:inherit}.document-wrapper .wiki-separator-marker{display:inline;color:inherit}.document-wrapper .link-definition-title{color:var(--document-text-light-color)}.document-wrapper .footnote-ref{font-size:.9em;vertical-align:super}.document-wrapper span.entity{direction:ltr;unicode-bidi:embed;color:var(--document-code-syntax-highlight-entity)}.document-wrapper span.escape{unicode-bidi:embed}.document-wrapper .color{font-family:var(--document-code-font),monospace;font-size:var(--document-code-text-size-multiplier);padding-inline-start:1.2em;position:relative;direction:ltr;unicode-bidi:embed}.document-wrapper .color::before{content:"";position:absolute;width:.9em;height:.9em;left:0;bottom:0;transform:translateY(-15%);border:var(--document-hairline-width) solid rgb(0,0,0,.3);border-radius:.9em;background-color:var(--data-color)}.document-wrapper .hashtag{color:var(--document-tag-text-color);background-color:var(--document-tag-background-color);border-radius:1em;padding:calc(var(--document-inline-padding-top-bottom) - 2 * var(--document-hairline-width)) calc(var(--document-inline-padding-left-right) + .3em);unicode-bidi:embed}.document-wrapper .hashtag>.marker{display:inline;color:var(--document-tag-marker-color);padding:0}.document-wrapper table{display:block;max-width:fit-content;overflow-x:auto;border-collapse:separate;border-spacing:0;border:var(--document-hairline-width) solid var(--document-table-border-color);border-radius:.33em;margin-bottom:calc(var(--document-line-height-multiplier) * 1em)}.document-wrapper table[data-direction="2"]{margin-left:auto;direction:ltr}.document-wrapper tr{display:table-row;background-color:var(--document-table-cell-background-color)}.document-wrapper tr.header-row,.document-wrapper tr:nth-child(odd){background-color:var(--document-table-cell-alternate-background-color)}.document-wrapper td,.document-wrapper th{box-sizing:border-box;display:table-cell;padding:.37em .75em;min-width:5em;border-right:var(--document-hairline-width) solid var(--document-table-border-color)}.document-wrapper td:last-of-type,.document-wrapper th:last-of-type{border:none}.document-wrapper table[data-direction="2"] td{margin-left:auto}.document-wrapper td[data-alignment="2"]{text-align:right}.document-wrapper td[data-alignment="3"]{text-align:center}.document-wrapper .code_comment{color:var(--document-code-syntax-highlight-comment)}.document-wrapper .code_constant{color:var(--document-code-syntax-highlight-constant)}.document-wrapper .code_number{color:var(--document-code-syntax-highlight-number)}.document-wrapper .code_string{color:var(--document-code-syntax-highlight-string)}.document-wrapper .code_entity{color:var(--document-code-syntax-highlight-entity)}.document-wrapper .code_keyword{color:var(--document-code-syntax-highlight-keyword)}.document-wrapper .code_function{color:var(--document-code-syntax-highlight-function)}.document-wrapper .code_variable{color:var(--document-code-syntax-highlight-variable)}.document-wrapper img{max-width:100%}.document-wrapper .pdf_preview{display:inline-block;width:100%;height:500px;background-color:#fff;overflow:hidden;padding:0;margin:0;position:relative;border-radius:4px}.document-wrapper .arrow svg #body,.document-wrapper .arrow svg #head{fill:var(--base-text-color)}.document-wrapper .todo-checkbox svg #body{stroke:var(--document-task-border-color)}.document-wrapper .todo-checkbox svg #check{fill:var(--document-task-check-color)}.document-wrapper .todo-checkbox.todo-checked svg #body{opacity:.35}.document-wrapper .todo-checkbox.todo-checked svg #check{opacity:.4}.document-wrapper blockquote.md-callout{padding-top:.8em;padding-bottom:.8em;border:1px solid;margin-inline:calc((var(--document-md-indentation) - 4px) * 0.5 + var(--nested-block-marker-skew));border-radius:3px;padding-inline-start:calc(var(--document-md-indentation) - 9px);padding-inline-end:calc(var(--document-md-indentation) - 9px);margin-left:1em}.document-wrapper blockquote.md-callout:before{top:0;left:0;width:.13em;height:calc(100%)}.document-wrapper>.md-callout{margin-inline:calc(var(--md-indentation) + (var(--md-indentation) - 4px) * 0.5 + var(--nested-block-marker-skew))}.document-wrapper .md-callout>.md-callout-head{font-family:var(--document-headers-font)}.document-wrapper .md-callout>.md-callout-head:not(:last-child){margin-bottom:.5em}.document-wrapper .md-callout-head img{vertical-align:baseline;margin-right:.1em}.document-wrapper blockquote.md-callout-note{border-color:var(--document-callout-note-border-color);background-color:var(--document-callout-note-background-color)}.document-wrapper blockquote.md-callout-note:before{border:var(--document-hairline-width) solid var(--document-callout-note-border-color);background-color:var(--document-callout-note-bar-color)}.document-wrapper .md-callout-note>.md-callout-head{color:var(--markdown-view-highlighter-blue-text-color)}.document-wrapper .md-callout-note .md-callout-head>img,.document-wrapper blockquote.md-callout-caution .md-callout-head>img,.document-wrapper blockquote.md-callout-tip .md-callout-head>img,.document-wrapper blockquote.md-callout-warning .md-callout-head>img{margin-bottom:-2px}.document-wrapper blockquote.md-callout-tip{border-color:var(--document-callout-tip-border-color);background-color:var(--document-callout-tip-background-color)}.document-wrapper blockquote.md-callout-tip:before{border:var(--document-hairline-width) solid var(--document-callout-tip-border-color);background-color:var(--document-callout-tip-bar-color)}.document-wrapper blockquote.md-callout-important::before,.document-wrapper blockquote.md-callout-important:before{background-color:var(--document-callout-important-bar-color)}.document-wrapper blockquote.md-callout-tip>.md-callout-head{color:var(--markdown-view-highlighter-green-text-color)}.document-wrapper blockquote.md-callout-important{border-color:var(--document-callout-important-border-color);background-color:var(--document-callout-important-background-color);background-color:var(--document-callout-important-background-color);border-color:var(--document-callout-important-border-color)}.document-wrapper blockquote.md-callout-important:before{border:var(--document-hairline-width) solid var(--document-callout-important-border-color)}.document-wrapper blockquote.md-callout-important>.md-callout-head{color:var(--markdown-view-highlighter-purple-text-color)}.document-wrapper blockquote.md-callout-important .md-callout-head>img{margin-bottom:-4px}.document-wrapper blockquote.md-callout-warning{background-color:var(--document-callout-warning-background-color);border-color:var(--document-callout-warning-border-color)}.document-wrapper blockquote.md-callout-warning::before{background-color:var(--document-callout-warning-bar-color);background-color:var(--document-callout-caution-bar-color)}.document-wrapper blockquote.md-callout-warning>.md-callout-head{color:var(--markdown-view-highlighter-yellow-text-color)}.document-wrapper blockquote.md-callout-caution{background-color:var(--document-callout-caution-background-color);border-color:var(--document-callout-caution-border-color)}.document-wrapper blockquote.md-callout-caution>.md-callout-head{color:var(--markdown-view-highlighter-red-text-color)}
+
+        </style>
+    </head>
+    <body>
+        <div class="document-wrapper">
+            <h1 id='Orange ISP Bring Your Own Router'>Orange ISP Bring Your Own Router</h1><br>
+<p>Version 20260606</p><br>
+<p>This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…</p><br>
+<h2 id='Requirements'>Requirements</h2><p>You must already have a working ONT/ONU registered on Orange fiber infrastructure. ONT/ONU are registering on Orange infrastructure with serial number.<br>
+For informations, Orange use serial_number and vendor_id to allow a ONT/ONU to register.<br>
+To configure properly your ONU/ONT, check dedicated topics and forums...</p><br>
+<br>
+<h2 id='Basics'>Basics</h2><br>
+<p>For memories, the good SFP power values should be in the following ranges :</p><br>
+<ul>
+<li>GPON  : Tx  0.5 <span class='arrow'><svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.500000)" fill="#444444">
+            <rect id="body" x="0" y="4.5" width="10" height="2"></rect>
+            <path d="M7,0 L11.7928932,4.79289322 C12.1834175,5.18341751 12.1834175,5.81658249 11.7928932,6.20710678 L7,11 L7,11 L6,10 L8.5,6 L8.5,5 L6,1 L7,0 Z" id="head"></path>
+        </g>
+    </g>
+</svg></span> 5 dBm  ;  Rx -30 <span class='arrow'><svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.500000)" fill="#444444">
+            <rect id="body" x="0" y="4.5" width="10" height="2"></rect>
+            <path d="M7,0 L11.7928932,4.79289322 C12.1834175,5.18341751 12.1834175,5.81658249 11.7928932,6.20710678 L7,11 L7,11 L6,10 L8.5,6 L8.5,5 L6,1 L7,0 Z" id="head"></path>
+        </g>
+    </g>
+</svg></span> -8 dBm</li>
+<li>XGSPON  : Tx 4 <span class='arrow'><svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.500000)" fill="#444444">
+            <rect id="body" x="0" y="4.5" width="10" height="2"></rect>
+            <path d="M7,0 L11.7928932,4.79289322 C12.1834175,5.18341751 12.1834175,5.81658249 11.7928932,6.20710678 L7,11 L7,11 L6,10 L8.5,6 L8.5,5 L6,1 L7,0 Z" id="head"></path>
+        </g>
+    </g>
+</svg></span> 9 dBm ; Rx -28 <span class='arrow'><svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.500000)" fill="#444444">
+            <rect id="body" x="0" y="4.5" width="10" height="2"></rect>
+            <path d="M7,0 L11.7928932,4.79289322 C12.1834175,5.18341751 12.1834175,5.81658249 11.7928932,6.20710678 L7,11 L7,11 L6,10 L8.5,6 L8.5,5 L6,1 L7,0 Z" id="head"></path>
+        </g>
+    </g>
+</svg></span> -9 dBm</li>
+</ul><br>
+<h2 id='2023 evolutions'>2023 evolutions</h2><br>
+<p><a href='https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/'>https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/</a></p><br>
+<blockquote class='md-callout md-callout-important'>
+<p class='md-callout-head'><img src="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='17' height='16' xmlns:v='https://vecta.io/nano'%3e%3cpath d='M5.373 15.269c.21 0 .408-.052.595-.157s.408-.269.663-.492l2.324-2.051h3.944c.693 0 1.283-.13 1.771-.39a2.64 2.64 0 0 0 1.118-1.121c.257-.488.386-1.073.386-1.757V3.948c0-.684-.129-1.269-.386-1.757a2.66 2.66 0 0 0-1.118-1.125c-.488-.262-1.078-.393-1.771-.393H4.245c-.688 0-1.276.131-1.764.393a2.66 2.66 0 0 0-1.118 1.125c-.257.488-.386 1.073-.386 1.757v5.353c0 .684.131 1.269.393 1.757a2.7 2.7 0 0 0 1.111 1.121c.479.26 1.041.39 1.688.39h.246v1.62c0 .328.085.59.256.786s.404.294.701.294zm.376-1.702v-1.928c0-.214-.049-.366-.147-.455s-.245-.133-.441-.133h-.848c-.615 0-1.072-.153-1.371-.458s-.448-.759-.448-1.36V4.01c0-.597.149-1.048.448-1.354s.755-.458 1.371-.458h8.524c.611 0 1.066.153 1.367.458s.451.757.451 1.354v5.223c0 .602-.15 1.055-.451 1.36s-.757.458-1.367.458H8.859c-.219 0-.394.026-.526.079s-.276.156-.431.311l-2.153 2.126zm2.83-5.879c.415 0 .631-.216.649-.649l.103-3.104c.009-.219-.058-.398-.202-.537S8.8 3.19 8.572 3.19s-.419.069-.561.208-.207.316-.198.53l.096 3.117c.018.428.242.643.67.643zm0 2.297a.87.87 0 0 0 .595-.215c.164-.144.246-.329.246-.557s-.081-.422-.243-.567a.86.86 0 0 0-.598-.219c-.237 0-.439.074-.605.222a.72.72 0 0 0-.25.564c0 .223.083.408.25.554s.368.219.605.219z' fill='hsla(298%2C%2080%25%2C%2035%25%2C%201)'/%3e%3c/svg%3e"/> 
+</p><p>Since December 2022, the following DHCP options are MANDATORY !</p>
+</blockquote><br>
+<h3 id='ipv4'>ipv4</h3><ul>
+<li>user-class [77] : "FSVDSL_livebox.Internet.softathome.Livebox6" or "2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"</li>
+<li>vendor-class-identifier [60] : "sagem" or "0x736167656d"</li>
+<li>rfc3118-authentication  [90] : "authentication string (00:00:00:00:00:00:00:00:00:00:00:1A:09:00:00:05:58:01:03:41:01:0Dxxx)"</li>
+<li>dhcp-client-identifier  [61] : "01:<mac_addr>" or "01<mac_addr>" or "0x01<mac_addr>"</li>
+</ul><br>
+<h3 id='ipv6'>ipv6</h3><ul>
+<li>user-class [15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"</li>
+<li>class-identifier [16] : "00:00:04:0e:00:05:73:61:67:65:6d" or "0x0000040e0005736167656d"</li>
+<li>authentication [11] : "authentication string (00:00:00:00:00:00:00:00:00:00:00:1A:09:00:00:05:58:01:03:41:01:0Dxxx)"</li>
+<li>client DUID [1]  : "00:03:00:01:<mac_addr>" or "00030001<mac_addr>" or "0x00030001<mac_addr>"</li>
+</ul><br>
+<h3 id='notes'>notes</h3><ul>
+<li><b>All DHCP requests must be done with COS6 (DSCP6 recommended too).</b></li>
+<li>When you switch hardware (new router /  ONU / ONT) you have to wait a few  minutes with DISCONNECTED fiber link. DHCP IAID are dynamically generated by hardware equipments and Orange is waiting for a single IAID per client. To force expiration, the only way is to disconnect fiber 15-30 minutes and wait… The issue is that you will NOT get DHCPv6 prefix (NoPrefixAvail) from Orange.</li>
+<li>note authentication : ipv4 and ipv6 strings MUST be equals</li>
+<li>note user-class : user-class (ipv4:77 / ipv6:15) must match ipv4 and ipv6 (with different formats)</li>
+</ul><br>
+<p><code class='code-inline'>string2hex(FSVDSL_livebox.Internet.softathome.Livebox4)</code> -> <code class='code-inline'>46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7834</code><br>
+user-class string = "2b" + string2hex() ; ipv6 string = "00" + "ipv4 string"<br>
+note: the last digit <code class='code-inline'>4</code> is the Livebox version (Livebox 4 here), just replace with your version.</p><br>
+<p><b>WARNING : take care of case (livebox7 6c697665626f7837 [bad] vs Livebox7 4c697665626f7837 [good])</b></p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>[ipv4:77] : "FSVDSL_livebox.Internet.softathome.Livebox4" or "0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7834"
+[ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7834"
+
+[ipv4:77] : "FSVDSL_livebox.Internet.softathome.Livebox5" or "0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7835"
+[ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7835"
+
+[ipv4:77] : "FSVDSL_livebox.Internet.softathome.Livebox6" or "0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
+[ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
+
+[ipv4:77] : "FSVDSL_livebox.Internet.softathome.Livebox7" or "0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837"
+[ipv6:15] : "002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837"
+</code></pre><br>
+<p><b>WARNING : if dhcp client use raw or not, final (and true) string to have in tcpdump sniff should be (for LB7) :</b></p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>[ipv4:77] : "4d2c2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837"
+[ipv6:15] : "000f002d002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837"
+</code></pre><br>
+<ul>
+<li>note vendor-opts : vendor-opts (or vendor_opts for vendor specific informations, IS NOT REQUIRED) [17] : "00:00:05:58:00:06:00:0e:49:50:56:36:5f:52:45:51:55:45:53:54:45:44" or "0x000005580006000e495056365f524551554553544544”, entreprise id "Orange" 4 octets 00000558 + 2 octets code 0006 + 14 octets data: 495056365f524551554553544544 ("IPV6_REQUESTED")</li>
+<li>note systemd-networkd : each string must converted from "aa:bb:cc:dd:ee:....." to xaaxbbxbbxccxddxeex...." (replace ":" with "x") <code class='code-inline'>echo "aa:bb:cc:dd:ee" | sed 's/^/\\\x/ ; s/:/\\\x/g'</code></li>
+</ul><br>
+<p>systemd-network sample config (for LB6)  :</p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>[DHCPv4]
+ClientIdentifier=mac
+VendorClassIdentifier=sagem
+UserClass=FSVDSL_livebox.Internet.softathome.Livebox6
+SendOption=90:string:\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1A\x09\x00\x00\x05\x58\x01\x03\x41\x01\x0D\x66\x74\x69...
+[DHCPv6]
+DUIDType=link-layer
+# Bring Your Own Router Orange ISP
+UserClass=FSVDSL_livebox.Internet.softathome.Livebox6
+#UserClass=\x00\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x36
+#SendOption=15:string:\x00\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x36
+SendOption=11:string:\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1A\x09\x00\x00\x05\x58\x01\x03\x41\x01\x0D\x66\x74\x69...
+SendOption=16:string:\x00\x00\x04\x0e\x00\x05\x73\x61\x67\x65\x6d
+</code></pre><br>
+<h3 id='ORO'>ORO</h3><br>
+<p>The DHCPv6 ORO (Option Request Option, code 6), the following options are required :<br>
+Option: Option Request (6) - Length: 8 - Value: 000b001100170018<br>
+Requested Option code: Authentication (11)<br>
+Requested Option code: Vendor-specific Information (17)<br>
+Requested Option code: DNS recursive name server (23)<br>
+Requested Option code: Domain Search List (24)</p><br>
+<p>But, for the RFC8415 (<a href='https://datatracker.ietf.org/doc/html/rfc8415#section-21.7'>https://datatracker.ietf.org/doc/html/rfc8415#section-21.7</a>), option 11 (Authentication) is forbidden.<br>
+For Orange, it is NOT mandatory to include option 11 in SOLLICIT/REQUEST requests. You can only keep options 17,23,24.</p><br>
+<br>
+<br>
+<h2 id='Authentication'>Authentication</h2><br>
+<p>note : You could also use <a href='https://jsfiddle.net/kgersen/3mnsc6wy/'>https://jsfiddle.net/kgersen/3mnsc6wy/</a></p><br>
+<p>shell script to generate authentication string :</p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='shell'><span class='code_variable'>#!/bin/bash</span>
+<span class='code_comment'># You could also use https://jsfiddle.net/kgersen/3mnsc6wy/</span>
+<span class='code_comment'># Version 20221214</span>
+
+[ <span class='code_variable'>-z</span> <span class='code_string'>"</span><span class='code_variable'>$2</span><span class='code_string'>"</span> ] <span class='code_entity'>&&</span> <span class='code_keyword'>echo</span> <span class='code_string'>"usage : </span><span class='code_variable'>$0</span><span class='code_string'> '&lt;fti/login&gt;' '&lt;passwd&gt;'"</span> <span class='code_entity'>&&</span> <span class='code_keyword'>exit</span> <span class='code_number'>1</span>
+
+login<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>$1</span><span class='code_string'>"</span> ; pass<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>$2</span><span class='code_string'>"</span>
+
+<span class='code_function'>tohex</span>() {
+      <span class='code_keyword'>for</span> <span class='code_variable'>h</span> <span class='code_keyword'>in</span> <span class='code_variable'>$(</span><span class='code_keyword'>echo</span><span class='code_variable'> $1 </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>sed</span><span class='code_variable'> </span><span class='code_string'>"s/\(.\)/</span><span class='code_entity'>\1</span><span class='code_string'> /g"</span><span class='code_variable'>)</span>; <span class='code_keyword'>do</span> <span class='code_keyword'>printf</span> %02x \'<span class='code_variable'>$h</span>; <span class='code_keyword'>done</span>
+}
+
+<span class='code_function'>addsep</span>() {
+      <span class='code_keyword'>echo</span> <span class='code_variable'>$(</span><span class='code_keyword'>echo</span><span class='code_variable'> $1 </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>sed</span><span class='code_variable'> </span><span class='code_string'>"s/\(.\)\(.\)/:</span><span class='code_entity'>\1\2</span><span class='code_string'>/g"</span><span class='code_variable'>)</span>
+}
+
+r<span class='code_entity'>=</span><span class='code_variable'>$(</span><span class='code_function'>dd</span><span class='code_variable'> </span>if<span class='code_entity'>=</span><span class='code_variable'>/dev/urandom </span>bs<span class='code_entity'>=</span><span class='code_variable'>1k </span>count<span class='code_entity'>=</span><span class='code_number'>1</span><span class='code_variable'> 2</span><span class='code_entity'>&gt;</span><span class='code_variable'>&1 </span><span class='code_entity'>|</span><span class='code_variable'> md5sum </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>cut</span><span class='code_variable'> -c1-16)</span>
+id<span class='code_entity'>=</span><span class='code_variable'>${r</span><span class='code_entity'>:</span><span class='code_variable'>0</span><span class='code_entity'>:</span><span class='code_variable'>1}</span>
+h<span class='code_entity'>=</span>3C12<span class='code_variable'>$(tohex $</span>{<span class='code_variable'>r</span>}<span class='code_variable'>)</span>0313<span class='code_variable'>$(tohex $</span>{<span class='code_variable'>id</span>}<span class='code_variable'>)$(</span><span class='code_keyword'>echo</span><span class='code_variable'> -n $</span>{<span class='code_variable'>id</span>}<span class='code_variable'>$</span>{<span class='code_variable'>pass</span>}<span class='code_variable'>$</span>{<span class='code_variable'>r</span>}<span class='code_variable'> </span><span class='code_entity'>|</span><span class='code_variable'> md5sum </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>cut</span><span class='code_variable'> -c1-32)</span>
+str<span class='code_entity'>=</span><span class='code_variable'>$(addsep </span>$(<span class='code_variable'>tohex $</span>{<span class='code_variable'>login</span>})<span class='code_variable'>$</span>{<span class='code_variable'>h</span>}<span class='code_variable'>)</span>
+
+<span class='code_keyword'>echo</span> <span class='code_string'>"# dhclient"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"## ipv4"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"send rfc3118-authentication 00:00:00:00:00:00:00:00:00:00:00:1A:09:00:00:05:58:01:03:41:01:0D</span><span class='code_variable'>${str}</span><span class='code_string'>;"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"## ipv6"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"send dhcp6.auth 00:00:00:00:00:00:00:00:00:00:00:1A:09:00:00:05:58:01:03:41:01:0D</span><span class='code_variable'>${str}</span><span class='code_string'>;"</span>
+
+<span class='code_keyword'>echo</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"# systemd-networkd"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"## [DHCPv4]"</span>
+str2<span class='code_entity'>=</span><span class='code_variable'>`</span><span class='code_keyword'>echo</span><span class='code_variable'> </span><span class='code_string'>"00:00:00:00:00:00:00:00:00:00:00:1A:09:00:00:05:58:01:03:41:01:0D</span><span class='code_variable'>${str}</span><span class='code_string'>"</span><span class='code_variable'> </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>sed</span><span class='code_variable'> </span><span class='code_string'>'s/^/\\\x/ ; s/:/\\\x/g'</span><span class='code_variable'>`</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"SendOption=90:string:</span><span class='code_variable'>${str2}</span><span class='code_string'>"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"## [DHCPv6]"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"SendOption=11:string:</span><span class='code_variable'>${str2}</span><span class='code_string'>"</span>
+
+<span class='code_keyword'>echo</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"# mikrotik routeros"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"## DHCPv4"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"/ip dhcp-client option"</span>
+str2<span class='code_entity'>=</span><span class='code_variable'>`</span><span class='code_keyword'>echo</span><span class='code_variable'> </span><span class='code_string'>"00:00:00:00:00:00:00:00:00:00:00:1A:09:00:00:05:58:01:03:41:01:0D</span><span class='code_variable'>${str}</span><span class='code_string'>"</span><span class='code_variable'> </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>sed</span><span class='code_variable'> </span><span class='code_string'>'s/://g'</span><span class='code_variable'>`</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"add code=90 name=authsend value=0x</span><span class='code_variable'>${str2}</span><span class='code_string'>"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"## DHCPv6"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"/ipv6 dhcp-client option"</span>
+<span class='code_keyword'>echo</span> <span class='code_string'>"add code=11 name=authsend value=0x</span><span class='code_variable'>${str2}</span><span class='code_string'>"</span>
+</code></pre><br>
+<h2 id='Class-Of-Service'>Class-Of-Service</h2><br>
+<p>**DHCP packets MUST be flagged COS/PCP 6 and DSCP 6 (48 dec) class-of-service **<br>
+However, DSCP is not mandatory but recommended.</p><br>
+<p><b>DHCPv4 clients use RAW SOCKETS for DISCOVER/REQUEST (init) requests and BSD/UDP SOCKETS for RENEW requests.<br>
+In consequence, you CANNOT use netfilter mangle rules to change COS/PCP and DSCP on DHCPv4. You MUST use L2 filtering. For IPv6, no problem for using netfilter mangle rules to change COS/DSCP.</b><br>
+<b>IMPORTANT NOTICE : Since kernel 5.7, the netfilter netdev egress filter could match DHCP packets. See below netfilter nftables egress filter, it could be fun to try without tc script…</b></p><br>
+<p><b>ALL OUTPUT PACKETS (from router) MUST BE ZERO (0 !) COS/DSCP TAGGUED, except DHCP relative to authentication. If it is not the case, the flow speeds will be drastically limited !</b></p><br>
+<p><b>For standalone ARP packets, it is currently not mandatory to set COS/DSCP, but it could be in a near future…</b></p><br>
+<p>On Linux L2 filtering can be done with tc (traffic-control) tool. On Mikrotik router there switch rules or bridge filters.</p><br>
+<h3 id='linux tc'>linux tc</h3><pre class='fenced-code'><code class='fenced-code-content' lang='shell'><span class='code_variable'>#!/bin/sh</span>
+iface<span class='code_entity'>=</span><span class='code_string'>"orange1"</span>
+tc_qos<span class='code_entity'>=</span><span class='code_string'>"0:6"</span>
+vlan<span class='code_entity'>=</span><span class='code_string'>"832"</span>
+physiface<span class='code_entity'>=</span><span class='code_string'>"wan1"</span>
+mac_addr<span class='code_entity'>=</span><span class='code_string'>"&lt;livebox_mac&gt;"</span>
+<span class='code_function'>ip</span> <span class='code_function'>link</span> <span class='code_function'>add</span> <span class='code_function'>link</span> <span class='code_variable'>$physiface</span> name <span class='code_variable'>$iface</span> <span class='code_keyword'>type</span> vlan <span class='code_function'>id</span> <span class='code_variable'>$vlan</span>
+<span class='code_function'>ip</span> <span class='code_function'>link</span> <span class='code_keyword'>set</span> dev <span class='code_variable'>$iface</span> address <span class='code_variable'>$mac_addr</span>
+<span class='code_function'>ip</span> <span class='code_function'>link</span> <span class='code_keyword'>set</span> <span class='code_variable'>$iface</span> up
+tc qdisc del dev <span class='code_variable'>$iface</span> root ; tc filter del dev <span class='code_variable'>$iface</span>
+tc qdisc replace dev <span class='code_variable'>$iface</span> root handle <span class='code_number'>1</span>: prio
+tc filter <span class='code_function'>add</span> dev <span class='code_variable'>$iface</span> parent <span class='code_number'>1</span>: prio <span class='code_number'>1</span> u32 match <span class='code_function'>ip</span> protocol <span class='code_number'>17</span> ff match <span class='code_function'>ip</span> dport <span class='code_number'>67</span> ffff action skbedit priority <span class='code_variable'>$tc_qos</span> <span class='code_comment'># dhcpv4</span>
+tc filter <span class='code_function'>add</span> dev <span class='code_variable'>$iface</span> parent <span class='code_number'>1</span>: prio <span class='code_number'>2</span> protocol ipv6 u32 match ip6 protocol <span class='code_number'>17</span> ff match ip6 dport <span class='code_number'>547</span> ffff action skbedit priority <span class='code_variable'>$tc_qos</span> <span class='code_comment'># dhcpv6</span>
+<span class='code_comment'># the following is not mandatory, but recommended</span>
+tc filter <span class='code_function'>add</span> dev <span class='code_variable'>$iface</span> parent <span class='code_number'>1</span>: prio <span class='code_number'>3</span> protocol 0x806 u32 match u32 <span class='code_number'>0</span> <span class='code_number'>0</span> action skbedit priority <span class='code_variable'>$tc_cos</span> <span class='code_comment'># arp</span>
+tc filter <span class='code_function'>add</span> dev <span class='code_variable'>$iface</span> parent <span class='code_number'>1</span>: prio <span class='code_number'>4</span> protocol ipv6 u32 match ip6 dst fe00::/7 match ip6 protocol <span class='code_number'>58</span> ff action skbedit priority <span class='code_variable'>$tc_cos</span> <span class='code_comment'># icmpv6_dst (fe00::/7 = fe80::/10 + ff02::/16)</span>
+<span class='code_comment'># for information</span>
+<span class='code_comment'>#tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 protocol 58 ff action skbedit priority $tc_cos # icmpv6</span>
+<span class='code_comment'>#tc filter add dev $iface parent 1: prio 5 protocol ip u32 match ip protocol 1 ff action skbedit priority $tc_cos # icmpv4 - SHOULD NOT BE USED !</span>
+</code></pre><br>
+<h4 id='DSCP'>DSCP</h4><br>
+<p><b>This step is optional.</b></p><br>
+<p><a href='https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/'>https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/</a><br>
+This version of tc script change COS and DSCP to 6, it should work but it has NOT been tested and work in progress.<br>
+note: DSCP CS6 = 48 (dec)  = 0xc0 (TOS-hex)</p><br>
+<p>script based on tc :</p><pre class='fenced-code'><code class='fenced-code-content' lang='shell'><span class='code_variable'>#!/bin/sh</span>
+iface<span class='code_entity'>=</span><span class='code_string'>"orange1"</span>
+tc_cos<span class='code_entity'>=</span><span class='code_string'>"0:6"</span>
+tc_tos<span class='code_entity'>=</span><span class='code_string'>"0xc0"</span>
+tc_retain<span class='code_entity'>=</span><span class='code_string'>"0xfc"</span>
+vlan<span class='code_entity'>=</span><span class='code_string'>"832"</span>
+physiface<span class='code_entity'>=</span><span class='code_string'>"wan1"</span>
+mac_addr<span class='code_entity'>=</span><span class='code_string'>"&lt;livebox_mac&gt;"</span>
+<span class='code_function'>ip</span> <span class='code_function'>link</span> <span class='code_function'>add</span> <span class='code_function'>link</span> <span class='code_variable'>$physiface</span> name <span class='code_variable'>$iface</span> <span class='code_keyword'>type</span> vlan <span class='code_function'>id</span> <span class='code_variable'>$vlan</span>
+<span class='code_function'>ip</span> <span class='code_function'>link</span> <span class='code_keyword'>set</span> dev <span class='code_variable'>$iface</span> address <span class='code_variable'>$mac_addr</span>
+<span class='code_function'>ip</span> <span class='code_function'>link</span> <span class='code_keyword'>set</span> <span class='code_variable'>$iface</span> up
+tc qdisc del dev <span class='code_variable'>$iface</span> root ; tc filter del dev <span class='code_variable'>$iface</span>
+tc qdisc replace dev <span class='code_variable'>$iface</span> root handle <span class='code_number'>1</span>: prio
+tc filter <span class='code_function'>add</span> dev <span class='code_variable'>$iface</span> parent <span class='code_number'>1</span>: prio <span class='code_number'>1</span> protocol <span class='code_function'>ip</span> u32 match <span class='code_function'>ip</span> ihl <span class='code_number'>5</span> 0xf match u16 0x0000 0x1fff at <span class='code_number'>6</span> match <span class='code_function'>ip</span> protocol <span class='code_number'>17</span> 0xff match <span class='code_function'>ip</span> sport <span class='code_number'>68</span> 0xffff match <span class='code_function'>ip</span> dport <span class='code_number'>67</span> 0xffff action skbedit priority <span class='code_variable'>$tc_cos</span> pipe action pedit pedit munge <span class='code_function'>ip</span> tos <span class='code_keyword'>set</span> <span class='code_variable'>$tc_tos</span> retain <span class='code_variable'>$tc_retain</span> pipe action csum ip4h <span class='code_comment'># dhcpv4_DSCP</span>
+tc filter <span class='code_function'>add</span> dev <span class='code_variable'>$iface</span> parent <span class='code_number'>1</span>: prio <span class='code_number'>2</span> protocol ipv6 u32 match ip6 protocol <span class='code_number'>17</span> 0xff match ip6 sport <span class='code_number'>546</span> 0xffff match ip6 dport <span class='code_number'>547</span> 0xffff action skbedit priority <span class='code_variable'>$tc_cos</span> pipe action pedit pedit munge ip6 tos <span class='code_keyword'>set</span> <span class='code_variable'>$tc_tos</span> retain <span class='code_variable'>$tc_retain</span> <span class='code_comment'># dhcpv6_DSCP</span>
+<span class='code_comment'># the following is not mandatory, but recommended</span>
+tc filter <span class='code_function'>add</span> dev <span class='code_variable'>$iface</span> parent <span class='code_number'>1</span>: prio <span class='code_number'>3</span> protocol arp u32 match u8 <span class='code_number'>0</span> <span class='code_number'>0</span> action skbedit priority <span class='code_variable'>$tc_cos</span> <span class='code_comment'># arp</span>
+tc filter <span class='code_function'>add</span> dev <span class='code_variable'>$iface</span> parent <span class='code_number'>1</span>: prio <span class='code_number'>4</span> protocol ipv6 u32 match ip6 dst fe00::/7 match ip6 protocol <span class='code_number'>58</span> 0xff action skbedit priority <span class='code_number'>0</span>:6 pipe action pedit ex munge ip6 traffic_class <span class='code_keyword'>set</span> <span class='code_variable'>$tc_tos</span> retain <span class='code_variable'>$tc_retain</span> <span class='code_comment'># icmpv6_dst_DSCP (fe00::/7 = fe80::/10 + ff02::/16)</span>
+<span class='code_comment'># for information - no dscp</span>
+<span class='code_comment'>#tc filter add dev $iface parent 1: prio 3 protocol ipv6 u32 match ip6 protocol 17 0xff match ip6 sport 546 0xffff match ip6 dport 547 0xffff action skbedit priority $tc_cos # dhcpv6</span>
+<span class='code_comment'>#tc filter add dev $iface parent 1: prio 4 protocol ipv6 u32 match ip6 dst fe00::/7 match ip6 protocol 58 0xff action skbedit priority $tc_cos # icmpv6 dst (fe00::/7 = fe80::/10 + ff02::/16)</span>
+</code></pre><br>
+<h3 id='nftables mangle'>nftables mangle</h3><br>
+<p><a href='https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/'>https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/324/</a><br>
+The following change DSCP and COS for ipv6 NS/NA/RS packets. From systemd v253, new options exist to modify COS and DSCP to 6 on dhcpv4 (<a href='https://github.com/systemd/systemd/pull/25904'>https://github.com/systemd/systemd/pull/25904</a>).<br>
+<b>But, you always have to modify COS(PCP) and DSCP for dhcpv6 (and icmpv6). Todo this use the previous nftables rules.</b></p><br>
+<ul>
+<li>original version (prefer next/simpler/better version) :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>iface = orange1.832
+table inet firewall {
+	chain prio_orange {
+		meta nfproto ipv4
+			meta priority set 0:0
+			ip dscp set cs0
+
+    	meta nfproto ipv6
+    		meta priority set 0:0
+    		ip6 dscp set cs0
+    	ip6 daddr { fe80::/10, ff02::/16 }
+    		icmpv6 type {
+    			nd-router-solicit,
+    			nd-neighbor-solicit,
+    			nd-neighbor-advert
+    		}
+    		meta priority set 0:6
+    		ip6 dscp set cs6
+    	ip6 daddr { fe80::/10, ff02::/16 }
+    		udp sport 546
+    		udp dport 547
+    		meta priority set 0:6
+    		ip6 dscp set cs6
+    }
+
+    chain mangle_postrouting {
+    	type filter hook postrouting priority mangle
+    	policy accept
+
+    	oifname $iface rt ipsec missing jump prio_orange
+    }
+}
+</code></pre><br>
+<ul>
+<li>a simpler (better?) version (note the new netdev/egress filter at the end) :<br>note: it should be better to untrack mangled packets <a href='https://wiki.nftables.org/wiki-nftables/index.php/Mangling_packet_headers'>https://wiki.nftables.org/wiki-nftables/index.php/Mangling_packet_headers</a> (not tested)</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'># ipv4 (for renew)
+table ip mangle {
+	chain prio_orange {
+        udp sport 68 udp dport 67 meta priority set 0:6 ip dscp set cs6 untrack counter comment "mangle-prio_orange_DHCP"
+       	#udp sport 68 udp dport 67 meta priority set 0:6 ip dscp set cs6 counter comment "mangle-prio_orange_DHCP"
+	}
+
+    chain POSTROUTING {
+    	type filter hook postrouting priority mangle; policy accept;
+        oifname $iface counter jump prio_orange comment "mangle-postrouting_orange"
+   }
+}
+
+# ipv6
+table ip6 mangle {
+	chain prio_orange {
+	    icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } meta priority set 0:6 ip6 dscp set cs6 untrack counter comment "mangle6-prio_orange_ICMP"
+    	#icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } meta priority set 0:6 ip6 dscp set cs6 counter comment "mangle6-prio_orange_ICMP"
+       	udp sport 546 udp dport 547 meta priority set 0:6 ip6 dscp set cs6 untrack counter comment "mangle6-prio_orange_DHCP"
+       	#udp sport 546 udp dport 547 meta priority set 0:6 ip6 dscp set cs6 counter comment "mangle6-prio_orange_DHCP"
+	}
+
+    chain POSTROUTING {
+    	type filter hook postrouting priority mangle; policy accept;
+        oifname $iface ip6 daddr { fe80::/10, ff02::/16 } counter jump prio_orange comment "mangle6-postrouting_orange"
+   }
+}
+</code></pre><br>
+<br>
+<h3 id='nftables netdev'>nftables netdev</h3><br>
+<p>Before kernel 6.x, nftables was NOT able to modify ipv4 DHCP packets, because they are using RAW sockets.</p><br>
+<p>Since recent kernels, a new method exist with netdev egress filter : <a href='https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/new/?topicseen#new'>Filtrer les raw socket avec nftables ?</a><br>
+<b>with netdev egress rules, netfilter mangle rules or traffic-control (tc script) are NO MORE NECESSARY</b><br>
+<a href='https://nftables.org/projects/nftables/files/changes-nftables-1.1.3.txt'>https://nftables.org/projects/nftables/files/changes-nftables-1.1.3.txt</a></p><br>
+<p>There are 2 methods to change dscp/cos/pcp on nftables netdev egress. The first method (recommended) is to apply egress on physical interface (parent of vlan interface 832). The second is to apply on vlan 832 interface.<br>
+Note: we are using netdev table, in this case we are applying settings on low level network device stack. You can specify « ^vlan id 832 » or not, it will work in both case. For this documentation, we will keep it for clarification.</p><br>
+<p>Note: we will using <code class='code-inline'>vlan pcp set 6</code> instead of <code class='code-inline'>meta priority set 0:6 + egress-qos-map</code> just because it is easier. DO NOT FORGET that in all case <code class='code-inline'>egress-qos-map</code> is required, but it can be set natively with systemd-netword via <code class='code-inline'>EgressQOSMaps=6-6</code> (since systemd v253).</p><br>
+<br>
+<ul>
+<li>method1: use physical interface</li>
+</ul><p>note: 'meta priority set 0:6' should NOT be required if phy version ('vlan pcp set 6' already done the right thing)</p><pre class='fenced-code'><code class='fenced-code-content'>chain prio_orange_phy {
+	icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } vlan pcp set 6 meta priority set 0:6 ip6 dscp set cs6 counter comment "prio_orange_ICMP6"
+	udp dport 547 vlan pcp set 6 meta priority set 0:6 ip6 dscp set cs6 counter comment "prio_orange_DHCP6"
+	udp dport 67 vlan pcp set 6 meta priority set 0:6 ip dscp set cs6 counter comment "prio_orange_DHCP4"
+	vlan type arp vlan pcp set 6 counter comment "prio_orange_ARP"
+}
+</code></pre><p>note: you could also use <code class='code-inline'>vlan pcp set 6 ip6 dscp set cs6</code> instead of <code class='code-inline'>vlan pcp set 6 meta priority set 0:6 ip6 dscp set cs6</code>.<br>
+$iface_wan1 = <b>physical interface</b> (parent of vlan 832 interface). Remember that you are using netdev and in this case, you can remove (or not) « ^vlan id 832 ».</p><pre class='fenced-code'><code class='fenced-code-content'>chain egress {
+	type filter hook egress devices = $iface_wan1 priority filter; policy accept;
+    vlan id 832 jump prio_orange_phy comment "egress-prio_orange_phy"
+}
+</code></pre><br>
+<br>
+<ul>
+<li>method2: use vlan interface (832)</li>
+</ul><p>note: no ‘vlan pcp set 6’ in this version, ‘meta priority set 0:6’ is required</p><pre class='fenced-code'><code class='fenced-code-content'>chain prio_orange_vlan {
+	icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } meta priority set 0:6 ip6 dscp set cs6 counter comment "prio_orange_ICMP6"
+	udp dport 547 meta priority set 0:6 ip6 dscp set cs6 counter comment "prio_orange_DHCP6"
+	udp dport 67 meta priority set 0:6 ip dscp set cs6 counter comment "prio_orange_DHCP4"
+	ether type arp meta priority set 0:6 counter comment "prio_orange_ARP"
+}
+</code></pre><p>$iface_wan1 = virtual vlan interface (832)</p><pre class='fenced-code'><code class='fenced-code-content'>chain egress {
+	type filter hook egress devices = $iface_wan1 priority filter; policy accept;
+    jump prio_orange_vlan comment "egress-prio_orange_vlan"
+}
+</code></pre><br>
+<br>
+<p>You MUST modify COS/DSCP before the very FIRST DHCP request. To do this, it is necessary to execute a script just AFTER the creation of the VLAN (832) interface (in our case, orange1). To inject nftables netdev/egress nftables rules on interface creation process, we could use the following systemd service unit.</p><br>
+<p>/etc/systemd/system/netdev-egress@.service (not FULLY tested, prefer other alternative below) :</p><pre class='fenced-code'><code class='fenced-code-content'>[Unit]
+Description=netdev-egress pre-requisite for %i
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/lib/systemd/systemd-networkd-wait-online --interface=%i --operational-state=off --timeout=8
+ExecStart=/etc/systemd/scripts/netdev-egress %i
+RemainAfterExit=yes
+TimeoutSec=10
+</code></pre><br>
+<p>A BETTER tested version (should be running just after interface link UP and before dhcp client requests):</p><pre class='fenced-code'><code class='fenced-code-content'>[Unit]
+Description=netdev-egress pre-requisite for %i
+BindTo=sys-subsystem-net-devices-%i.device
+After=sys-subsystem-net-devices-%i.device
+
+[Service]
+Type=oneshot
+ExecStart=/etc/systemd/scripts/netdev-egress %i
+RemainAfterExit=true
+TimeoutSec=10
+
+[Install]
+WantedBy=sys-subsystem-net-devices-%i.device
+</code></pre><br>
+<br>
+<p>/etc/systemd/scripts/netdev-egress (change <code class='code-inline'>iface=orange1</code> as required) :<br>
+note: this script apply on vlan interface (not physical) and is binded to its creation via systemd-networkd</p><pre class='fenced-code'><code class='fenced-code-content' lang='shell'><span class='code_variable'>#!/bin/sh</span>
+<span class='code_comment'># apply netdev/egress priority for orange dhcp client requests</span>
+<span class='code_comment'># Version 20240717</span>
+
+SleepRetry<span class='code_entity'>=</span><span class='code_number'>3</span>
+
+<span class='code_comment'># set orange interface</span>
+<span class='code_keyword'>if</span> [ <span class='code_variable'>-z</span> <span class='code_string'>"</span><span class='code_variable'>$1</span><span class='code_string'>"</span> ] ; <span class='code_keyword'>then</span>
+        iface<span class='code_entity'>=</span><span class='code_string'>"orange1"</span>
+<span class='code_keyword'>else</span>
+        iface<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>$1</span><span class='code_string'>"</span>
+<span class='code_keyword'>fi</span>
+
+<span class='code_keyword'>echo</span> <span class='code_string'>"executing nft chain netdev filter egress device </span><span class='code_variable'>$iface</span><span class='code_string'>"</span>
+
+<span class='code_function'>ip</span> <span class='code_function'>link</span> show dev <span class='code_variable'>$iface</span>
+<span class='code_keyword'>if</span> [ <span class='code_variable'>$?</span> <span class='code_variable'>-ne</span> <span class='code_number'>0</span> ] ; <span class='code_keyword'>then</span>
+        <span class='code_keyword'>echo</span> <span class='code_string'>"ERROR : interface </span><span class='code_variable'>$iface</span><span class='code_string'> not exist, retrying in </span><span class='code_variable'>${SleepRetry}</span><span class='code_string'>s..."</span>
+        <span class='code_function'>sleep</span> <span class='code_variable'>$SleepRetry</span>
+        <span class='code_function'>ip</span> <span class='code_function'>link</span> show dev <span class='code_variable'>$iface</span> ; [ <span class='code_variable'>$?</span> <span class='code_variable'>-ne</span> <span class='code_number'>0</span> ] <span class='code_entity'>&&</span> <span class='code_keyword'>echo</span> <span class='code_string'>"ERROR : interface </span><span class='code_variable'>$iface</span><span class='code_string'> definitely not exist !"</span> <span class='code_entity'>&&</span> <span class='code_keyword'>exit</span> <span class='code_number'>9</span>
+<span class='code_keyword'>fi</span>
+
+<span class='code_keyword'>echo</span> <span class='code_string'>"executing nft chain netdev filter egress device </span><span class='code_variable'>$iface</span><span class='code_string'>"</span>
+
+<span class='code_keyword'>echo</span> ; <span class='code_keyword'>echo</span> <span class='code_string'>"existing table netdev filter"</span>
+nft list table netdev filter
+
+<span class='code_keyword'>echo</span> ; <span class='code_keyword'>echo</span> <span class='code_string'>"applying nft chain netdev filter egress </span><span class='code_variable'>$iface</span><span class='code_string'>"</span>
+nft <span class='code_function'>add</span> <span class='code_string'>"table netdev filter"</span>
+nft <span class='code_function'>add</span> <span class='code_string'>"chain netdev filter egress { type filter hook egress devices = { </span><span class='code_variable'>${iface}</span><span class='code_string'> } priority 0; }"</span>
+nft insert <span class='code_string'>"rule netdev filter egress udp dport 67 meta priority set 0:6 ip dscp set cs6 counter comment </span><span class='code_entity'>\"</span><span class='code_string'>egress_prio_</span><span class='code_variable'>${iface}</span><span class='code_string'>_DHCP4</span><span class='code_entity'>\"</span><span class='code_string'>"</span>
+nft insert <span class='code_string'>"rule netdev filter egress ether type arp meta priority set 0:6 counter comment </span><span class='code_entity'>\"</span><span class='code_string'>egress_prio_</span><span class='code_variable'>${iface}</span><span class='code_string'>_ARP</span><span class='code_entity'>\"</span><span class='code_string'>"</span>
+nft insert <span class='code_string'>"rule netdev filter egress udp dport 547 meta priority set 0:6 ip6 dscp set cs6 counter comment </span><span class='code_entity'>\"</span><span class='code_string'>egress_prio_</span><span class='code_variable'>${iface}</span><span class='code_string'>_DHCP6</span><span class='code_entity'>\"</span><span class='code_string'>"</span>
+nft insert <span class='code_string'>"rule netdev filter egress icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } meta priority set 0:6 ip6 dscp set cs6 counter comment </span><span class='code_entity'>\"</span><span class='code_string'>egress_prio_</span><span class='code_variable'>${iface}</span><span class='code_string'>_ICMP6</span><span class='code_entity'>\"</span><span class='code_string'>"</span>
+<span class='code_comment'>#nft insert "rule netdev filter egress icmpv6 daddr { fe00::/7 } meta priority set 0:6 ip6 dscp set cs6 counter comment \"egress_prio_${iface}_ICMP6\""</span>
+
+<span class='code_keyword'>echo</span> ; <span class='code_keyword'>echo</span> <span class='code_string'>"final nft table netdev filter"</span>
+nft list table netdev filter
+
+<span class='code_keyword'>echo</span> ; <span class='code_keyword'>echo</span> <span class='code_string'>"networkctl renew </span><span class='code_variable'>$iface</span><span class='code_string'>"</span>
+networkctl renew <span class='code_variable'>$iface</span>
+<span class='code_keyword'>echo</span> ; <span class='code_keyword'>echo</span> <span class='code_string'>"networkctl status </span><span class='code_variable'>$iface</span><span class='code_string'>"</span>
+networkctl <span class='code_variable'>-s</span> status <span class='code_variable'>$iface</span>
+</code></pre><br>
+<p>Finally, enable service unit : <code class='code-inline'>systemctl enable netdev-egress@&lt;vlan832-interface&gt;</code> and show logs <code class='code-inline'>journalctl -xeu netdev-egress@vlan832</code> :</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>[...]
+systemd-networkd[1071]: orange1: Gained IPv6LL
+[...]
+systemd-networkd[1071]: orange1: DHCP: received delegated prefix xxxx::/56
+[...]
+systemd-networkd[1071]: orange1: DHCPv4 address xxxx/24, gateway xxxx.1 acquired from yy.yy.yy.yy.yy
+</code></pre><br>
+<br>
+<h3 id='Mikrotik'>Mikrotik</h3><br>
+<br>
+<p>DHCPv4 clients use RAW SOCKETS for DISCOVER/REQUEST (init) requests and BSD/UDP SOCKETS for RENEW requests.<br>
+In consequence, you CANNOT use netfilter mangle rules to change PCP and DSCP. You MUST use L2 rules (switch rules or bridge filters).</p><br>
+<p>Moreover, Mikrotik limit its switch rules to INGRESS, switch rules cannot be used for EGRESS. In other terms, to change COS/PCP and DSCP on DHCPv4 requests you must use a different device (switch/router) in front of your main router.</p><br>
+<p>To bypass this limitation, you can use bridge filters (instead of switch rules), BUT it is not recommended in performance point view because the CPU will be in charge of these filters.</p><br>
+<p>If you want to use switch rules : ISP Fiber --- Switch (switch rules) --- Router (DHCP clients)<br>
+If you want to use bridge filters : ISP Fiber --- Router (DHCP clients + bridge filters)</p><br>
+<p>note : fe00::/7 (fe80::/10 + ff02::/16)</p><br>
+<ul>
+<li>on switch (CRS/CCR211x) with switch rules (before ROS 7.15) :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>/interface ethernet switch rule
+add comment="orange1 dhcp4 COS6" dst-port=67 mac-protocol=ip new-vlan-priority=6 ports=sfp1.router protocol=udp switch=switch1 vlan-id=832
+add comment="orange1 dhcp6 COS6" dst-port=547 mac-protocol=ipv6 new-vlan-priority=6 ports=sfp1.router protocol=udp switch=switch1 vlan-id=832
+add comment="orange1 icmp6 COS6" dst-address6=fe00::/7 mac-protocol=ipv6 new-vlan-priority=6 ports=sfp1.router protocol=icmp switch=switch1 vlan-id=832
+add comment="orange1 arp COS6" mac-protocol=arp new-vlan-priority=6 ports=sfp1.router switch=switch1 vlan-id=832
+</code></pre><br>
+<br>
+<ul>
+<li>on switch (CRS/CCR211x) with switch rules (after ROS 7.15 - modify PCP and DSCP) :<br>note : the following is for a CRS310, you must disable tx-manager only on disabled ports (not used), and enable on router port (ingress traffic)</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>/interface ethernet switch set 0 qos-hw-offloading=yes
+/interface ethernet switch qos profile add comment="orange PCP6 DSCP48_CS6" dscp=48 name=orange-prio-bng pcp=6 traffic-class=6
+
+/interface ethernet switch qos port
+	set sfp-sfpplus4 tx-manager=offline
+	set sfp1 tx-manager=offline
+	set sfp2 tx-manager=offline
+	set sfp3 tx-manager=offline
+	set sfp4 tx-manager=offline
+	set sfp5 tx-manager=offline
+
+/interface ethernet switch l3hw-settings  set icmp-reply-on-error=no
+
+/interface ethernet switch rule
+	add comment="orange1 arp QOS" mac-protocol=arp new-qos-profile=orange-prio-bng ports=sfpplus1.router switch=switch1 vlan-id=832
+	add comment="orange1 dhcp4 QOS" dst-port=67 src-port=68 mac-protocol=ip new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=udp switch=switch1 vlan-id=832
+	add comment="orange1 dhcp6 QOS" dst-port=547 src-port=546 mac-protocol=ipv6 new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=udp switch=switch1 vlan-id=832
+	add comment="orange1 icmp6 QOS" dst-address6=fe00::/7 mac-protocol=ipv6 new-qos-profile=orange-prio-bng ports=sfpplus1.router protocol=icmpv6 switch=switch1 vlan-id=832
+</code></pre><br>
+<ul>
+<li>since ROS 7.16 it is necessary to define a param to keep PCP and DSCP (and NOT ignore) that could be defined before reaching the switch (CRS/CCR211x). For example, if you ALREADY change PCP and DSCP on a previous equipment (firewall mangle or dhcp clients for example) and if <code class='code-inline'>trust-l2</code>and <code class='code-inline'>trust-l3</code>are not defined (ignore by default), the switch will reset packets to prio 0 (and dhcp clients will not be able to authenticate to Orange).<br><a href='https://lafibre.info/remplacer-livebox/news-mikrotik-7-16-breaking-changes-qos-trust-l2l3'>https://lafibre.info/remplacer-livebox/news-mikrotik-7-16-breaking-changes-qos-trust-l2l3</a></li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>/interface ethernet switch qos port  print
+/interface ethernet switch qos port
+	set sfp1.router trust-l2=keep trust-l3=keep
+	set sfp2.orange1-ont trust-l2=keep trust-l3=keep
+	set sfp3.orange1-onu trust-l2=keep trust-l3=keep
+</code></pre><br>
+<p>If you have TV, add also these rules :</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>/interface ethernet switch qos profile add name=orange-prio-tv pcp=5 traffic-class=5
+/interface ethernet switch rule add comment="orange TV PCP5" mac-protocol=ip new-qos-profile=orange-prio-tv ports=sfp1.router switch=switch1 vlan-id=840
+</code></pre><br>
+<br>
+<ul>
+<li>on router (CCR2004 - WITHOUT switch chipset ) with bridge filters :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>/interface bridge filter
+add action=set-priority chain=output comment="orange1 dhcp4 COS6" disabled=yes dst-port=67 ip-protocol=udp log=yes log-prefix="orange1 COS6_DHCP4" mac-protocol=ip new-priority=6 out-interface=bridge-wan1 passthrough=yes
+add action=set-priority chain=output comment="orange1 dhcp6 COS6" disabled=yes dst-port=547 ip-protocol=udp log=yes log-prefix="orange1 COS6_DHCP6" mac-protocol=ipv6 new-priority=6 out-interface=bridge-wan1 passthrough=yes
+add action=set-priority chain=output comment="orange1 icmp6 COS6" disabled=yes ip-protocol=icmpv6 log-prefix="orange1 COS6_ICMP6" mac-protocol=ipv6 new-priority=6 out-interface=bridge-wan1 passthrough=yes
+add action=set-priority chain=output comment="orange1 arp COS6" disabled=yes log=yes log-prefix="orange1 COS6_ARP" mac-protocol=arp new-priority=6 out-interface=bridge-wan1 passthrough=yes
+</code></pre><br>
+<ul>
+<li>firewall mangle rules are ONLY for DHCPv6 client requests (IPv6 do not use RAW SOCKETS for DHCP) :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>/ipv6 firewall mangle
+add action=set-priority chain=output comment="orange1 icmp6 133RS COS6" dst-address=ff00::/8 icmp-options=133:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
+add action=set-priority chain=output comment="orange1 icmp6 136NA COS6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
+add action=set-priority chain=output comment="orange1 icmp6 135NS COS6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
+add action=set-priority chain=output comment="orange1 dhcp6 COS6" dst-port=547 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=546
+</code></pre><br>
+<h4 id='DSCP'>DSCP</h4><br>
+<p><b>This step is optional and obsoleted with last ROS (7.15-16) capabilities - see previous chapter.</b></p><br>
+<p>This is optional in 2023, and not really required (DSCP 48 match with 6 on layer 2). Since ROS 7.15, it is possible to modify DSCP directly with Switch rules (see above).<br>
+note : if it do not work with new-dscp=48, try new-dscp=6</p><br>
+<ul>
+<li>original version :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>/ipv6 firewall mangle
+add action=change-dscp chain=output comment="orange1 icmp6 133RS DSCP6" dst-address=ff00::/8 icmp-options=133:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
+add action=change-dscp chain=output comment="orange1 icmp6 136NA DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
+add action=change-dscp chain=output comment="orange1 icmp6 135NS DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
+add action=change-dscp chain=output comment="orange1 dhcp6 DSCP6" dst-port=547 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=546
+</code></pre><br>
+<ul>
+<li>better version with POSTROUTING (you could also use OUTPUT chain) :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>/ipv6 firewall mangle
+add action=set-priority chain=prio_orange_dhcp6 comment="dhcp6 COS6" new-priority=6 passthrough=yes
+add action=change-dscp chain=prio_orange_dhcp6 comment="dhcp6 DSCP6" new-dscp=48 passthrough=yes
+add action=accept chain=prio_orange_dhcp6 comment="ACCEPT"
+
+/ip firewall mangle
+add action=change-dscp chain=postrouting comment="dhcp4 DSCP6" dst-port=67 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=68
+
+/ipv6 firewall mangle
+add action=jump chain=postrouting comment="jump prio_orange_icmp6" dst-address=fe00::/7 jump-target=prio_orange_icmp6 out-interface=bridge-wan1 protocol=icmp6
+add action=jump chain=postrouting comment="jump prio_orange_dhcp6" dst-address=fe00::/7 dst-port=547 jump-target=prio_orange_dhcp6 out-interface=bridge-wan1 protocol=udp src-port=546
+# you could also change DSCP6(48) for all COS6 packets (and remove all change-dscp rules in prio_orange_* chains)
+#add action=change-dscp chain=postrouting comment="DSCP6 for all COS6" new-dscp=48 out-interface=bridge-wan1 passthrough=no priority=6
+
+/ipv6 firewall mangle
+add action=set-priority chain=prio_orange_icmp6 comment="icmp6 136NA COS6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-priority=6 passthrough=yes protocol=icmp6
+add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 136NA DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-dscp=48 passthrough=yes protocol=icmp6
+add action=set-priority chain=prio_orange_icmp6 comment="icmp6 135NS COS6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-priority=6 passthrough=yes protocol=icmp6
+add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 135NS DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-dscp=48 passthrough=yes protocol=icmp6
+add action=set-priority chain=prio_orange_icmp6 comment="icmp6 133RS COS6" dst-address=fe00::/7 icmp-options=133:0-255 new-priority=6 passthrough=yes protocol=icmp6
+add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 133RS DSCP6" dst-address=fe00::/7 icmp-options=133:0-255 new-dscp=48 passthrough=yes protocol=icmp6
+add action=accept chain=prio_orange_icmp6 comment="ACCEPT"
+</code></pre><br>
+<h4 id='RouterOS 7.20+'>RouterOS 7.20+</h4><br>
+<p>Since RouterOS version 7.20+, there is an option in dhcp client (ipv4) to set COS (vlan-priority). This option set the COS for RAW ipv4 sockets. Then, you could finaly use firewall mangle rules to set COS (and DSCP) for ipv6 (which are NOT RAW). No more switch rules or bridge filters are required.<br>
+In the following code block, OUTPUT is used, but you could also use POSTROUTING chain…</p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'># DO NOT FORGET TO SET VLAN-PRIORITY AND DSCP IN DHCP4 CLIENT
+/ip dhcp-client add dscp=48 interface=orange1 vlan-priority=6
+
+/ip firewall mangle
+add action=set-priority chain=prio_orange comment="dhcp COS6" new-priority=6 passthrough=yes
+add action=change-dscp chain=prio_orange comment="dhcp DSCP48" new-dscp=48 passthrough=yes
+add action=accept chain=prio_orange comment="ACCEPT"
+
+/ipv6 firewall mangle
+add action=set-priority chain=prio_orange comment="dhcp COS6" new-priority=6 passthrough=yes
+add action=change-dscp chain=prio_orange comment="dhcp DSCP48" new-dscp=48 passthrough=yes
+add action=accept chain=prio_orange comment="ACCEPT"
+
+/ip firewall mangle
+add action=jump chain=output comment="orange dhcp4" dst-port=67 jump-target=prio_orange out-interface=orange1 protocol=udp src-port=68
+
+/ipv6 firewall mangle
+add action=jump chain=output comment="orange icmp6" dst-address=fe00::/7 jump-target=prio_orange out-interface=orange1 protocol=icmpv6
+add action=jump chain=output comment="orange dhcp6" dst-address=fe00::/7 dst-port=547 jump-target=prio_orange out-interface=orange1 protocol=udp src-port=546
+</code></pre><br>
+<p><b>Note: ARP packets should also be modified (new-priority=6 and new-dscp=48), but it is not currently mandatory. There is also no specific setting to do this. Let’s see if DHCP(v4/v6) settings are sufficients…</b></p><br>
+<h2 id='DHCP clients'>DHCP clients</h2><br>
+<h3 id='systemd-networkd'>systemd-networkd</h3><br>
+<p>note : to check interface status, use <code class='code-inline'>networkctl -s status &lt;iface&gt;</code></p><br>
+<ul>
+<li>/etc/systemd/network/wan1.network :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>[Match]
+Name=wan1
+[Network]
+ConfigureWithoutCarrier=true
+Address=192.168.2.254/24
+Description=WAN1 Orange1
+VLAN=orange1
+IPv6AcceptRA=no
+[DHCP]
+UseDNS=false
+</code></pre><br>
+<ul>
+<li>/etc/systemd/network/orange1.netdev :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>[NetDev]
+Name=orange1
+Kind=vlan
+MACAddress=&lt;livebox_macaddr&gt;
+[VLAN]
+Id=832
+EgressQOSMaps=6-6 # systemd v253 only
+</code></pre><br>
+<ul>
+<li>/etc/systemd/network/orange1.network :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>[Match]                                                                                                                                                                                                                                                                                      
+Name=orange1                                                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                                                             
+[Network]                                                                                                                                                                                                                                                                                    
+Description=Orange1                                                                                                                                                                                                                                                                          
+LinkLocalAddressing=ipv6                                                                                                                                                                                                                                                                     
+DHCP=yes                                                                                                                                                                                                                                                                                     
+#IPForward=yes                                                                                                                                                                                                                                                                               
+IPv4Forwarding=yes                                                                                                                                                                                                                                                                           
+IPv6Forwarding=yes                                                                                                                                                                                                                                                                           
+IPv6AcceptRA=yes                                                                                                                                                                                                                                                                             
+DHCPPrefixDelegation=yes                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                             
+# define Orange IPs (prefer pure dhcp for IPv4/DHCPv4 and manually for IPv6)                                                                                                                                                                                                                 
+#Address=80.xx.xx.xx/24                                                                                                                                                                                                                                                                     
+#Address=2a01:xx:xx:xx::254/64                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                             
+[DHCPv4]                                                                                                                                                                                                                                                                                     
+# use only ClientIdentifier=mac ; equivalent to DUIDType=link-layer (not required) ; try DUIDRawData=01:&lt;livebox_macaddr&gt; ; reset ONT could be required                                                                                                                                      
+ClientIdentifier=mac                                                                                                                                                                                                                                                                         
+# it could be a good idea to define a static IAID (just an integer, same for dhcpv6, not mandatory)                                                                                                                                                                                          
+#IAID=123456                                                                                                                                                                                                                                                                                 
+VendorClassIdentifier=sagem                                                                                                                                                                                                                                                                  
+# SendOption=77:string:... == UserClass - https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1138756                                                                                                                                                                                          
+# UserClass=FSVDSL_livebox.Internet.softathome.Livebox7                                                                                                                                                                                                                                      
+# SendOption=77:string:\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x37                                                                                      
+SendOption=77:string:\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x37                                                                                        
+SendOption=90:string:&lt;authentication_string&gt;
+\x68\x89\xa2\x63                                                                                                                                                                                                                                                                             
+UseHostname=no                                                                                                                                                                                                                                                                               
+UseDNS=no                                                                                                                                                                                                                                                                                    
+UseDomains=no                                                                                                                                                                                                                                                                                
+UseNTP=no                                                                                                                                                                                                                                                                                    
+#UseAddress=no                                                                                                                                                                                                                                                                               
+SendHostname=no                                                                                                                                                                                                                                                                              
+RouteMetric=0                                                                                                                                                                                                                                                                                
+# systemd v253 only                                                                                                                                                                                                                                                                          
+IPServiceType=CS6                                                                                                                                                                                                                                                                            
+SocketPriority=6                                                                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                                                                             
+[DHCPv6]                                                                                                                                                                                                                                                                                     
+# prefer DUIDType=link-layer (mac_addr of interface MUST be equal to livebox_macaddr&gt;) ; try DUIDRawData=00:03:00:01:&lt;livebox_macaddr&gt; (should work) or DUIDRawData=00:03:00::&lt;livebox_macaddr&gt; (should not work) ; reset ONT could be required                                              
+#DUIDRawData=00:03:00:01:58:1D:D8:xx:xx:xx                                                                                                                                                                                                                                                   
+DUIDType=link-layer                                                                                                                                                                                                                                                                          
+# it could be a good idea to define a static IAID (just an integer, same for dhcpv4, not mandatory)                                                                                                                                                                                          
+#IAID=123456                                                                                                                                                                                                                                                                                 
+# SendOption=16:string: == VendorClassIdentifier (use ONLY SendOption=16:string: in DHCPv6)                                                                                                                                                                                                  
+SendOption=16:string:\x00\x00\x04\x0e\x00\x05\x73\x61\x67\x65\x6d                                                                                                                                                                                                                            
+# SendOption=15:string:\x00...  == UserClass (add the prefix \x00)                                                                                                                                                                                                                           
+# UserClass=FSVDSL_livebox.Internet.softathome.Livebox7                                                                                                                                                                                                                                      
+# SendOption=15:string:\x00\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x37                                                                                  
+SendOption=15:string:\x00\x2b\x46\x53\x56\x44\x53\x4c\x5f\x6c\x69\x76\x65\x62\x6f\x78\x2e\x49\x6e\x74\x65\x72\x6e\x65\x74\x2e\x73\x6f\x66\x74\x61\x74\x68\x6f\x6d\x65\x2e\x4c\x69\x76\x65\x62\x6f\x78\x37                                                                                    
+SendOption=11:string:&lt;authentication_string&gt;
+\x68\x89\xa2\x63                                                                                                                                                                                                                                                                             
+UseHostname=no                                                                                                                                                                                                                                                                               
+UseDNS=no                                                                                                                                                                                                                                                                                    
+UseDomains=no                                                                                                                                                                                                                                                                                
+UseNTP=no                                                                                                                                                                                                                                                                                    
+UseAddress=no                                                                                                                                                                                                                                                                                
+SendHostname=no                                                                                                                                                                                                                                                                              
+RouteMetric=1024                                                                                                                                                                                                                                                                             
+WithoutRA=solicit                                                                                                                                                                                                                                                                            
+# disable rapid commit (simple standard)                                                                                                                                                                                                                                                     
+RapidCommit=no                                                                                                                                                                                                                                                                               
+#PrefixDelegationHint=::/56                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                             
+[IPv6AcceptRA]                                                                                                                                                                                                                                                                               
+DHCPv6Client=always                                                                                                                                                                                                                                                                          
+UseDNS=no                                                                                                                                                                                                                                                                                    
+UseDomains=no                                                           
+
+[DHCPPrefixDelegation]                                                                                                                                                                                                                                                                       
+# SubnetId in Hexa (&lt;0xY&gt;=...:xxxY::/64)                                                                                                                                                                                                                                                     
+# Token to use xxxY&lt;token&gt;/64 (&lt;::Z&gt;=xxxY::Z/64)                                                                                                                                                                                                                                             
+# Assign=no to disable addr definition                                                                                                                                                                                                                                                       
+SubnetId=0x2                                                                                                                                                                                                                                                                                 
+Token=::254                                                                                                                                                                                                                                                                                  
+Assign=yes                                                                                                                                                                                                                                                                                   
+UplinkInterface=:self                                                                                                                                                                                                                                                                        
+Announce=no                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+</code></pre><br>
+<ul>
+<li><b>OPTIONNAL FOR PREFIX DELEGATION ONLY</b> on “lan” interface /etc/systemd/network/lan.network :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>#[Link]
+#RequiredForOnline=no
+
+[Network]
+DHCPServer=yes
+DHCPPrefixDelegation=yes
+IPv6SendRA=yes
+IPv6AcceptRA=no
+
+[Address]
+Address=&lt;lan_ip4_subnet&gt;
+
+[DHCPServer]
+PoolSize=30
+EmitRouter=yes
+EmitTimezone=yes
+Timezone=Europe/Paris
+
+[DHCPPrefixDelegation]
+# SubnetId in Hexa (&lt;0xY&gt;=...:xxxY::/64)                                                                                                                                                                                                                                                     
+# Token to use xxxY&lt;token&gt;/64 (&lt;::Z&gt;=xxxY::Z/64)                                                                                                                                                                                                                                             
+# Assign=no to disable addr definition                                                                                                                                                                                                                                                       
+SubnetId=0x20
+Token=::254
+Announce=yes
+</code></pre><br>
+<ul>
+<li><b>for debugging</b> /etc/system/systemd-networkd.service.d/10-debug.conf :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>[Service]
+Environment=SYSTEMD_LOG_LEVEL=debug
+</code></pre><br>
+<p>note : since systemd v253, new options [egressqosmaps, ipservicetype, socketpriority] exists to modify COS and DSCP to 6 on DHCPv4 (<a href='https://github.com/systemd/systemd/pull/25904'>https://github.com/systemd/systemd/pull/25904</a>).</p><br>
+<p><b>WARNING : You always have to modify COS and DSCP for DHCPv6 (and ICMPv6). Todo this use the previous nftables rules (see paragraph).</b></p><br>
+<h4 id='Authentication Strings'>Authentication Strings</h4><br>
+<p><a href='https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/msg1128224/#msg1128224'>Remplacer la livebox par systemd-networkd / nftables</a></p><br>
+<p>To strictly follow Orange recommendation, you have to renew authentications strings each time. Here is the requirements to do this with native systemd-netword environment file feature.<br>
+<b>Currently, it is NOT mandatory, but it could be one day…</b></p><br>
+<ul>
+<li>/etc/networkd-orange/networkd-orange-env.sh</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='bash'><span class='code_variable'>#!/bin/bash</span>
+
+<span class='code_keyword'>set</span> <span class='code_variable'>-eu</span>
+
+<span class='code_function'>log</span>() {
+    <span class='code_keyword'>local</span> level<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>$1</span><span class='code_string'>"</span>
+    <span class='code_keyword'>shift</span>
+    <span class='code_keyword'>printf</span> <span class='code_string'>'%-5s %s\n'</span> <span class='code_string'>"</span><span class='code_variable'>$level</span><span class='code_string'>"</span> <span class='code_string'>"</span><span class='code_variable'>$*</span><span class='code_string'>"</span>
+}
+
+<span class='code_comment'># Destination</span>
+IN_OUT_PATH<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>${IN_OUT_PATH</span><span class='code_entity'>:-/</span><span class='code_variable'>etc</span><span class='code_entity'>/</span><span class='code_variable'>networkd-orange}</span><span class='code_string'>"</span>
+FILE_NAME<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>${FILE_NAME</span><span class='code_entity'>:-</span><span class='code_variable'>orange.env}</span><span class='code_string'>"</span>
+
+<span class='code_comment'># Orange vars</span>
+LOGIN<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>${LOGIN</span><span class='code_entity'>:-</span><span class='code_variable'>&lt;default&gt;}</span><span class='code_string'>"</span>
+PASSWORD<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>${PASSWORD</span><span class='code_entity'>:-</span><span class='code_variable'>&lt;default&gt;}</span><span class='code_string'>"</span>
+LIVEBOX_VERSION<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>${LIVEBOX_VERSION</span><span class='code_entity'>:-</span><span class='code_variable'>&lt;default&gt;}</span><span class='code_string'>"</span>
+LIVEBOX_HARDWARE<span class='code_entity'>=</span><span class='code_string'>"</span><span class='code_variable'>${LIVEBOX_HARDWARE</span><span class='code_entity'>:-</span><span class='code_variable'>&lt;default&gt;}</span><span class='code_string'>"</span>
+log INFO <span class='code_string'>"Orange parameters"</span>
+log INFO <span class='code_string'>"      Login:            ********"</span>
+log INFO <span class='code_string'>"      Password:         ********"</span>
+log INFO <span class='code_string'>"      Livebox Version:  </span><span class='code_variable'>${LIVEBOX_VERSION}</span><span class='code_string'>"</span>
+log INFO <span class='code_string'>"      Livebox Hardware: </span><span class='code_variable'>${LIVEBOX_HARDWARE}</span><span class='code_string'>"</span>
+
+<span class='code_comment'># Check for default values</span>
+<span class='code_keyword'>if</span> [ <span class='code_variable'>$LOGIN</span> <span class='code_entity'>==</span> <span class='code_string'>"&lt;default&gt;"</span> ]; <span class='code_keyword'>then</span>
+        log WARN <span class='code_string'>"      * LOGIN is default value !"</span>
+<span class='code_keyword'>fi</span>
+
+<span class='code_keyword'>if</span> [ <span class='code_variable'>$PASSWORD</span> <span class='code_entity'>==</span> <span class='code_string'>"&lt;default&gt;"</span> ]; <span class='code_keyword'>then</span>
+        log WARN <span class='code_string'>"      * PASSWORD is default value !"</span>
+<span class='code_keyword'>fi</span>
+
+<span class='code_keyword'>if</span> [ <span class='code_variable'>$LIVEBOX_VERSION</span> <span class='code_entity'>==</span> <span class='code_string'>"&lt;default&gt;"</span> ]; <span class='code_keyword'>then</span>
+        log WARN <span class='code_string'>"      * LIVEBOX_VERSION is default value !"</span>
+<span class='code_keyword'>fi</span>
+
+<span class='code_keyword'>if</span> [ <span class='code_variable'>$LIVEBOX_HARDWARE</span> <span class='code_entity'>==</span> <span class='code_string'>"&lt;default&gt;"</span> ]; <span class='code_keyword'>then</span>
+        log WARN <span class='code_string'>"      * LIVEBOX_HARDWARE is default value !"</span>
+<span class='code_keyword'>fi</span>
+
+<span class='code_comment'># Forge DHCP option 90</span>
+<span class='code_function'>tohex</span>() {
+  <span class='code_keyword'>for</span> <span class='code_variable'>h</span> <span class='code_keyword'>in</span> <span class='code_variable'>$(</span><span class='code_keyword'>echo</span><span class='code_variable'> $1 </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>sed</span><span class='code_variable'> </span><span class='code_string'>"s/\(.\)/</span><span class='code_entity'>\1</span><span class='code_string'> /g"</span><span class='code_variable'>)</span>; <span class='code_keyword'>do</span> <span class='code_keyword'>printf</span> %02x \'<span class='code_variable'>$h</span>; <span class='code_keyword'>done</span>
+}
+
+<span class='code_function'>addsep</span>() {
+  <span class='code_keyword'>echo</span> <span class='code_variable'>$(</span><span class='code_keyword'>echo</span><span class='code_variable'> $1 </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>sed</span><span class='code_variable'> </span><span class='code_string'>"s/\(.\)\(.\)/:</span><span class='code_entity'>\1\2</span><span class='code_string'>/g"</span><span class='code_variable'>)</span>
+}
+
+r<span class='code_entity'>=</span><span class='code_variable'>$(</span><span class='code_function'>dd</span><span class='code_variable'> </span>if<span class='code_entity'>=</span><span class='code_variable'>/dev/urandom </span>bs<span class='code_entity'>=</span><span class='code_variable'>1k </span>count<span class='code_entity'>=</span><span class='code_number'>1</span><span class='code_variable'> 2</span><span class='code_entity'>&gt;</span><span class='code_variable'>&1 </span><span class='code_entity'>|</span><span class='code_variable'> md5sum </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>cut</span><span class='code_variable'> -c1-16)</span>
+id<span class='code_entity'>=</span><span class='code_variable'>${r</span><span class='code_entity'>:</span><span class='code_variable'>0</span><span class='code_entity'>:</span><span class='code_variable'>1}</span>
+h<span class='code_entity'>=</span>3c12<span class='code_variable'>$(tohex $</span>{<span class='code_variable'>r</span>}<span class='code_variable'>)</span>0313<span class='code_variable'>$(tohex $</span>{<span class='code_variable'>id</span>}<span class='code_variable'>)$(</span><span class='code_keyword'>echo</span><span class='code_variable'> -n $</span>{<span class='code_variable'>id</span>}<span class='code_variable'>$</span>{<span class='code_variable'>PASSWORD</span>}<span class='code_variable'>$</span>{<span class='code_variable'>r</span>}<span class='code_variable'> </span><span class='code_entity'>|</span><span class='code_variable'> md5sum </span><span class='code_entity'>|</span><span class='code_variable'> </span><span class='code_function'>cut</span><span class='code_variable'> -c1-32)</span>
+log INFO <span class='code_string'>"Generating Orange DHCP values"</span>
+
+<span class='code_comment'># vendor class</span>
+<span class='code_keyword'>export</span> VENDOR_CLASS_IDENTIFIER_4<span class='code_entity'>=</span><span class='code_variable'>${LIVEBOX_HARDWARE}</span>
+<span class='code_keyword'>export</span> VENDOR_CLASS_IDENTIFIER_6<span class='code_entity'>=</span>00:00:04:0e:00:05<span class='code_variable'>$(addsep </span>$(<span class='code_variable'>tohex $</span>{<span class='code_variable'>LIVEBOX_HARDWARE</span>})<span class='code_variable'>)</span>
+log INFO <span class='code_string'>"      Vendor class has been generated"</span>
+
+<span class='code_comment'># user class</span>
+<span class='code_keyword'>export</span> USER_CLASS_4<span class='code_entity'>=</span>+FSVDSL_livebox.Internet.softathome.Livebox<span class='code_variable'>${LIVEBOX_VERSION}</span>
+<span class='code_keyword'>export</span> USER_CLASS_6<span class='code_entity'>=</span>00<span class='code_variable'>$(addsep </span>$(<span class='code_variable'>tohex </span><span class='code_string'>"+FSVDSL_livebox.Internet.softathome.Livebox</span><span class='code_variable'>${LIVEBOX_VERSION}</span><span class='code_string'>"</span>)<span class='code_variable'>)</span>
+log INFO <span class='code_string'>"      User class has been generated"</span>
+
+<span class='code_comment'># option 90</span>
+<span class='code_keyword'>export</span> AUTHENTICATION_STR<span class='code_entity'>=</span>00:00:00:00:00:00:00:00:00:00:00:1a:09:00:00:05:58:01:03:41:01:0d<span class='code_variable'>$(addsep </span>$(<span class='code_variable'>tohex $</span>{<span class='code_variable'>LOGIN</span>})<span class='code_variable'>$</span>{<span class='code_variable'>h</span>}<span class='code_variable'>)</span>
+log INFO <span class='code_string'>"      Option 90 has been generated"</span>
+
+<span class='code_comment'># Generate DHCP option for networkd</span>
+envsubst <span class='code_entity'>&lt;</span> <span class='code_variable'>${IN_OUT_PATH}</span>/<span class='code_variable'>${FILE_NAME}</span>.template <span class='code_entity'>&gt;</span> <span class='code_variable'>${IN_OUT_PATH}</span>/<span class='code_variable'>${FILE_NAME}</span>
+log INFO <span class='code_string'>"Generating env vars files"</span>
+log INFO <span class='code_string'>"      Source = </span><span class='code_variable'>${IN_OUT_PATH}</span><span class='code_string'>/</span><span class='code_variable'>${FILE_NAME}</span><span class='code_string'>.template"</span>
+log INFO <span class='code_string'>"      Destination = </span><span class='code_variable'>${IN_OUT_PATH}</span><span class='code_string'>/</span><span class='code_variable'>${FILE_NAME}</span><span class='code_string'>"</span>
+</code></pre><br>
+<br>
+<ul>
+<li>/etc/systemd/system/networkd-orange-env.service</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>[Unit]
+Description=Generate networkd-orange.env before systemd-networkd
+Before=systemd-networkd.service
+Requires=network-pre.target
+DefaultDependencies=no
+
+[Service]
+EnvironmentFile=/etc/networkd-orange/networkd-orange-env.env
+Type=oneshot
+ExecStart=/etc/networkd-orange/networkd-orange-env.sh
+UMask=0077
+
+[Install]
+WantedBy=systemd-networkd.service
+</code></pre><br>
+<ul>
+<li>/etc/networkd-orange/networkd-orange-env.env (change values as required)</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='bash'><span class='code_comment'># Orange variables</span>
+LOGIN<span class='code_entity'>=</span>fti/XXXXX
+PASSWORD<span class='code_entity'>=</span>XXXXXXX
+LIVEBOX_VERSION<span class='code_entity'>=</span><span class='code_number'>6</span>
+LIVEBOX_HARDWARE<span class='code_entity'>=</span>sagem
+
+<span class='code_comment'># Destination and filename (template + gen file)</span>
+IN_OUT_PATH<span class='code_entity'>=</span><span class='code_string'>"/etc/networkd-orange"</span>
+FILE_NAME<span class='code_entity'>=</span><span class='code_string'>"orange.env"</span>
+</code></pre><br>
+<ul>
+<li>/etc/networkd-orange/networkd-orange-env.template</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'># IPV4
+VendorClassIdentifier4=${VENDOR_CLASS_IDENTIFIER_4}
+UserClass4=${USER_CLASS_4}
+
+# IPV6
+VendorClassIdentifier6=${VENDOR_CLASS_IDENTIFIER_6}
+UserClass6=${USER_CLASS_6}
+
+# Global
+Authentication=${AUTHENTICATION_STR}
+</code></pre><br>
+<ul>
+<li>modify (or copy) systemd-networkd.service and add</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>[Service]
+EnvironmentFile=/etc/networkd-orange/orange.env
+</code></pre><br>
+<ul>
+<li>update you systemd-networkd orange config file (/etc/systemd/network/orange.network for example)</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>[DHCPv4]
+VendorClassIdentifier=$VendorClassIdentifier4
+UserClass=$UserClass4
+SendOption=90:string:$Authentication
+
+[DHCPv6]
+VendorClassIdentifier=$VendorClassIdentifier6
+UserClass=$UserClass6
+SendOption=SendOption=11:string:$Authentication
+</code></pre><br>
+<ul>
+<li>install service</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>chmod 750 /etc/networkd-orange/networkd-orange-env.sh
+chmod 640 /etc/networkd-orange/networkd-orange-env.env
+chown root:root /etc/networkd-orange/networkd-orange-env.env
+chmod 644 /etc/systemd/system/networkd-orange-env.service
+systemctl enable /etc/systemd/system/networkd-orange-env.service
+systemctl restart systemd-networkd 
+</code></pre><br>
+<p>The result should be:</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>systemd[1]: Starting networkd-orange-env.service - Generate /etc/networkd-orange/network.env before systemd-networkd...
+[6368]: INFO  Orange parameters
+[6368]: INFO          Login:            ********
+[6368]: INFO          Password:         ********
+[6368]: INFO          Livebox version:  6
+[6368]: INFO          Livebox hardware: sagem
+[6368]: INFO  Generating Orange DHCP values
+[6368]: INFO          Vendor class has been generated
+[6368]: INFO          User class has been generated
+[6368]: INFO          Option 90 has been generated
+[6368]: INFO  Generating env vars files
+[6368]: INFO          Source = /etc/networkd-orange/networkd-orange.template
+[6368]: INFO          Destination = /etc/networkd-orange/orange.env
+systemd[1]: networkd-orange-env.service: Deactivated successfully.
+systemd[1]: Finished networkd-orange-env.service - Generate /etc/networkd-orange/orange.env before systemd-networkd.
+</code></pre><br>
+<h3 id='Mikrotik'>Mikrotik</h3><br>
+<ul>
+<li>ipv4</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>/ip/dhcp-client/print detail
+	interface=vlan832-orange1.wan1 add-default-route=no use-peer-dns=no use-peer-ntp=no dhcp-options=hostname,clientid,authsend,userclass,vendor-class-identifier
+
+     script=
+	     :if ($bound=1) do={
+		    /log info "dhcp4-client script begin"
+		    # multiwan
+		    /routing rule set [find where action=lookup table=route-wan1 ] src-address=$"lease-address"
+		    ip route set [find where dst-address="0.0.0.0/0" routing-table=route-wan1 distance=1 ] gateway=$"gateway-address" comment="wan1 - FIB - dhclient"
+		    # recursive
+		    #/ip route set [find where dst-address="1.0.0.1/32" scope=10 routing-table=main] gateway=$"gateway-address"
+		    #/ip route set [find where dst-address="8.8.4.4/32" scope=10 routing-table=main] gateway=$"gateway-address"
+		    #/ip route set [find where dst-address="9.9.9.10/32" scope=10 routing-table=main] gateway=$"gateway-address"
+		    # not recursive
+		    /ip route set [find where dst-address="0.0.0.0/0" routing-table=main distance=1 ] gateway=$"gateway-address" comment="wan1 - def - dhclient"
+		    /ip route set [find where dst-address="0.0.0.0/0" routing-table=main distance=101 ] gateway=$"gateway-address" comment="wan1 - persist - dhclient"
+		    # update routes oneshot (not tested)
+			#/ip route set [ find where immediate-gw~$"interface"  dst-address=0.0.0.0/0 ] gateway=$"gateway-address"
+			# netwatch
+			/tool netwatch set [find where comment="wan1 - ipv4 - dhclient" ] src-address=$"lease-address"
+			/log info "dhcp4-client script finished"
+		}
+
+	status=bound address=xx.xx.xx.xx/24 gateway=xx.xx.xx.1 dhcp-server=80.xx.xx.xx primary-dns=xx.xx.xx.xx secondary-dns=xx.xx.xx.xx expires-after=5d5h16s
+
+
+/ip/dhcp-client/option/print detail
+ 0 name="vendor-class-identifier" code=60 value="0x736167656d" raw-value="736167656d"
+ 1 name="userclass" code=77 value="0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836" raw-value="2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
+ 2 name="authsend" code=90 value="0x00000000000000000000001A090000055801034101xxxxxxxxxxx"
+     raw-value="00000000000000000000001a090000055801034101xxxxxxxxxx"
+3 name="clientid_duid" code=61 value="0xff$(CLIENT_DUID)" raw-value="ff"
+4 name="clientid" code=61 value="0x01$(CLIENT_MAC)" raw-value="01"
+5 name="hostname" code=12 value="$(HOSTNAME)" raw-value="xxxxxx"
+</code></pre><br>
+<ul>
+<li>ipv6</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content'>/ipv6/dhcp-client/print detail
+	interface=vlan832-orange1.wan1 status=bound duid="0x000300xxxxxxxxx" dhcp-server-v6=fe80::ba0:bab request=prefix add-default-route=yes default-route-distance=1 use-peer-dns=no use-interface-duid=yes rapid-commit=no dhcp-options=authsend,userclass,class-identifier pool-name="pool6-wan1" pool-prefix-length=64 prefix-hint=::/0
+
+	script=
+		:if ($"pd-valid" = 1) do={
+			/log info "dhcp6-client script begin"
+			:local iface "vlan832-orange1.wan1"
+			# infos
+			:local pdprefix $"pd-prefix"
+			:local naaddress $"na-address"
+			/log info "dhcp6-client infos interface:$iface pd-prefix:$pdprefix na-address:$naadress"
+			# netmap
+			##:set pdprefix ([:pick $"pd-prefix" 0 [:find $"pd-prefix" "/"]]."/56");
+			##/log info "dhcp6-client cleaned pd-prefix is $pdprefix"
+			/ipv6/firewall/nat set [find where out-interface=$iface ] to-address=$"pd-prefix"
+			## netwatch
+            ##/tool netwatch set [find where comment="wan1 - ipv6 - dhclient" ] src-address=$"na-address"
+            /log info "dhcp6-client script finished"
+        }
+    dhcp-options=authsend,userclass,class-identifier prefix=xx:xx:xx:xx::/56, 6d23h46m11s
+
+
+/ipv6/dhcp-client/option/print detail
+0 name="class-identifier" code=16 value="0x0000040e0005736167656d" raw-value="0000040e0005736167656d"
+1 name="userclass" code=15 value="0x002b46535644534c5xxxxxxx" raw-value="002b46535644534c5f6c697665626f782e4xxxxx"
+2 name="authsend" code=11 value="0x00000000000000000000001A0900xxxxxx" raw-value="00000000000000000000001a0900xxx"
+</code></pre><br>
+<br>
+<h3 id='dhcpcd'>dhcpcd</h3><br>
+<p>dhcpcd is using NetworkConfiguration</p><br>
+<p><a href='https://roy.marples.name/projects/dhcpcd'>https://roy.marples.name/projects/dhcpcd</a><br>
+<a href='https://github.com/NetworkConfiguration/dhcpcd'>https://github.com/NetworkConfiguration/dhcpcd</a></p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>noipv4ll
+nohook hostname resolv.conf timesyncd.conf
+allowinterfaces orange1
+debug
+logfile /var/log/dhcpcd.log
+noauthrequired
+noarp
+noipv6rs
+
+interface orange1
+	iaid	xxxxxxxx
+	ia_pd	xxxxxxxx br0//64
+	ipv6rs
+	clientid
+	userclass FSVDSL_livebox.Internet.softathome.Livebox6
+	vendclass 1038 sagem
+	vendorclassid sagem
+	broadcast
+	option subnet_mask routers domain_name_servers domain_name broadcast_address dhcp_lease_time dhcp_renewal_time dhcp_rebinding_time domain_search sip_server 125 auth
+	option dhcp6_vivso dhcp6_name_servers dhcp6_domain_search dhcp6_auth
+	nooption 33 57
+	authprotocol token 0x123/0x456
+	authtoken 0x456 "" forever 64:68:63:70:6c:69:76:65:62:6f:78:66:72:32:35:30
+	authtoken 0x123 "" forever 1a:09:00:00:05:58:01:03:41:01:0d:66:74:69:2f:...
+</code></pre><br>
+<h3 id='ISC dhclient'>ISC dhclient</h3><br>
+<p>** WARNING : ISC dhclient is deprecated since 2023, prefer systemd-networkd**</p><br>
+<p>Do not forget to :</p><ul>
+<li>define Enter and Exit hooks</li>
+<li>use so_priority or LD_PRELOAD to force packets COS6</li>
+<li>if necessary and to avoid /etc/resolv.conf overwrite, use <code class='code-inline'>chattr +i /etc/resolv.conf</code><br></li>
+<li>launch command lines :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>iface="orange1"
+cfgdir=...
+leasedir=...
+piddir=...
+dhclient -4 -cf ${cfgdir}/${iface}_4.conf -pf ${piddir}/${iface}_4.pid -lf ${leasedir}/${iface}_4.leases $iface
+dhclient -6 -cf ${cfgdir}/${iface}_6.conf -pf ${piddir}/${iface}_6.pid -lf ${leasedir}/${iface}_6.leases -P -nw $iface
+</code></pre><br>
+<ul>
+<li>/etc/dhclient/orange1_4.conf :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>option rfc3118-authentication code 90 = string;
+interface "orange1" {
+  timeout 60;
+  retry 1;
+  select-timeout 0;
+  #supersede dhcp-renewal-time 30;
+  #supersede dhcp-rebinding-time 60;
+  #supersede dhcp-lease-time 90;
+  send vendor-class-identifier "sagem";
+  send user-class "+FSVDSL_livebox.Internet.softathome.Livebox4";
+  send rfc3118-authentication 00:00:00:00:00:00:&lt;authentication_string&gt;;
+  send dhcp-client-identifier 01:&lt;livebox_mac&gt;;
+  request subnet-mask, routers, broadcast-address;
+  #request subnet-mask, routers, domain-name-servers, domain-name, broadcast-address, dhcp-lease-time, dhcp-renewal-time, dhcp-rebinding-time, rfc3118-authentication;
+  #request subnet-mask, broadcast-address, dhcp-lease-time, dhcp-renewal-time, dhcp-rebinding-time, rfc3118-authentication;
+}
+</code></pre><br>
+<ul>
+<li>/etc/dhclient/orange1_6.conf :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>option dhcp6.auth code 11 = string;
+option dhcp6.userclass code 15 = string;
+option dhcp6.vendorclass code 16 = string;
+interface "orange1" {
+  timeout 60;
+  retry 1;
+  select-timeout 0;
+  send dhcp6.vendorclass 00:00:04:0e:00:05:73:61:67:65:6d;
+  send dhcp6.userclass 00:2b:46:53:56:44:53:4c:5f:6c:69:76:65:62:6f:78:2e:49:6e:74:65:72:6e:65:74:2e:73:6f:66:74:61:74:68:6f:6d:65:2e:4c:69:76:65:62:6f:78:34;
+  send dhcp6.auth 00:00:00:00:00:00:00:00:&lt;authentication_string&gt;;
+  send dhcp6.client-id 00:03:00:01:&lt;livebox_mac&gt;;
+  also request dhcp6.auth, dhcp6.vendorclass, dhcp6.userclass, dhcp6.vendor-opts;
+}
+</code></pre><br>
+<h3 id='so\_priority'>so_priority</h3><br>
+<p>This utility must be used with dhcp client utility (like dhclient or dhpcd, NOT systemd). It provide the ability to run the dhcp client with a modified Socket Priority. It is using LD_PRELOAD feature.<br>
+**WARNING : It is NOT compatible with systemd-networkd (which have built-in params to do COS6) ! **</p><br>
+<p><a href='https://git.kindwolf.org/so_priority.so/'>https://git.kindwolf.org/so\_priority.so/</a><br>
+<a href='https://lafibre.info/remplacer-livebox/petit-ld_preload-pour-amateurs-de-setsockopt/'>https://lafibre.info/remplacer-livebox/petit-ld\_preload-pour-amateurs-de-setsockopt/</a></p><br>
+<ul>
+<li>compilation</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='bash'>gcc <span class='code_variable'>-shared</span> <span class='code_variable'>-ldl</span> <span class='code_variable'>-fPIC</span> so_priority.c <span class='code_variable'>-o</span> so_priority.so
+</code></pre><br>
+<ul>
+<li>usage</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='shell'>SO_PRIORITY_DEBUG<span class='code_entity'>=</span><span class='code_number'>1</span> SO_PRIORITY_VALUE<span class='code_entity'>=</span><span class='code_number'>6</span> LD_PRELOAD<span class='code_entity'>=</span>/path/to/so_priority.so program arg1 arg2
+</code></pre><br>
+<ul>
+<li>source code</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='cpp'><span class='code_comment'>/*
+        Set SO_PRIORITY right after each socket() call.
+        Compile with: gcc -shared -ldl -fPIC so_priority.c -o so_priority.so
+        Usage: SO_PRIORITY_DEBUG=1 SO_PRIORITY_VALUE=6 LD_PRELOAD=/path/to/so_priority.so program arg1 arg2
+
+        (c) 2020 - Xavier Guerrin
+        This program is free software. It comes without any warranty, to
+        the extent permitted by applicable law. You can redistribute it
+        and/or modify it under the terms of the Do What The Fuck You Want
+        To Public License, Version 2, as published by Sam Hocevar. See
+        http://www.wtfpl.net/ for more details.
+*/</span>
+
+#<span class='code_keyword'>define</span><span class='code_entity'> </span>_GNU_SOURCE<span class='code_entity'> </span><span class='code_comment'>/* RTLD_NEXT */</span>
+#<span class='code_keyword'>include</span><span class='code_entity'> </span><span class='code_string'>&lt;dlfcn.h&gt;</span><span class='code_entity'> </span><span class='code_comment'>/* dlsym, dlerror */</span>
+#<span class='code_keyword'>include</span><span class='code_entity'> </span><span class='code_string'>&lt;errno.h&gt;</span><span class='code_entity'> </span><span class='code_comment'>/* errno */</span>
+#<span class='code_keyword'>include</span><span class='code_entity'> </span><span class='code_string'>&lt;stdio.h&gt;</span><span class='code_entity'> </span><span class='code_comment'>/* dprintf */</span>
+#<span class='code_keyword'>include</span><span class='code_entity'> </span><span class='code_string'>&lt;stdlib.h&gt;</span><span class='code_entity'> </span><span class='code_comment'>/* atoi, getenv */</span>
+#<span class='code_keyword'>include</span><span class='code_entity'> </span><span class='code_string'>&lt;string.h&gt;</span><span class='code_entity'> </span><span class='code_comment'>/* strerror */</span>
+#<span class='code_keyword'>include</span><span class='code_entity'> </span><span class='code_string'>&lt;sys/types.h&gt;</span><span class='code_entity'> </span><span class='code_comment'>/* setsockopt */</span>
+#<span class='code_keyword'>include</span><span class='code_entity'> </span><span class='code_string'>&lt;sys/socket.h&gt;</span><span class='code_entity'> </span><span class='code_comment'>/* setsockopt */</span>
+
+#<span class='code_keyword'>ifndef</span><span class='code_entity'> </span>SOPRIORITY_SO_NAME
+#<span class='code_keyword'>define</span><span class='code_entity'> </span>SOPRIORITY_SO_NAME<span class='code_entity'> </span><span class='code_string'>"so_priority.so"</span>
+#<span class='code_keyword'>endif</span>
+#<span class='code_keyword'>ifndef</span><span class='code_entity'> </span>SOPRIORITY_VALUE_EV
+#<span class='code_keyword'>define</span><span class='code_entity'> </span>SOPRIORITY_VALUE_EV<span class='code_entity'> </span><span class='code_string'>"SO_PRIORITY_VALUE"</span>
+#<span class='code_keyword'>endif</span>
+#<span class='code_keyword'>ifndef</span><span class='code_entity'> </span>SOPRIORITY_DEBUG_EV
+#<span class='code_keyword'>define</span><span class='code_entity'> </span>SOPRIORITY_DEBUG_EV<span class='code_entity'> </span><span class='code_string'>"SO_PRIORITY_DEBUG"</span>
+#<span class='code_keyword'>endif</span>
+
+<span class='code_keyword'>typedef</span> <span class='code_keyword'>int</span> (<span class='code_entity'>*</span>socket_function_type)(<span class='code_keyword'>int</span>, <span class='code_keyword'>int</span>, <span class='code_keyword'>int</span>);
+
+<span class='code_comment'>/* Pointer to the actual socket symbol. */</span>
+socket_function_type so_priority_socket <span class='code_entity'>=</span> <span class='code_constant'>NULL</span>;
+
+<span class='code_comment'>/* SO_PRIORITY value to set; can be configured using the SO_PRIORITY_VALUE environment variable. */</span>
+<span class='code_keyword'>int</span> so_priority_value <span class='code_entity'>=</span> <span class='code_number'>0</span>;
+<span class='code_comment'>/* Debug level; can be configured using the SO_PRIORITY_DEBUG environment variable. */</span>
+<span class='code_keyword'>int</span> so_priority_debug <span class='code_entity'>=</span> <span class='code_number'>0</span>;
+<span class='code_keyword'>int</span> so_priority_known <span class='code_entity'>=</span> <span class='code_number'>0</span>;
+
+<span class='code_comment'>/* Ask the linker to provide the actual "socket" symbol: */</span>
+<span class='code_keyword'>static</span> <span class='code_keyword'>int</span> <span class='code_function'>so_priority_get_socket</span>() {
+        <span class='code_keyword'>char</span> <span class='code_entity'>*</span>error_string;
+        so_priority_socket <span class='code_entity'>=</span> (socket_function_type)<span class='code_function'>dlsym</span>(RTLD_NEXT, <span class='code_string'>"socket"</span>);
+        <span class='code_keyword'>if</span> (<span class='code_entity'>!</span>so_priority_socket) {
+                error_string <span class='code_entity'>=</span> <span class='code_function'>dlerror</span>();
+                <span class='code_keyword'>if</span> (error_string) {
+                        <span class='code_function'>dprintf</span>(<span class='code_number'>2</span>, <span class='code_string'>"%s: unable to find the actual socket symbol: %s\n"</span>, SOPRIORITY_SO_NAME, error_string);
+                }
+                <span class='code_keyword'>else</span> {
+                        <span class='code_function'>dprintf</span>(<span class='code_number'>2</span>, <span class='code_string'>"%s: unable to find the actual socket symbol\n"</span>, SOPRIORITY_SO_NAME);
+                }
+                <span class='code_keyword'>return</span> <span class='code_number'>0</span>;
+        }
+        <span class='code_keyword'>return</span> <span class='code_number'>1</span>;
+}
+
+<span class='code_comment'>/* Read the priority value from the environment. */</span>
+<span class='code_keyword'>static</span> <span class='code_keyword'>void</span> <span class='code_function'>so_priority_set_options</span>() {
+        <span class='code_keyword'>char</span> <span class='code_entity'>*</span>str;
+        str <span class='code_entity'>=</span> <span class='code_function'>getenv</span>(SOPRIORITY_VALUE_EV);
+        <span class='code_keyword'>if</span> (str) so_priority_value <span class='code_entity'>=</span> <span class='code_function'>atoi</span>(str);
+        str <span class='code_entity'>=</span> <span class='code_function'>getenv</span>(SOPRIORITY_DEBUG_EV);
+        <span class='code_keyword'>if</span> (str) so_priority_debug <span class='code_entity'>=</span> <span class='code_function'>atoi</span>(str);
+        so_priority_known <span class='code_entity'>=</span> <span class='code_number'>1</span>;
+}
+
+<span class='code_comment'>/* Wrapper around the actual socket() function that sets SO_PRIORITY by calling setsockopt(). */</span>
+<span class='code_keyword'>int</span> <span class='code_function'>socket</span>(<span class='code_keyword'>int</span> domain, <span class='code_keyword'>int</span> type, <span class='code_keyword'>int</span> protocol) {
+        <span class='code_keyword'>int</span> ret, setsockopt_errno, socket_errno, sockfd;
+
+        <span class='code_keyword'>if</span> (<span class='code_entity'>!</span>so_priority_socket <span class='code_entity'>&&</span> <span class='code_entity'>!</span><span class='code_function'>so_priority_get_socket</span>()) {
+                errno <span class='code_entity'>=</span> ENOENT;
+                <span class='code_keyword'>return</span> <span class='code_entity'>-</span><span class='code_number'>1</span>;
+        }
+        <span class='code_comment'>/* Actually call socket(): */</span>
+        sockfd <span class='code_entity'>=</span> <span class='code_function'>so_priority_socket</span>(domain, type, protocol);
+        <span class='code_comment'>/* Do not call setsockopt() if socket() failed: */</span>
+        <span class='code_keyword'>if</span> (sockfd <span class='code_entity'>&lt;</span> <span class='code_number'>0</span>) <span class='code_keyword'>return</span> sockfd;
+
+        <span class='code_comment'>/* Time for the actual work: */</span>
+        socket_errno <span class='code_entity'>=</span> errno;
+
+        <span class='code_keyword'>if</span> (<span class='code_entity'>!</span>so_priority_known) <span class='code_function'>so_priority_set_options</span>();
+        ret <span class='code_entity'>=</span> <span class='code_function'>setsockopt</span>(sockfd, SOL_SOCKET, SO_PRIORITY, <span class='code_entity'>&</span>so_priority_value, <span class='code_keyword'>sizeof</span>(so_priority_value));
+        <span class='code_comment'>/* Ignore setsockopt() errors, except for debugging purposes. */</span>
+        <span class='code_keyword'>if</span> (so_priority_debug) {
+                setsockopt_errno <span class='code_entity'>=</span> errno;
+                <span class='code_function'>dprintf</span>(<span class='code_number'>2</span>, <span class='code_string'>"%s: setsockopt(%d, SOL_SOCKET, SO_PRIORITY, %d, %zu) returned %d"</span>,
+                        SOPRIORITY_SO_NAME, sockfd, so_priority_value, <span class='code_keyword'>sizeof</span>(so_priority_value), ret);
+                <span class='code_keyword'>if</span> (ret <span class='code_entity'>&lt;</span> <span class='code_number'>0</span>) <span class='code_function'>dprintf</span>(<span class='code_number'>2</span>, <span class='code_string'>"; errno is %d: %s"</span>, setsockopt_errno, <span class='code_function'>strerror</span>(setsockopt_errno));
+                <span class='code_function'>dprintf</span>(<span class='code_number'>2</span>, <span class='code_string'>"\n"</span>);
+        }
+
+        errno <span class='code_entity'>=</span> socket_errno;
+        <span class='code_keyword'>return</span> sockfd;
+}
+</code></pre><br>
+<ul>
+<li>Archlinux PKGBUILD</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'># https://git.kindwolf.org/so_priority.so/
+# https://lafibre.info/remplacer-livebox/petit-ld_preload-pour-amateurs-de-setsockopt/
+# USAGE : SO_PRIORITY_DEBUG=1 SO_PRIORITY_VALUE=6 LD_PRELOAD=/path/to/so_priority.so program arg1 arg2
+
+pkgname=so_priority
+pkgver=1.0
+pkgrel=0
+
+pkgdesc='Set SO_PRIORITY (aka skb-&gt;priority) right after each socket() call.'
+arch=('i686' 'x86_64')
+url="https://git.kindwolf.org/so_priority.so"
+license=('GPL3')
+
+source=(https://git.kindwolf.org/so_priority.so/raw/master/so_priority.c)
+
+validpgpkeys=(
+        'SKIP'
+)
+sha256sums=(
+        'SKIP')
+
+build() {
+        cd "$srcdir"/
+        gcc -shared -ldl -fPIC so_priority.c -o so_priority.so
+}
+
+package() {
+        cd "$srcdir"/
+        for s in *.so; do
+                install -Dm755 $s "$pkgdir/usr/lib/so_priority/$s"
+        done
+}
+</code></pre><br>
+<h2 id='Debug & Troubleshoot'>Debug & Troubleshoot</h2><br>
+<ul>
+<li>If you get no answer from Orange DHCP server and everything seems to be ok, try to force release multiple times and disconnect a few minutes the ONT (fiber link) to force DHCP lease expiration.</li>
+<li>In some case, you just have to <b>remove dhcp client lease file</b> (see relative documentation of each dhcp client).</li>
+<li>Sometimes, when switching hardware or interface on the same fiber link, you will encounter IAID issue. In this case the DHCPv6 server (ISP) will give NO PREFIX answer. You have to disconnect fiber link for at least 10-20min. Then reconnect and retry DHCP requests. You should have no issue with DHCPv4. Check also option 17 (vendor_opt) answer, if everything is correct, try again to disconnect fiber link for a few minutes.</li>
+<li>Finally try to regenerate authentication options (90 for DHCPv4 and 11 for DHCPv6). Sometimes, it could be necessary to regenerate authentication options, after a few months for example...<br></li>
+<li>For COS 6 verification check the first line tcpdump trace, check :</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>'[vlan ${vlan}, p X]' : ..., ethertype 802.1Q (0x8100), length XXX: vlan ${vlan}, p X, ethertype IPv4 (0x0800), ...
+</code></pre><br>
+<ul>
+<li>For ipv6 DUID/IAID/Prefix debug :</li>
+</ul><br>
+<p><a href='https://www.linuxquestions.org/questions/showthread.php?p=6259784#post6259784'>https://www.linuxquestions.org/questions/showthread.php?p=6259784#post6259784</a><br>
+<a href='https://ipv6.web.cern.ch/content/linux-client-doesnt-get-ipv6-address-dhcpv6'>https://ipv6.web.cern.ch/content/linux-client-doesnt-get-ipv6-address-dhcpv6</a></p><br>
+<ul>
+<li>tcpdump command lines</li>
+</ul><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='shell'><span class='code_comment'># prefer :</span>
+tcpdump <span class='code_variable'>-vnei</span> wan1 <span class='code_string'>'(udp port 546 or port 547) or icmp6'</span>
+<span class='code_comment'># alternatives :</span>
+tcpdump <span class='code_variable'>-i</span> wan1 <span class='code_variable'>-ne</span> <span class='code_variable'>-vv</span> <span class='code_string'>"(udp port 546 and port 547)"</span>
+tcpdump <span class='code_variable'>-i</span> wan1 <span class='code_variable'>-vvv</span> <span class='code_variable'>-n</span> ip6  “(udp port <span class='code_number'>546</span> and port <span class='code_number'>547</span>)”
+tcpdump <span class='code_variable'>-vnes0</span> <span class='code_variable'>-i</span> wan1 udp port <span class='code_number'>67</span> or port <span class='code_number'>68</span> or port <span class='code_number'>546</span> or port <span class='code_number'>547</span>
+tcpdump <span class='code_variable'>-vvvvv</span> <span class='code_variable'>-ttt</span> <span class='code_variable'>-i</span> wan1 <span class='code_string'>'icmp6 and (ip6[40] = 134 or ip6[40] = 133 or ip6[40] = 135 or ip6[40] = 136 or ip6[40] = 129 or ip6[40] = 128 or ip6[40] = 3 or ip6[40] = 2 or ip6[40] = 1)'</span> <span class='code_variable'>-w</span> /tmp/capture.pcap <span class='code_comment'># use wireshark to analyse /tmp/capture.pcap</span>
+</code></pre><br>
+<ul>
+<li>For DHCP response :</li>
+</ul><p><a href='https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/24/'>https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/24/</a><br>
+In DHCP response, there is an option (DHCPv4 [125] et DHCPv6 [17|vendor\_opts_]) in return with 2 bytes information : 000100<b>XXXX</b> ffffffffff</p><ul>
+<li>
+<ul>
+<li>00xx : OK, everything is fine</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>01xx : box model, firmware or line issue (0102:too aggressive requests, 0199:bad COS)</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>02xx : bad login/password (or encoding)</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>03xx : account already unregistered</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>04xx : billing issue</li>
+</ul>
+<br></li>
+<li>If your connection is up and running, BUT (after some times) your download/upload speed is SLOW, it should be related to a QOS issue :</li>
+</ul><p>The standard flow (everything except DHCP related traffic) QOS MUST be 0 (zero)<br>
+Everything related to DHCP (DHCPv4/6 init|renew ; ICMPv6 ; ARP) QOS MUST be 6 (six)</p><br>
+<h3 id='Systemd-networkd'>Systemd-networkd</h3><br>
+<ul>
+<li>use DUIDType=link-layer</li>
+<li>from tcpdump : client-ID hwaddr 44d4540axxxx ; IA_PD-prefix 2a01::xxxx::/56 ; IA_PD IAID:22882960xx</li>
+<li>check interface status : networkctl status <iface></li>
+</ul><br>
+<p>DHCP6 Client IAID: 0x8864a065<br>
+DHCP6 Client DUID: DUID-LL:000144d4540axxxx0000</p><br>
+<p>tcpdump sample trace :</p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>dhcp6 solicit   (xid=6461b1 (rapid-commit) (IA_PD IAID:22882960xx T1:0 T2:0) (Client-FQDN) (user-class) (option-request opt_82) (client-ID hwaddr type 1 44d4540axxxx)
+dhcp6 advertise (xid=6461b1 (IA_PD IAID:22882960xx T1:83812 T2:207360 (IA_PD-prefix 2a01:xxxx::/56 pltime:259200 vltime:259200)) (server-ID vid 0000055844455348) (client-ID hwaddr type 1 44d4540axxxx)
+dhcp6 request   (xid=76595c (server-ID vid 0000055844455348) (IA_PD IAID:22882960xx T1:0 T2:0 (IA_PD-prefix 2a01:xxxx::/56 pltime:0 vltime:0)) (Client-FQDN) (user-class) (client-ID hwaddr type 1 44d4540axxxx)
+dhcp6 reply     (xid=76595c (IA_PD IAID:22882960xx T1:86413 T2:207360 (IA_PD-prefix 2a01:xxxx::/56 pltime:259200 vltime:259200)) (server-ID vid 0000055844455348) (client-ID hwaddr type 1 44d4540axxxx)
+</code></pre><br>
+<h3 id='Mikrotik'>Mikrotik</h3><br>
+<p>Sometimes, when switching hardware or interface on the same fiber link, you will encounter IAID issue. In this case ipv6 DHCP client will give you NO PREFIX answer from DHCP server.<br>
+To determine what IAID will be used, convert internal ID of an interface on which DHCP client is running from hex to decimal. For example, DHCP client is running on interface pppoe-out1. To get internal ID use following command :<br>
+<code class='code-inline'>/interface&gt; :put \[find name="vlan832-orange1"]</code><br>
+For example, you will get : *15<br>
+Now convert hex value 15 to decimal and you get IAID=21</p><br>
+<p>routerOS command line to snif interface and send to a remote host :</p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='other'>xxxxxx] &gt; /tool/sniffer/export 
+# apr/20/2023 19:01:18 by RouterOS 7.6
+# software id = xxxxxx
+#
+# model = CCR2004-1G-12S+2XS
+# serial number = xxxxxxx
+/tool sniffer
+set file-limit=100000KiB filter-interface=br-wan filter-ip-protocol=udp filter-port=bootps,bootpc,546,547 filter-stream=yes memory-limit=5000KiB memory-scroll=no streaming-enabled=yes streaming-server=192.168.xxx.xxx
+</code></pre><br>
+<br>
+<h3 id='VLAN 2800 mapping'>VLAN 2800 mapping</h3><br>
+<p>In some cases, the ONU/ONT is mapping the VLAN 832 on VLAN 2800. See the post <a href='https://github.com/Anime4000/RTL960x/issues/282#issuecomment-2089248396'>https://github.com/Anime4000/RTL960x/issues/282#issuecomment-2089248396</a>.<br>
+You have to connect on the ONU/ONT and use command <code class='code-inline'>omcicli</code>:</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'># omcicli mib get 84
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+VlanTagFilterData
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+=================================
+EntityID: 0x1102
+FilterTbl[0]: PRI 0,CFI 0, VID 2800
+FwdOp:  0x10
+NumOfEntries: 1
+=================================
+=================================
+EntityID: 0x1103
+FilterTbl[0]: PRI 0,CFI 0, VID 835
+FwdOp:  0x10
+NumOfEntries: 1
+=================================
+=================================
+EntityID: 0x1104
+FilterTbl[0]: PRI 0,CFI 0, VID 852
+FwdOp:  0x10
+NumOfEntries: 1
+=================================
+=================================
+EntityID: 0x110b
+FilterTbl[0]: PRI 0,CFI 0, VID 835
+FilterTbl[2]: PRI 0,CFI 0, VID 852
+FilterTbl[4]: PRI 0,CFI 0, VID 2800
+FwdOp:  0x10
+NumOfEntries: 3
+=================================
+
+# omcicli mib get 171
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ExtVlanTagOperCfgData
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+=================================
+EntityId: 0x101
+AssociationType: 2
+ReceivedFrameVlanTagOperTableMaxSize: 0
+InputTPID: 0x8100
+OutputTPID: 0x8100
+DsMode: 0
+ReceivedFrameVlanTaggingOperTable
+INDEX 0
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 7,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 7,VID 852, TPID 2
+INDEX 1
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 6,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 5,VID 852, TPID 2
+INDEX 2
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 5,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 4,VID 852, TPID 2
+INDEX 3
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 4,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 4,VID 852, TPID 2
+INDEX 4
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 3,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 3,VID 852, TPID 2
+INDEX 5
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 2,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 2,VID 852, TPID 2
+INDEX 6
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 1,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 1,VID 852, TPID 2
+INDEX 7
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 0,VID 851, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 0,VID 852, TPID 2
+INDEX 8
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 8,VID 835, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 8,VID 835, TPID 2
+INDEX 9
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 8,VID 832, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 1
+Treatment Inner   : PRI 8,VID 2800, TPID 2
+INDEX 10
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 15,VID 0, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3
+Treatment Inner   : PRI 15,VID 0, TPID 2
+INDEX 11
+Filter Outer   : PRI 14,VID 4096, TPID 5
+Filter Inner   : PRI 14,VID 4096, TPID 0, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3
+Treatment Inner   : PRI 15,VID 4096, TPID 3
+INDEX 12
+Filter Outer   : PRI 15,VID 4096, TPID 0
+Filter Inner   : PRI 14,VID 4096, TPID 5, EthType 0x00
+Treatment Outer   : PRI 15,VID 0, TPID 0, RemoveTags 3
+Treatment Inner   : PRI 15,VID 4096, TPID 2
+AssociatedMePoint: 0x101
+</code></pre><br>
+<p>If you are in this case, you just have to change the VLAN 832 with 2800 in your router configuration.</p><br>
+<h2 id='Annexes'>Annexes</h2><br>
+<h3 id='DHCP Option 125'>DHCP Option 125</h3><br>
+<p>Here’s how to generate it correctly, from right to left:</p><br>
+<ol start='1' style='--data-list-start: 1;'>
+<li>Take the model name of your box as a plain text string, for example "Livebox 7", and convert it to hexadecimal:<br>"Livebox 7" → 4c697665626f782037<br></li>
+<li>In front of that, prepend the half-length of the hex string, expressed in hexadecimal. In this case, the string 4c697665626f782037 has 18 characters, and 18 / 2 = 9 = 0x09, so we prepend 09.<br></li>
+<li>In front of that, prepend 06, which is the “tag 6”.<br></li>
+<li>Take the ONT serial number as a plain text string, for example "SMBS02C3D435", and convert it to hexadecimal:<br>"SMBS02C3D435" → 534d42533032433344343335<br></li>
+<li>Prepend the half-length of the resulting hex string. It has 24 characters, so 24 / 2 = 12 = 0x0c, hence we prepend 0c.<br></li>
+<li>Prepend 05, which is the “tag 5”.<br></li>
+<li>Take the MAC address in uppercase, without separators, and keep only the first 6 characters. Convert this 6-character string to hexadecimal. For example, "581DD8" becomes 353831444438.<br></li>
+<li>Prepend the half-length of the resulting hex string. It’s always 6 bytes (12 hex characters), so we prepend 06.<br></li>
+<li>Prepend 04, which is the “tag 4”.<br></li>
+<li>Prepend the half-length of everything you’ve written so far (after the fixed header, see below). In this example, we’ve written:<br>
+<ul>
+<li>Tag 4: 2 (tag + length) + 12 = 14 chars</li>
+<li>Tag 5: 2 + 24 = 26 chars</li>
+<li>Tag 6: 2 + 18 = 20 chars</li>
+<li>Total: 14 + 26 + 20 = 60 hex characters = 30 bytes → 0x21</li>
+</ul>
+</li>
+</ol><br>
+<p><i>(Note: it seems the total is actually 66 characters in your example, so 66 / 2 = 33 =</i> <i>0x21)</i></p><br>
+<ol start='11' style='--data-list-start: 11;'>
+<li>Finally, prepend the fixed header: 00000de9</li>
+</ol><br>
+<p>So in this example, option 125 becomes:</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>00000de9210406353831444438050c534d4253303243334434333506094c697665626f782037
+</code></pre><br>
+<br>
+<h2 id='Sources'>Sources</h2><p>There are lot of sources which helped me to write this article. Here are the most importants.</p><br>
+<p><a href='https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/'>https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/</a></p><br>
+<p><a href='https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/'>https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/</a></p><br>
+<p><a href='https://lafibre.info/remplacer-livebox/index-des-solutions-de-remplacement-de-la-livebox/'>https://lafibre.info/remplacer-livebox/index-des-solutions-de-remplacement-de-la-livebox/</a></p><br>
+<p><a href='https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/'>https://lafibre.info/remplacer-livebox/filtrer-les-raw-socket-avec-nftables/</a></p><br>
+<p><a href='https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/24/'>https://lafibre.info/remplacer-livebox/remplacer-la-livebox-par-systemd-networkd-nftables/24/</a></p><br>
+<p><a href='https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/5112/?PHPSESSID=05am86kho55au6drtc1fubo8qm'>https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/5112/?PHPSESSID=05am86kho55au6drtc1fubo8qm</a></p><br>
+<p><a href='https://github.com/luneth/OpenWRT-Livebox'>https://github.com/luneth/OpenWRT-Livebox</a></p><br>
+<br>
+<p><i>Special thanks to <a href='https://lafibre.info'>lafibre.info</a> forum and its members !</i></p><br>
+<p><span class='hashtag'><span class='hashtag-marker marker'>#</span>nbux<span class='hashtag-separator-marker marker'>/</span>orange</span> <span class='hashtag'><span class='hashtag-marker marker'>#</span>nbux<span class='hashtag-separator-marker marker'>/</span>mikrotik</span> <span class='hashtag'><span class='hashtag-marker marker'>#</span>publish</span> <span class='hashtag'><span class='hashtag-marker marker'>#</span>blog<span class='hashtag-separator-marker marker'>/</span>cyasssw<span class='hashtag-separator-marker marker'>/</span>orange</span></p>
+        </div>
+    </body>
+</html>

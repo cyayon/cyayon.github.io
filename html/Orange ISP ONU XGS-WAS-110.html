@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <title>Orange ISP ONU XGS-WAS-110</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="bear-note-unique-identifier" content="CAE75863-24E8-47B7-A746-FC6B8718D7F8">
+        <meta name="created" content="2026-06-10T11:44:18+0200">
+        <meta name="modified" content="2026-06-10T11:48:57+0200">
+        <meta name="tags" content="nbux/orange, publish, blog, blog/cyasssw/orange, blog/cyasssw, nbux">
+        <meta name="last device" content="solaria">
+        
+        <script id="MathJax-script" async
+                src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+        <style>
+             body {
+   --base-background-color: #ffffff;
+   --document-background-color: var(--base-background-color);
+ }
+
+.document-wrapper {
+  /* Constants used to transform theme values to CSS */
+  --transform-line-height-factor: 1.17;
+
+  /* From template */
+  --base-text-color: #444444;
+  --base-text-secondary-color: #888888;
+  --base-text-tertiary-color: #d9d9d9;
+  --base-background-color: #ffffff;
+  --base-background-secondary-color: #F3F5F7;
+  --base-background-tertiary-color: #E4E5E6;
+  --base-stroke-color: #d9d9d9;
+  --base-stroke-secondary-color: #d9d9d9;
+  --base-accent-color: #DD4C4F;
+  --base-highlight-color: ;
+
+  --document-background-color: var(--base-background-color);
+  --document-text-color: var(--base-text-color);
+  --document-text-secondary-color: var(--base-text-secondary-color);
+  --document-text-light-color: var(--base-text-secondary-color);
+  --document-accent-color: var(--base-accent-color);
+  --document-cursor-color: var(--base-accent-color);
+  --document-link-color: var(--base-accent-color);
+  --document-list-marker-color: var(--base-accent-color);
+  --document-marker-color: var(--base-text-tertiary-color);
+  --document-selection-color: var(--base-selection-color);
+  --document-selection-inactive-color: var(--base-background-tertiary-color);
+  --document-text-font: "AvenirNext-Regular";
+  --document-text-size: 15px;
+  --document-line-height-multiplier: calc(
+    1.5 * var(--transform-line-height-factor)
+  );
+
+  --document-headers-text-color: var(--base-text-color);
+  --document-headers-font: "AvenirNext-Medium";
+  --document-headers-modular-scale: 1.125;
+  --document-headers-line-height-multiplier: calc(
+    1.3 * var(--transform-line-height-factor)
+  );
+  --document-headers-add-top-bottom-padding: 1;
+  --document-headers-padding-top-multiplier: 0.5;
+  --document-headers-padding-bottom-multiplier: 0.3;
+
+  --document-code-text-color: var(--base-text-color);
+  --document-code-border-color: var(--base-text-tertiary-color);
+  --document-code-background-color: var(--base-background-secondary-color);
+  --document-code-font: "Menlo-Regular";
+  --document-code-text-size-multiplier: 0.91em;
+
+  --document-code-syntax-highlight-comment: #65798c;
+  --document-code-syntax-highlight-constant: #0095c9;
+  --document-code-syntax-highlight-number: #0095c9;
+  --document-code-syntax-highlight-string: #d12f1b;
+  --document-code-syntax-highlight-entity: #4a838b;
+  --document-code-syntax-highlight-keyword: #ad3da4;
+  --document-code-syntax-highlight-function: #4a838b;
+  --document-code-syntax-highlight-variable: #4a838b;
+
+  --document-task-background-color: var(--base-background-color);
+  --document-task-border-color: var(--base-text-secondary-color);
+  --document-task-check-color: var(--base-text-color);
+
+  --document-tag-background-color: var(--base-background-tertiary-color);
+  --document-tag-text-color: var(--base-text-color);
+  --document-tag-marker-color: var(--base-text-secondary-color);
+
+  --document-highlighter-background-color: #CDF7BD;
+  --document-highlighter-text-color: #102D05;
+
+  --document-highlighter-red-background-color: #FFD5D5;
+  --document-highlighter-red-text-color: #321A00;
+
+  --document-highlighter-blue-background-color: #C9E5FF;
+  --document-highlighter-blue-text-color: #001A32;
+
+  --document-highlighter-green-background-color: #CDF7BD;
+  --document-highlighter-green-text-color: #102D05;
+
+  --document-highlighter-purple-background-color: #FEDAFF;
+  --document-highlighter-purple-text-color: #310032;
+
+  --document-highlighter-yellow-background-color: #FCF195;
+  --document-highlighter-yellow-text-color: #312C01;
+  
+  --document-file-fold-color: var(--base-background-tertiary-color);
+  --document-file-background-color: var(--base-background-secondary-color);
+
+  --document-separator-border-color: var(--base-stroke-secondary-color);
+
+  --document-table-border-color: var(--base-stroke-secondary-color);
+  --document-table-cell-background-color: var(--base-background-color);
+  --document-table-cell-alternate-background-color: var(
+    --base-background-secondary-color
+  );
+  
+  /* Callouts */
+  --document-md-indentation: 32px;
+  --nested-block-marker-skew: -5px;
+  /* Blue */
+  --document-callout-note-background-color: hsla(209, 100%, 89%, 0.15);
+  --document-callout-note-border-color: hsla(209, 80%, 35%, 0.1);
+  --document-callout-note-bar-color: hsla(209, 80%, 35%, 0.8);
+  
+  /* Green */
+  --document-callout-tip-background-color: hsla(103, 78%, 85%, 0.15);
+  --document-callout-tip-border-color: hsla(103, 80%, 35%, 0.1);
+  --document-callout-tip-bar-color: hsla(103, 80%, 35%, 0.8);
+  
+  /* Purple */
+  --document-callout-important-background-color: hsla(298, 100%, 93%, 0.15);
+  --document-callout-important-border-color: hsla(298, 80%, 35%, 0.07);
+  --document-callout-important-bar-color: hsla(298, 80%, 35%, 0.8);
+  
+  /* Yellow */
+  --document-callout-warning-background-color: hsla(54, 94%, 79%, 0.15);
+  --document-callout-warning-border-color: hsla(45, 94%, 50%, 0.15);
+  --document-callout-warning-bar-color: hsla(45, 94%, 50%, 1);
+  
+  /* Red */
+  --document-callout-caution-background-color: hsla(31, 98%, 81%, 0.15);
+  --document-callout-caution-border-color: hsla(31, 98%, 50%, 0.1);
+  --document-callout-caution-bar-color: hsla(31, 98%, 50%, 1);
+}
+
+.document-wrapper,body{background-color:var(--document-background-color)}.document-wrapper h1.setext,.document-wrapper h2.setext{border-bottom:calc(2 * var(--document-hairline-width)) solid var(--document-separator-border-color);padding-bottom:.6em}.document-wrapper blockquote blockquote blockquote blockquote blockquote::before,.document-wrapper blockquote blockquote blockquote::before,.document-wrapper blockquote::before{background-color:var(--document-list-marker-color)}.document-wrapper td[data-alignment="1"],.document-wrapper th{text-align:left}.document-wrapper :after,.document-wrapper a,.document-wrapper abbr,.document-wrapper acronym,.document-wrapper address,.document-wrapper applet,.document-wrapper article,.document-wrapper aside,.document-wrapper audio,.document-wrapper b,.document-wrapper big,.document-wrapper blockquote,.document-wrapper canvas,.document-wrapper caption,.document-wrapper center,.document-wrapper cite,.document-wrapper code,.document-wrapper dd,.document-wrapper del,.document-wrapper details,.document-wrapper dfn,.document-wrapper div,.document-wrapper dl,.document-wrapper dt,.document-wrapper em,.document-wrapper embed,.document-wrapper fieldset,.document-wrapper figcaption,.document-wrapper figure,.document-wrapper footer,.document-wrapper form,.document-wrapper h1,.document-wrapper h2,.document-wrapper h3,.document-wrapper h4,.document-wrapper h5,.document-wrapper h6,.document-wrapper header,.document-wrapper hgroup,.document-wrapper i,.document-wrapper iframe,.document-wrapper ins,.document-wrapper kbd,.document-wrapper label,.document-wrapper legend,.document-wrapper li,.document-wrapper mark,.document-wrapper menu,.document-wrapper nav,.document-wrapper object,.document-wrapper ol,.document-wrapper output,.document-wrapper p,.document-wrapper pre,.document-wrapper q,.document-wrapper ruby,.document-wrapper s,.document-wrapper samp,.document-wrapper section,.document-wrapper small,.document-wrapper span,.document-wrapper strike,.document-wrapper strong,.document-wrapper summary,.document-wrapper table,.document-wrapper tbody,.document-wrapper td,.document-wrapper tfoot,.document-wrapper th,.document-wrapper thead,.document-wrapper time,.document-wrapper tr,.document-wrapper tt,.document-wrapper u,.document-wrapper ul,.document-wrapper var,.document-wrapper video{all:unset}.document-wrapper{--document-inline-padding-top-bottom:0.25em;--document-inline-padding-left-right:0.25em;--header-1-font-size:2em;--header-2-font-size:1.6em;--header-3-font-size:1.27em;--document-hairline-width:calc(var(--document-text-size) / 15);box-sizing:border-box;color:var(--document-text-color);font-family:var(--document-text-font);font-size:var(--document-text-size);line-height:var(--document-line-height-multiplier);min-height:100%;max-width:48em;width:100%;tab-size:4;margin:0 auto;padding:0 2em}body{text-rendering:optimizeLegibility}.document-wrapper:focus-visible{outline:0}.document-wrapper .marker{color:var(--document-marker-color);display:none}.document-wrapper [data-direction="2"]{direction:rtl}.document-wrapper div.footnote,.document-wrapper div.link-definition,.document-wrapper p{display:block}.document-wrapper p.blank-line::before{content:" "}.document-wrapper h1,.document-wrapper h2,.document-wrapper h3,.document-wrapper h4,.document-wrapper h5,.document-wrapper h6{font-family:var(--document-headers-font);display:block;line-height:var(--document-headers-line-height-multiplier)}.document-wrapper h1{font-size:var(--header-1-font-size);padding-block-start:0.8em;padding-block-end:0.33em}.document-wrapper h2{font-size:var(--header-2-font-size);padding-block-start:0.66em;padding-block-end:0.27em}.document-wrapper h3{font-size:var(--header-3-font-size);padding-block-start:0.53em;padding-block-end:0.27em}.document-wrapper code,.document-wrapper pre{font-size:var(--document-code-text-size-multiplier);font-family:var(--document-code-font),monospace}.document-wrapper h4,.document-wrapper h5,.document-wrapper h6{padding-block-start:0.4em;padding-block-end:0.27em}.document-wrapper h1.setext{margin-bottom:.45em}.document-wrapper h2.setext{margin-bottom:.2em}.document-wrapper .fenced-code *,.document-wrapper .fenced-code-content .marker,.document-wrapper .fenced-code-content .space,.document-wrapper .hard-linebreak-marker,.document-wrapper .image .space,.document-wrapper .image-destination,.document-wrapper .image-label,.document-wrapper .image-title,.document-wrapper .indented-code .space,.document-wrapper .link .space,.document-wrapper .link-destination,.document-wrapper .link-label,.document-wrapper .link-title,.document-wrapper .replace .text,.document-wrapper .setext-heading-marker+.line-ending,.document-wrapper .yaml-marker+.line-ending,.document-wrapper li>p>.space:first-child,.document-wrapper tr.delimiter-row{display:none}.document-wrapper ol,.document-wrapper ul{display:block;padding-inline-start:2.13em}.document-wrapper li{display:list-item;color:var(--document-text-color)}.document-wrapper .color-marker,.document-wrapper .entity-marker,.document-wrapper .fenced-code-content,.document-wrapper .fenced-code-content *,.document-wrapper .footnote-separator,.document-wrapper .link-definition-separator,.document-wrapper code.code-inline,.document-wrapper li>p{display:inline}.document-wrapper ul{list-style-type:disc}.document-wrapper li li li li li li li ul,.document-wrapper li li li li li ul,.document-wrapper li li li ul,.document-wrapper li ul{list-style:circle}.document-wrapper li li li li li li ul,.document-wrapper li li li li ul,.document-wrapper li li ul{list-style:disc}.document-wrapper li::marker{color:var(--document-list-marker-color)}.document-wrapper ol{list-style-type:none;counter-reset:custom-list-item calc(var(--data-list-start,1) - 1)}.document-wrapper ol>li{counter-increment:custom-list-item;position:relative}.document-wrapper ol>li::before{content:counter(custom-list-item) ". ";color:var(--document-list-marker-color);position:absolute;transform:translate(calc(-100% - .33em),0)}.document-wrapper ol>li[data-big-number=true]{margin-inline-start:-2.05em}.document-wrapper ol>li[data-big-number=true]::before{position:static;padding-inline-end:0.25em}.document-wrapper ol>li[data-list-type="1"]:before{content:counter(custom-list-item) ") "}.document-wrapper [data-direction="2"] ol>li::before,.document-wrapper ol[data-direction="2"]>li::before{transform:translate(calc(100% + .33em),0)}.document-wrapper li[role=checkbox]{list-style:none;position:relative}.document-wrapper li[aria-checked=true]{color:var(--document-text-secondary-color)}.document-wrapper .todo-checkbox{display:inline-block;margin-left:-1.7em;margin-right:.5em}.document-wrapper .todo-checkbox svg{display:inline-block;margin-bottom:-.3em}.document-wrapper blockquote{display:block;padding-inline-start:2.13em;position:relative}.document-wrapper code,.document-wrapper mark,span.highlighted{padding:var(--document-inline-padding-top-bottom) var(--document-inline-padding-left-right)}.document-wrapper blockquote::before{content:"";position:absolute;top:.2em;left:1em;width:.13em;height:calc(100% - .4em);border:var(--document-hairline-width) solid var(--document-list-marker-color);border-radius:.33em}.document-wrapper code,.document-wrapper pre.fenced-code,.document-wrapper pre.indented-code,.document-wrapper pre.yaml{color:var(--document-code-text-color);background-color:var(--document-code-background-color);border-radius:.25em}.document-wrapper [data-direction="2"] blockquote::before,.document-wrapper blockquote[data-direction="2"]::before{left:0;right:1em}.document-wrapper blockquote blockquote blockquote blockquote blockquote blockquote::before,.document-wrapper blockquote blockquote blockquote blockquote::before,.document-wrapper blockquote blockquote::before{background-color:transparent}.document-wrapper hr{display:block;margin-block-start:calc(var(--document-line-height-multiplier) * 0.5em);margin-block-end:calc(var(--document-line-height-multiplier) * -0.5em);border-top:var(--document-hairline-width) solid var(--document-separator-border-color)}.document-wrapper pre{display:block;white-space:pre-wrap}.document-wrapper pre.indented-code{padding-inline-start:2.13em}.document-wrapper pre.fenced-code,.document-wrapper pre.yaml{padding:0 .5em}.document-wrapper .fenced-code::before{content:"\200B"}.document-wrapper code{font-weight:400;font-style:normal;display:block}.document-wrapper mark code{color:var(--document-text-color);background-color:var(--document-highlighter-background-color)}.document-wrapper em,.document-wrapper i{font-family:AvenirNext-Italic}.document-wrapper b,.document-wrapper strong,.document-wrapper th{font-family:AvenirNext-Bold}.document-wrapper mark,span.highlighted{color:var(--document-highlighter-background-text-color);background-color:var(--document-highlighter-background-color);text-decoration:inherit;unicode-bidi:embed;border-radius:.25em}.document-wrapper mark.red,span.highlighted.red{color:var(--document-highlighter-red-background-text-color);background-color:var(--document-highlighter-red-background-color)}.document-wrapper mark.blue,span.highlighted.blue{color:var(--document-highlighter-blue-background-text-color);background-color:var(--document-highlighter-blue-background-color)}.document-wrapper mark.green,span.highlighted.green{color:var(--document-highlighter-green-background-text-color);background-color:var(--document-highlighter-green-background-color)}.document-wrapper mark.yellow,span.highlighted.yellow{color:var(--document-highlighter-yellow-background-text-color);background-color:var(--document-highlighter-yellow-background-color)}.document-wrapper mark.purple,span.highlighted.purple{color:var(--document-highlighter-purple-background-text-color);background-color:var(--document-highlighter-purple-background-color)}.document-wrapper u{text-decoration:underline;text-decoration-color:var(--document-accent-color);unicode-bidi:embed}.document-wrapper s,.document-wrapper strike{text-decoration:line-through}.document-wrapper a{color:var(--document-link-color);unicode-bidi:embed;cursor:pointer}.document-wrapper a:hover{text-decoration:inherit}.document-wrapper .wiki-separator-marker{display:inline;color:inherit}.document-wrapper .link-definition-title{color:var(--document-text-light-color)}.document-wrapper .footnote-ref{font-size:.9em;vertical-align:super}.document-wrapper span.entity{direction:ltr;unicode-bidi:embed;color:var(--document-code-syntax-highlight-entity)}.document-wrapper span.escape{unicode-bidi:embed}.document-wrapper .color{font-family:var(--document-code-font),monospace;font-size:var(--document-code-text-size-multiplier);padding-inline-start:1.2em;position:relative;direction:ltr;unicode-bidi:embed}.document-wrapper .color::before{content:"";position:absolute;width:.9em;height:.9em;left:0;bottom:0;transform:translateY(-15%);border:var(--document-hairline-width) solid rgb(0,0,0,.3);border-radius:.9em;background-color:var(--data-color)}.document-wrapper .hashtag{color:var(--document-tag-text-color);background-color:var(--document-tag-background-color);border-radius:1em;padding:calc(var(--document-inline-padding-top-bottom) - 2 * var(--document-hairline-width)) calc(var(--document-inline-padding-left-right) + .3em);unicode-bidi:embed}.document-wrapper .hashtag>.marker{display:inline;color:var(--document-tag-marker-color);padding:0}.document-wrapper table{display:block;max-width:fit-content;overflow-x:auto;border-collapse:separate;border-spacing:0;border:var(--document-hairline-width) solid var(--document-table-border-color);border-radius:.33em;margin-bottom:calc(var(--document-line-height-multiplier) * 1em)}.document-wrapper table[data-direction="2"]{margin-left:auto;direction:ltr}.document-wrapper tr{display:table-row;background-color:var(--document-table-cell-background-color)}.document-wrapper tr.header-row,.document-wrapper tr:nth-child(odd){background-color:var(--document-table-cell-alternate-background-color)}.document-wrapper td,.document-wrapper th{box-sizing:border-box;display:table-cell;padding:.37em .75em;min-width:5em;border-right:var(--document-hairline-width) solid var(--document-table-border-color)}.document-wrapper td:last-of-type,.document-wrapper th:last-of-type{border:none}.document-wrapper table[data-direction="2"] td{margin-left:auto}.document-wrapper td[data-alignment="2"]{text-align:right}.document-wrapper td[data-alignment="3"]{text-align:center}.document-wrapper .code_comment{color:var(--document-code-syntax-highlight-comment)}.document-wrapper .code_constant{color:var(--document-code-syntax-highlight-constant)}.document-wrapper .code_number{color:var(--document-code-syntax-highlight-number)}.document-wrapper .code_string{color:var(--document-code-syntax-highlight-string)}.document-wrapper .code_entity{color:var(--document-code-syntax-highlight-entity)}.document-wrapper .code_keyword{color:var(--document-code-syntax-highlight-keyword)}.document-wrapper .code_function{color:var(--document-code-syntax-highlight-function)}.document-wrapper .code_variable{color:var(--document-code-syntax-highlight-variable)}.document-wrapper img{max-width:100%}.document-wrapper .pdf_preview{display:inline-block;width:100%;height:500px;background-color:#fff;overflow:hidden;padding:0;margin:0;position:relative;border-radius:4px}.document-wrapper .arrow svg #body,.document-wrapper .arrow svg #head{fill:var(--base-text-color)}.document-wrapper .todo-checkbox svg #body{stroke:var(--document-task-border-color)}.document-wrapper .todo-checkbox svg #check{fill:var(--document-task-check-color)}.document-wrapper .todo-checkbox.todo-checked svg #body{opacity:.35}.document-wrapper .todo-checkbox.todo-checked svg #check{opacity:.4}.document-wrapper blockquote.md-callout{padding-top:.8em;padding-bottom:.8em;border:1px solid;margin-inline:calc((var(--document-md-indentation) - 4px) * 0.5 + var(--nested-block-marker-skew));border-radius:3px;padding-inline-start:calc(var(--document-md-indentation) - 9px);padding-inline-end:calc(var(--document-md-indentation) - 9px);margin-left:1em}.document-wrapper blockquote.md-callout:before{top:0;left:0;width:.13em;height:calc(100%)}.document-wrapper>.md-callout{margin-inline:calc(var(--md-indentation) + (var(--md-indentation) - 4px) * 0.5 + var(--nested-block-marker-skew))}.document-wrapper .md-callout>.md-callout-head{font-family:var(--document-headers-font)}.document-wrapper .md-callout>.md-callout-head:not(:last-child){margin-bottom:.5em}.document-wrapper .md-callout-head img{vertical-align:baseline;margin-right:.1em}.document-wrapper blockquote.md-callout-note{border-color:var(--document-callout-note-border-color);background-color:var(--document-callout-note-background-color)}.document-wrapper blockquote.md-callout-note:before{border:var(--document-hairline-width) solid var(--document-callout-note-border-color);background-color:var(--document-callout-note-bar-color)}.document-wrapper .md-callout-note>.md-callout-head{color:var(--markdown-view-highlighter-blue-text-color)}.document-wrapper .md-callout-note .md-callout-head>img,.document-wrapper blockquote.md-callout-caution .md-callout-head>img,.document-wrapper blockquote.md-callout-tip .md-callout-head>img,.document-wrapper blockquote.md-callout-warning .md-callout-head>img{margin-bottom:-2px}.document-wrapper blockquote.md-callout-tip{border-color:var(--document-callout-tip-border-color);background-color:var(--document-callout-tip-background-color)}.document-wrapper blockquote.md-callout-tip:before{border:var(--document-hairline-width) solid var(--document-callout-tip-border-color);background-color:var(--document-callout-tip-bar-color)}.document-wrapper blockquote.md-callout-important::before,.document-wrapper blockquote.md-callout-important:before{background-color:var(--document-callout-important-bar-color)}.document-wrapper blockquote.md-callout-tip>.md-callout-head{color:var(--markdown-view-highlighter-green-text-color)}.document-wrapper blockquote.md-callout-important{border-color:var(--document-callout-important-border-color);background-color:var(--document-callout-important-background-color);background-color:var(--document-callout-important-background-color);border-color:var(--document-callout-important-border-color)}.document-wrapper blockquote.md-callout-important:before{border:var(--document-hairline-width) solid var(--document-callout-important-border-color)}.document-wrapper blockquote.md-callout-important>.md-callout-head{color:var(--markdown-view-highlighter-purple-text-color)}.document-wrapper blockquote.md-callout-important .md-callout-head>img{margin-bottom:-4px}.document-wrapper blockquote.md-callout-warning{background-color:var(--document-callout-warning-background-color);border-color:var(--document-callout-warning-border-color)}.document-wrapper blockquote.md-callout-warning::before{background-color:var(--document-callout-warning-bar-color);background-color:var(--document-callout-caution-bar-color)}.document-wrapper blockquote.md-callout-warning>.md-callout-head{color:var(--markdown-view-highlighter-yellow-text-color)}.document-wrapper blockquote.md-callout-caution{background-color:var(--document-callout-caution-background-color);border-color:var(--document-callout-caution-border-color)}.document-wrapper blockquote.md-callout-caution>.md-callout-head{color:var(--markdown-view-highlighter-red-text-color)}
+
+        </style>
+    </head>
+    <body>
+        <div class="document-wrapper">
+            <h1 id='Orange ISP ONU XGS-WAS-110'>Orange ISP ONU XGS-WAS-110</h1><br>
+<blockquote>
+<p><b>Orange tricks</b><br>
+Notes from the part of the home network where optics, OMCI, VLANs, DHCP options and ISP assumptions meet.<br>
+KISS when possible. Preserve the logs when not.</p>
+</blockquote><br>
+<br>
+<h2 id='What this note is about'>What this note is about</h2><br>
+<p>XGS-PON, SFP+ ONU stick, 8311 firmware, VLAN/OMCI verification and the usual Orange-flavored archaeology.</p><br>
+<p>This is a cleaned-up blog version of my working notes, but intentionally <b>not a simplified rewrite</b>.<br>
+All commands, code blocks, device-specific values, references and troubleshooting hints from the original note are preserved below.</p><br>
+<p>The objective is simple: make the document easier to read without turning hard-earned operational details into vague advice. ISP replacement setups are already full of ghosts; removing useful notes would only make the ghosts angrier.</p><br>
+<h2 id='Read this first'>Read this first</h2><br>
+<p>This kind of setup touches several layers at once:</p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='text'>fiber / optics
+PON registration
+OMCI identity
+VLAN provisioning
+Ethernet handoff
+DHCP client behavior
+routing / firewalling
+</code></pre><br>
+<p>When something fails, debug in that order. Starting with firewall rules before the ONU/ONT is properly associated is a very efficient way to lose an evening.</p><br>
+<h2 id='Original technical notes, preserved and reorganized only lightly'>Original technical notes, preserved and reorganized only lightly</h2><br>
+<p>Source note: <code class='code-inline'>Orange ISP ONU XGS WAS-110.md</code></p><br>
+<h2 id='Orange ISP ONU XGS WAS-110'>Orange ISP ONU XGS WAS-110</h2><br>
+<h2 id='Links'>Links</h2><br>
+<p><a href='https://akhamar.github.io/orange-xgs-pon/30_was_onu.html'>https://akhamar.github.io/orange-xgs-pon/30_was_onu.html</a></p><br>
+<p><a href='https://akhamar.github.io/orange-xgs-pon/'>https://akhamar.github.io/orange-xgs-pon/</a></p><br>
+<p><a href='https://www.fibermall.com/sale-460693-xgspon-onu-sfp-stick.htm'>https://www.fibermall.com/sale-460693-xgspon-onu-sfp-stick.htm</a></p><br>
+<p><a href='https://lafibre.info/remplacer-livebox/durcissement-du-controle-de-loption-9011-et-de-la-conformite-protocolaire/1320/'>Orange DHCP conformité protocolaire 2023 - lire depuis le début du sujet</a></p><br>
+<p><a href='https://github.com/djGrrr/8311-was-110-firmware-builder'>djGrrr/8311-was-110-firmware-builder</a></p><br>
+<br>
+<p>The chipset is MaxLinear PRX126 made by Azores.</p><br>
+<p>Do not use any NIC to host the ONU as above 7800-8000Mbps the ONU will draw too much power and enter a deep emergency lock state. Use a switch instead (using trunk vlan832).</p><br>
+<p>To be able to flash the WAS-110 inside a Mikrotik switch without to have to connect the fiber (and power-on the ONU), just disable rx-loss on the port :</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>/interface ethernet set [ find default-name=sfp-sfpplusX ] sfp-ignore-rx-los=yes
+</code></pre><br>
+<h2 id='Basics'>Basics</h2><br>
+<p>For memories, the good SFP power values should be in the following ranges :</p><ul>
+<li>GPON  :</li>
+</ul><p>TX  0.5 <span class='arrow'><svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.500000)" fill="#444444">
+            <rect id="body" x="0" y="4.5" width="10" height="2"></rect>
+            <path d="M7,0 L11.7928932,4.79289322 C12.1834175,5.18341751 12.1834175,5.81658249 11.7928932,6.20710678 L7,11 L7,11 L6,10 L8.5,6 L8.5,5 L6,1 L7,0 Z" id="head"></path>
+        </g>
+    </g>
+</svg></span> 5 dBm<br>
+RX -30 <span class='arrow'><svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.500000)" fill="#444444">
+            <rect id="body" x="0" y="4.5" width="10" height="2"></rect>
+            <path d="M7,0 L11.7928932,4.79289322 C12.1834175,5.18341751 12.1834175,5.81658249 11.7928932,6.20710678 L7,11 L7,11 L6,10 L8.5,6 L8.5,5 L6,1 L7,0 Z" id="head"></path>
+        </g>
+    </g>
+</svg></span> -8 dBm</p><br>
+<ul>
+<li>XGSPON  :</li>
+</ul><p>TX 4 <span class='arrow'><svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.500000)" fill="#444444">
+            <rect id="body" x="0" y="4.5" width="10" height="2"></rect>
+            <path d="M7,0 L11.7928932,4.79289322 C12.1834175,5.18341751 12.1834175,5.81658249 11.7928932,6.20710678 L7,11 L7,11 L6,10 L8.5,6 L8.5,5 L6,1 L7,0 Z" id="head"></path>
+        </g>
+    </g>
+</svg></span> 9 dBm<br>
+RX -28 <span class='arrow'><svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.500000)" fill="#444444">
+            <rect id="body" x="0" y="4.5" width="10" height="2"></rect>
+            <path d="M7,0 L11.7928932,4.79289322 C12.1834175,5.18341751 12.1834175,5.81658249 11.7928932,6.20710678 L7,11 L7,11 L6,10 L8.5,6 L8.5,5 L6,1 L7,0 Z" id="head"></path>
+        </g>
+    </g>
+</svg></span> -9 dBm</p><br>
+<br>
+<h2 id='Introduction'>Introduction</h2><br>
+<p>The WAS-110 firmware can be switched to a community firmware that allow a lot of customization and control over the ONU.</p><br>
+<p>Note: After 3 consecutive power failures (or like that), the ONU automatically switch to failsafe mode.<br>
+To exit from this mode, just power cycle 1 time (power off, power on).</p><br>
+<h2 id='Material/Software validation'>Material/Software validation</h2><br>
+<p>Router (soft):</p><br>
+<ul>
+<li>OpnSense</li>
+<li>Debian</li>
+<li>OpenWrt</li>
+</ul><br>
+<p>Router (hardware):</p><br>
+<ul>
+<li>tp-link er8411</li>
+<li>mikrotik CCR2004</li>
+<li>Banana Pi BPI-R4</li>
+</ul><br>
+<p><s>NIC:</s></p><br>
+<ul>
+<li><s>X710-DA2 (some seem to have issues, I didn’t)</s></li>
+<li><s>X520-xx</s></li>
+<li><s>Mellanox MT27710 [ConnectX-4 Lx]</s></li>
+</ul><br>
+<blockquote>
+<p>Do not use any NIC to host the ONU as above 7800-8000Mbps the ONU will draw too much power and enter a deep emergency lock state.</p><br>
+<p>Use a switch instead (using trunk vlan832)</p>
+</blockquote><br>
+<p>Switch:</p><br>
+<ul>
+<li>Probably any</li>
+</ul><br>
+<p>Media converter:</p><br>
+<ul>
+<li>MC220L v2.x</li>
+<li>MC220L v3.x</li>
+</ul><br>
+<br>
+<br>
+<h1 id='ONU cross flash'>ONU cross flash</h1><h2 id='List of essentials'>List of essentials</h2><br>
+<p>Available version of the firmware</p><br>
+<p>The explanations and original github repository are available <a href='https://github.com/djGrrr/8311-was-110-firmware-builder'>here</a></p><br>
+<p>You will need the ability to use 7zip (windows or linux) to extract the firmware and a console able to connect and transfert using an <code class='code-inline'>ssh/scp</code> command.</p><br>
+<h2 id='Preparing the host'>Preparing the host</h2><br>
+<p>Make sure you are on the ONU host machine. You will need an address on the <code class='code-inline'>192.168.11.0/24</code> network. The ONU is accessible on the IP <code class='code-inline'>192.168.11.1</code></p><br>
+<p>You can test the connectivity by pinging the ONU.</p><br>
+<h2 id='Preparing the original ONU firmware'>Preparing the original ONU firmware</h2><h2 id='Credentials'>Credentials</h2><h3 id='Web credentials (HTTP)'>Web credentials (HTTP)</h3><br>
+<p>The original firmware login/password that come with the WAS-110 vary depending on the ONU version.</p><br>
+<blockquote>
+<p><= v1.0.20</p>
+</blockquote><br>
+<table>
+	<tr>
+		<th>Username</th>
+		<th>Password</th>
+	</tr>
+	<tr>
+		<td>admin</td>
+		<td>QsCg@7249#5281</td>
+	</tr>
+	<tr>
+		<td>user</td>
+		<td>user1234</td>
+	</tr>
+</table>
+<br>
+<blockquote>
+<p>v1.0.21+ (or root of community firmware from <a href='https://github.com/djGrrr/8311-was-110-firmware-builder'>djGrrr/8311-was-110-firmware-builder</a>)</p>
+</blockquote><br>
+<table>
+	<tr>
+		<th>Username</th>
+		<th>Password</th>
+	</tr>
+	<tr>
+		<td>admin</td>
+		<td>BR#22729%635e9</td>
+	</tr>
+	<tr>
+		<td>user</td>
+		<td>user1234</td>
+	</tr>
+</table>
+<br>
+<blockquote>
+<p>community firmware from <a href='https://github.com/djGrrr/8311-was-110-firmware-builder'>djGrrr/8311-was-110-firmware-builder</a></p>
+</blockquote><br>
+<p><b>There is no root password, you must define a password with <code class='code-inline'>passwd</code> command !</b></p><br>
+<br>
+<h3 id='Shell credentials (SSH)'>Shell credentials (SSH)</h3><br>
+<p>The original firmware login/password that come with the WAS-110 vary depending on the ONU version.</p><br>
+<blockquote>
+<p><= v1.0.20</p>
+</blockquote><br>
+<table>
+	<tr>
+		<th>Username</th>
+		<th>Password</th>
+	</tr>
+	<tr>
+		<td>root</td>
+		<td>QpZm@4246#5753</td>
+	</tr>
+</table>
+<br>
+<blockquote>
+<p>v1.0.21+</p>
+</blockquote><br>
+<p><code class='code-inline'>The root password is undisclosed at this time, use the suggested exploit below to gain root privileges</code></p><br>
+<p>Run the following command(s) to temporarily change the root password to <code class='code-inline'>root</code></p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='bash'><span class='code_function'>curl</span> <span class='code_variable'>-s</span> <span class='code_variable'>-o</span> null <span class='code_string'>"http://192.168.11.1/cgi-bin/shortcut_telnet.cgi?%7B%20echo%20root%20%3B%20sleep%201%3B%20echo%20root%3B%20%7D%20%7C%20passwd%20root"</span>
+</code></pre><br>
+<br>
+<blockquote>
+<p>community firmware from <a href='https://github.com/djGrrr/8311-was-110-firmware-builder'>djGrrr/8311-was-110-firmware-builder</a></p>
+</blockquote><br>
+<p><b>There is no root password, you must define a password with <code class='code-inline'>passwd</code> command !</b></p><br>
+<h2 id='Configuring the ONU to accept SSH'>Configuring the ONU to accept SSH</h2><br>
+<p>Navigate to the service controle panel to activate SSH. Use the <code class='code-inline'>admin</code> credential above, matching your version, to login on the ONU.</p><br>
+<blockquote>
+<p><a href='https://192.168.11.1/html/main.html#service/servicecontrol'>https://192.168.11.1/html/main.html#service/servicecontrol</a></p>
+</blockquote><br>
+<p>Activate SSH and Save.</p><br>
+<p><img src='https://raw.githubusercontent.com/akhamar/orange-xgs-pon/main/assets/images/was-110/WAS-110-SSH.png' alt='image'></p><br>
+<h2 id='Preparing the firmware'>Preparing the firmware</h2><br>
+<p>Extract the firmware</p><br>
+<blockquote>
+<p>windows</p>
+</blockquote><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='plaintext'>7z x WAS-110_8311_firmware_mod_&lt;version&gt;_basic.7z
+</code></pre><br>
+<blockquote>
+<p>linux</p>
+</blockquote><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='plaintext'>7z x WAS-110_8311_firmware_mod_&lt;version&gt;_basic.7z
+</code></pre><br>
+<h2 id='Installing the firmware'>Installing the firmware</h2><br>
+<p>In the folder where you extracted the community firmware, do the following.</p><br>
+<h2 id='windows'>windows</h2><br>
+<p>Prior to Windows 11 Build 22631.4391 (KB5044380) and Windows 10 Build 19045.5073 (KB5045594)</p><pre class='fenced-code'><code class='fenced-code-content' lang='plaintext'>scp -oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedKeyTypes=+ssh-rsa local-upgrade.tar root@192.168.11.1:/tmp/
+ssh -oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedKeyTypes=+ssh-rsa root@192.168.11.1 "tar xvf /tmp/local-upgrade.tar -C /tmp/ -- upgrade.sh && /tmp/upgrade.sh -y -r /tmp/local-upgrade.tar"
+</code></pre><br>
+<p>New Windows build</p><pre class='fenced-code'><code class='fenced-code-content' lang='plaintext'>scp -O -oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedKeyTypes=+ssh-rsa local-upgrade.tar root@192.168.11.1:/tmp/
+ssh -oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedKeyTypes=+ssh-rsa root@192.168.11.1 "tar xvf /tmp/local-upgrade.tar -C /tmp/ -- upgrade.sh && /tmp/upgrade.sh -y -r /tmp/local-upgrade.tar"
+</code></pre><br>
+<h2 id='linux'>linux</h2><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='plaintext'>scp -O -oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedKeyTypes=+ssh-rsa local-upgrade.tar root@192.168.11.1:/tmp/
+ssh -oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedKeyTypes=+ssh-rsa root@192.168.11.1 'tar xvf /tmp/local-upgrade.tar -C /tmp/ -- upgrade.sh && /tmp/upgrade.sh -y -r /tmp/local-upgrade.tar'
+</code></pre><br>
+<p>After a reboot of the ONU, you can verify that it as been upgraded to the community version.</p><br>
+<h2 id='Verify'>Verify</h2><br>
+<p>Navigate to the ONU community interface. On the first connection, you will be asked to set a new <code class='code-inline'>root</code> password. Please remember it, it will be important to configure the ONU later on.</p><br>
+<blockquote>
+<p><a href='https://192.168.11.1/'>https://192.168.11.1</a></p>
+</blockquote><br>
+<p><img src='https://raw.githubusercontent.com/akhamar/orange-xgs-pon/main/assets/images/was-110/WAS-110-community-status.png' alt='image'></p><br>
+<br>
+<h2 id='Upgrading community firmware'>Upgrading community firmware</h2><br>
+<p>Just extract <code class='code-inline'>local-upgrade.tar</code> from <code class='code-inline'>WAS-110_8311_firmware_mod_&lt;version&gt;_basic.7z</code>, go to the web interface > 8311 menu > Firmware > Upload > Install > Reboot (wait about 2 min)</p><br>
+<br>
+<h1 id='ONU Configuration'>ONU Configuration</h1><h2 id='Configuring the ONU'>Configuring the ONU</h2><br>
+<p>Navigate to the ONU community interface and login.</p><br>
+<blockquote>
+<p><a href='https://192.168.11.1/'>https://192.168.11.1</a></p>
+</blockquote><br>
+<p>On the menu and under <code class='code-inline'>8311</code> go to <code class='code-inline'>Configuration</code>.</p><br>
+<p><img src='https://raw.githubusercontent.com/akhamar/orange-xgs-pon/main/assets/images/was-110/WAS-110-community-configuration.png' alt='image'></p><br>
+<h2 id='PON'>PON</h2><br>
+<p>Set your LiveBox values and save.</p><br>
+<p>You will need to set the <code class='code-inline'>PON Serial Number</code>, the <code class='code-inline'>Vendor ID</code> and the <code class='code-inline'>Hardware Version</code>.</p><br>
+<table>
+	<tr>
+		<th>PON Serial Number</th>
+		<th>YOUR_LIVEBOX_ONT_SERIAL</th>
+	</tr>
+	<tr>
+		<td>Vendor ID</td>
+		<td>SMBS</td>
+	</tr>
+	<tr>
+		<td>Hardware Version</td>
+		<td>SMBSXLB7400</td>
+	</tr>
+</table>
+<p><b>WARNING : The very last version of Livebox 7 (with wifi 7) seems to have a different Hardware Version. To be sure, just verify yourself in the Livebox interface…</b></p><br>
+<table>
+	<tr>
+		<th>PON Serial Number</th>
+		<th>YOUR_LIVEBOX_ONT_SERIAL</th>
+	</tr>
+	<tr>
+		<td>Vendor ID</td>
+		<td>SMBS</td>
+	</tr>
+	<tr>
+		<td>Hardware Version</td>
+		<td>SMBSXLB7270300</td>
+	</tr>
+</table>
+<br>
+<p><img src='https://raw.githubusercontent.com/akhamar/orange-xgs-pon/main/assets/images/was-110/WAS-110-community-configuration-values-01.png' alt='image'></p><br>
+<p><b>Note: DO NOT FORGET TO REPORT THE MAC ADDRESS OF LIVEBOX TO DHCP CLIENT VLAN 832 INTERFACE</b></p><br>
+<h2 id='ISP Fixes'>ISP Fixes</h2><br>
+<p>Unset the <code class='code-inline'>Fix VLANs</code> and save.</p><br>
+<p><img src='https://raw.githubusercontent.com/akhamar/orange-xgs-pon/main/assets/images/was-110/WAS-110-community-configuration-values-02.png' alt='image'></p><br>
+<h1 id='ONU Verify'>ONU Verify</h1><p>Navigate to the ONU community interface and login.</p><br>
+<blockquote>
+<p><a href='https://192.168.11.1/'>https://192.168.11.1</a></p>
+</blockquote><br>
+<p>On the menu and under <code class='code-inline'>8311</code> go to <code class='code-inline'>PON Status</code>.</p><br>
+<p><img src='https://raw.githubusercontent.com/akhamar/orange-xgs-pon/main/assets/images/was-110/WAS-110-community-olt-check-01.png' alt='image'></p><br>
+<p>You should see the <code class='code-inline'>O5.1, Associated state</code> status.<br>
+Now, just go to the menu 8311 > VLAN Tables, you should see expected VLAN tables.<br>
+<b>If it is not the case and the PON Status show <code class='code-inline'>O5.1, Associated state</code>, just reboot the SFP via the menu System > Reboot and check again.</b></p><br>
+<p><img src='https://raw.githubusercontent.com/akhamar/orange-xgs-pon/main/assets/images/was-110/WAS-110-community-olt-check-02.png' alt='image'></p><br>
+<br>
+<h1 id='ONU Troubleshoot'>ONU Troubleshoot</h1><br>
+<br>
+<h2 id='Failsafe mode'>Failsafe mode</h2><br>
+<p>After 3 consecutive power failures (or like that), the ONU automatically switch to failsafe mode.<br>
+To exit from this mode, just power cycle 1 time (power off, power on).</p><br>
+<h2 id='Verify your VLANs'>Verify your VLANs</h2><br>
+<blockquote>
+<p>This is now directly available on the ONU http interface starting <code class='code-inline'>2.7.0+</code> version of the firmware.</p>
+</blockquote><br>
+<p>Just go to the menu 8311 > VLAN Tables, you should see the following.<br>
+If it is not the case and the PON Status show <code class='code-inline'>O5.1, Associated state</code>, just reboot the SFP via the menu System > Reboot and check again.</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>------------------------
+Filter Outer		Filter Inner		Filter Other	Treatment Outer			Treatment Inner
+Prio	VID	TPIDDEI	Prio	VID	TPIDDEI	EthTyp	ExtCrit	TagRem	Prio	VID	TPIDDEI	Prio	VID	TPIDDEI
+14	4096	5	14	4096	0	0	0	3	15	0	0	15	4096	3
+15	4096	0	0	851	5	0	0	1	15	0	0	0	852	2
+15	4096	0	1	851	5	0	0	1	15	0	0	1	852	2
+15	4096	0	2	851	5	0	0	1	15	0	0	2	852	2
+15	4096	0	3	851	5	0	0	1	15	0	0	3	852	2
+15	4096	0	4	851	5	0	0	1	15	0	0	4	852	2
+15	4096	0	5	851	5	0	0	1	15	0	0	4	852	2
+15	4096	0	6	851	5	0	0	1	15	0	0	5	852	2
+15	4096	0	7	851	5	0	0	1	15	0	0	7	852	2
+15	4096	0	8	832	5	0	0	1	15	0	0	8	2800	2
+15	4096	0	8	835	5	0	0	1	15	0	0	8	835	2
+15	4096	0	14	4096	5	0	0	3	15	0	0	15	4096	2
+15	4096	0	15	0	5	0	0	3	15	0	0	15	0	2
+15	4096	0	14	4096	0	0	0	0	15	0	0	15	0	0
+14	4096	0	14	4096	0	0	0	0	15	0	0	15	0	0
+
+
+Extended VLAN table 257
+------------------------
+Filter Outer Priority:		14	(Default filter when no other two-tag rule applies)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter Inner Priority:		14	(Default filter when no other one-tag rule applies)
+Filter Inner VID:		4096	(Do not filter on the inner VID)
+Filter Inner TPID/DEI:		0	(Do not filter on inner TPID or DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	3	(Discard the frame)
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	15	(Do not add an inner tag)
+Treatment inner VID:		4096	(Copy from the inner VID of received frame)
+Treatment inner TPID/DEI:	3	(TPID = Output TPID, DEI = Outer DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		0
+Filter Inner VID:		851
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	0
+Treatment inner VID:		852
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		1
+Filter Inner VID:		851
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	1
+Treatment inner VID:		852
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		2
+Filter Inner VID:		851
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	2
+Treatment inner VID:		852
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		3
+Filter Inner VID:		851
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	3
+Treatment inner VID:		852
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		4
+Filter Inner VID:		851
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	4
+Treatment inner VID:		852
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		5
+Filter Inner VID:		851
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	4
+Treatment inner VID:		852
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		6
+Filter Inner VID:		851
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	5
+Treatment inner VID:		852
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		7
+Filter Inner VID:		851
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	7
+Treatment inner VID:		852
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		8	(Do not filter on the inner priority)
+Filter Inner VID:		832
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	8	(Copy from the inner priority of received frame)
+Treatment inner VID:		2800
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		8	(Do not filter on the inner priority)
+Filter Inner VID:		835
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	1
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	8	(Copy from the inner priority of received frame)
+Treatment inner VID:		835
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		14	(Default filter when no other one-tag rule applies)
+Filter Inner VID:		4096	(Do not filter on the inner VID)
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	3	(Discard the frame)
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	15	(Do not add an inner tag)
+Treatment inner VID:		4096	(Copy from the inner VID of received frame)
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		15	(No-tag rule; ignore all other VLAN tag filter fields)
+Filter Inner VID:		0
+Filter Inner TPID/DEI:		5	(TPID = Input TPID, ignore DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	3	(Discard the frame)
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	15	(Do not add an inner tag)
+Treatment inner VID:		0
+Treatment inner TPID/DEI:	2	(TPID = Output TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		15	(Not a double-tag rule; ignore all other outer tag filter fields)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		14	(Default filter when no other one-tag rule applies)
+Filter Inner VID:		4096	(Do not filter on the inner VID)
+Filter Inner TPID/DEI:		0	(Do not filter on inner TPID or DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	0
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	15	(Do not add an inner tag)
+Treatment inner VID:		0
+Treatment inner TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+
+Filter Outer Priority:		14	(Default filter when no other two-tag rule applies)
+Filter Outer VID:		4096	(Do not filter on the outer VID)
+Filter Outer TPID/DEI:		0	(Do not filter on outer TPID or DEI)
+Filter Inner Priority:		14	(Default filter when no other one-tag rule applies)
+Filter Inner VID:		4096	(Do not filter on the inner VID)
+Filter Inner TPID/DEI:		0	(Do not filter on inner TPID or DEI)
+Filter EtherType:		0	(Do not filter on EtherType)
+Filter Extended Criteria:	0	(Do not filter on extended criteria)
+Treatment tags to remove:	0
+Treatment outer priority:	15	(Do not add an outer tag)
+Treatment outer VID:		0
+Treatment outer TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+Treatment inner priority:	15	(Do not add an inner tag)
+Treatment inner VID:		0
+Treatment inner TPID/DEI:	0	(TPID = Inner TPID, DEI = Inner DEI)
+</code></pre><br>
+<br>
+<p>You will need to <code class='code-inline'>ssh</code> to the ONU first.</p><br>
+<p>Extract the VLANs data</p><br>
+<p>The result will be something similar to that.</p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='bash'>Class ID    <span class='code_entity'>=</span> <span class='code_number'>171</span> (Extended VLAN conf data)
+Instance ID <span class='code_entity'>=</span> <span class='code_number'>257</span>
+Upload      <span class='code_entity'>=</span> <span class='code_function'>yes</span>
+Alarms      <span class='code_entity'>=</span> -
+-------------------------------------------------------------------------------
+ <span class='code_number'>1</span> Association <span class='code_keyword'>type</span>              1b ENUM RWS-------
+   0x02 (<span class='code_number'>2</span>)
+-------------------------------------------------------------------------------
+ <span class='code_number'>2</span> RX frame VLAN table max       2b UINT R---------
+   0x0000 (<span class='code_number'>0</span>)
+-------------------------------------------------------------------------------
+ <span class='code_number'>3</span> Input TPID                    2b UINT RW--------
+   0xXXXX (XXXXX)
+-------------------------------------------------------------------------------
+ <span class='code_number'>4</span> Output TPID                   2b UINT RW--------
+   0xXXXX (XXXXX)
+-------------------------------------------------------------------------------
+ <span class='code_number'>5</span> Downstream mode               1b ENUM RW--------
+   0x00 (<span class='code_number'>0</span>)
+-------------------------------------------------------------------------------
+ <span class='code_number'>6</span> RX frame VLAN table          16b TBL  RW---UTP--
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+
+-------------------------------------------------------------------------------
+ <span class='code_number'>7</span> Associated ME ptr             2b PTR  RWS-------
+   0xXXXX (<span class='code_number'>257</span>)
+-------------------------------------------------------------------------------
+ <span class='code_number'>8</span> DSCP to P-bit mapping        24b STR  RW--O--P--
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   \xXX\xXX\xXX$\xXX$\xXX\xXX\xXX\xXX$\xXX\xXX\xXX\xXX\xXX\xXX\xXX
+-------------------------------------------------------------------------------
+R - Readable          O - Not supported (optional)
+W - Writable          E - Excluded from MIB upload (template)
+S - set-by-create     T - Table
+A - Send AVC          V - Volatile
+U - No upload         P - No swap
+N - Not supported     Y - Partly supported
+
+errorcode<span class='code_entity'>=</span><span class='code_number'>0</span>
+</code></pre><br>
+<p>Extract the table frome that and copy it.</p><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='bash'>   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+   0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX 0xXX
+</code></pre><br>
+<h2 id='Compile table parser'>Compile table parser</h2><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='c++'>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iomanip&gt;
+#include &lt;climits&gt;
+#include &lt;bit&gt;
+
+void output_priority(unsigned int n) {
+    if (n &lt; 7) {
+      std::cout &lt;&lt; n;
+    } else if (n == 8) {
+      std::cout &lt;&lt; "Do not filter";
+    } else if (n == 14) {
+      std::cout &lt;&lt; "Default";
+    } else if (n == 15) {
+      std::cout &lt;&lt; "Not a double tag, ignore";
+    } else {
+      std::cout &lt;&lt; "Invalid";
+    }
+}
+void output_vid(unsigned int n) {
+    if (n &lt; 4096) {
+      std::cout &lt;&lt; n;
+    } else if (n == 4096) {
+      std::cout &lt;&lt; "Do not filter on the outer VID";
+    } else {
+      std::cout &lt;&lt; "Invalid";
+    }
+}
+
+int main(int argc, char** argv) {
+  std::cout &lt;&lt; "Paste bitstream:" &lt;&lt; std::endl;
+  std::string input;
+  std::vector&lt;unsigned char&gt; bitstream;
+while (std::getline(std::cin, input)) {
+  if (input.empty()) break;
+//  std::cout &lt;&lt; "Input " &lt;&lt; input.size()/3 &lt;&lt; " bytes" &lt;&lt; std::endl;
+  for (size_t i = 0; i &lt; input.size(); i+=5) {
+    while(std::isspace(input[i])) i++;
+    if (i + 4 &lt;= input.size()) {
+      bitstream.push_back(strtoul(input.substr(i+2, 2).c_str(), 0, 16));
+//      std::cerr &lt;&lt; "Read " &lt;&lt; std::hex &lt;&lt; (unsigned int)bitstream.back() &lt;&lt; std::endl;
+    }
+  }
+}
+//  std::cout &lt;&lt; "Read " &lt;&lt; bitstream.size() &lt;&lt; " bytes" &lt;&lt; std::endl;
+  unsigned char* p = bitstream.data();
+  int remaining = bitstream.size() - ((p - bitstream.data()));;
+  size_t i = 1;
+  std::cout &lt;&lt; "Filter Outer\t\tFilter Inner\t\t\tTreatment Outer\t\t\tTreatment Innter" &lt;&lt; std::endl;
+  std::cout &lt;&lt; "Prio\tVID\tTPIDDEI\tPrio\tVID\tTPIDDEI\tEthTyp\tTagRem\tPrio\tVID\tTPIDDEI\tPrio\tVID\tTPIDDEI" &lt;&lt; std::endl;
+  do {
+    remaining -= 16;
+    unsigned int* w = (unsigned int*)p;
+    std::cout &lt;&lt; ((__builtin_bswap32(w[0]) & 0xf0000000) &gt;&gt; 28) &lt;&lt; ",\t" &lt;&lt; ((__builtin_bswap32(w[0]) & 0x0fff8000) &gt;&gt; 15) &lt;&lt; ",\t"
+              &lt;&lt; ((__builtin_bswap32(w[0]) & 0x00007000) &gt;&gt; 12) &lt;&lt; ",\t" &lt;&lt; ((__builtin_bswap32(w[1]) & 0xf0000000) &gt;&gt; 28) &lt;&lt; ",\t"
+              &lt;&lt; ((__builtin_bswap32(w[1]) & 0x0fff8000) &gt;&gt; 15) &lt;&lt; ",\t" &lt;&lt; ((__builtin_bswap32(w[1]) & 0x00007000) &gt;&gt; 12) &lt;&lt; ",\t"
+              &lt;&lt; (__builtin_bswap32(w[1]) & 0x0000000f) &lt;&lt; ",\t(" &lt;&lt; ((__builtin_bswap32(w[2]) & 0xc0000000) &gt;&gt; 30) &lt;&lt; ",\t"
+              &lt;&lt; ((__builtin_bswap32(w[2]) & 0x000f0000) &gt;&gt; 16) &lt;&lt; ",\t" &lt;&lt; ((__builtin_bswap32(w[2]) & 0x0000fff8) &gt;&gt; 3) &lt;&lt; ",\t"
+              &lt;&lt; (__builtin_bswap32(w[2]) & 0x00000007) &lt;&lt; ",\t" &lt;&lt; ((__builtin_bswap32(w[3]) & 0x000f0000) &gt;&gt; 16) &lt;&lt; ",\t"
+              &lt;&lt; ((__builtin_bswap32(w[3]) & 0x0000fff8) &gt;&gt; 3) &lt;&lt; ",\t" &lt;&lt; (__builtin_bswap32(w[3]) & 0x00000007) &lt;&lt; ")" &lt;&lt; std::endl;
+    /*unsigned int n = ((__builtin_bswap32(*w) & 0xf0000000) &gt;&gt; 28);
+    std::cout &lt;&lt; "Filter Outer Priority: ";
+    output_priority(n);
+    std::cout &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Filter Outer VID: ";
+    output_vid((__builtin_bswap32(*w) & 0x0fff8000) &gt;&gt; 15);
+    std::cout &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Filter Outer TPID/DEI: " &lt;&lt; ((__builtin_bswap32(*w) & 0x00007000) &gt;&gt; 12) &lt;&lt; std::endl;
+    w++;
+    n = ((__builtin_bswap32(*w) & 0xf0000000) &gt;&gt; 28);
+    std::cout &lt;&lt; "Filter Inner Priority: ";
+    output_priority(n);
+    std::cout &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Filter Inner VID: ";
+    output_vid((__builtin_bswap32(*w) & 0x0fff8000) &gt;&gt; 15);
+    std::cout &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Filter Inner TPID/DEI: " &lt;&lt; ((__builtin_bswap32(*w) & 0x00007000) &gt;&gt; 12) &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Filter EtherType: " &lt;&lt; (__builtin_bswap32(*w) & 0x0000000f) &lt;&lt; std::endl;
+    w++;
+    std::cout &lt;&lt; "Treatment, tags to remove: " &lt;&lt; ((__builtin_bswap32(*w) & 0xc0000000) &gt;&gt; 30) &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Treatment outer priority: " &lt;&lt; ((__builtin_bswap32(*w) & 0x000f0000) &gt;&gt; 16) &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Treatment outer vid: " &lt;&lt; ((__builtin_bswap32(*w) & 0x0000fff8) &gt;&gt; 3) &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Treatment outer TPID/DEI: " &lt;&lt; (__builtin_bswap32(*w) & 0x00000007) &lt;&lt; std::endl;
+    w++;
+    std::cout &lt;&lt; "Treatment inner priority: " &lt;&lt; ((__builtin_bswap32(*w) & 0x000f0000) &gt;&gt; 16) &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Treatment inner vid: " &lt;&lt; ((__builtin_bswap32(*w) & 0x0000fff8) &gt;&gt; 3) &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Treatment inner TPID/DEI: " &lt;&lt; (__builtin_bswap32(*w) & 0x00000007) &lt;&lt; std::endl;
+    i++;*/
+    p += 16;
+  } while (remaining - 16 &gt;= 0);
+  return 0;
+}
+</code></pre><br>
+<pre class='fenced-code'><code class='fenced-code-content' lang='bash'>g++ <span class='code_variable'>-o</span> vlan_decode vlan_decode.cpp
+</code></pre><br>
+<h2 id='Use the table parser'>Use the table parser</h2><br>
+<p>Use the tool and paste the VLANs data.</p><br>
+<br>
+<h1 id='github djGrrr'>github djGrrr</h1><br>
+<p><a href='https://github.com/djGrrr/8311-was-110-firmware-builder'>https://github.com/djGrrr/8311-was-110-firmware-builder</a></p><br>
+<h2 id='8311 WAS-110 Firmware Builder'>8311 WAS-110 Firmware Builder</h2><br>
+<h2 id='Custom fwenvs'>Custom fwenvs</h2><br>
+<pre class='fenced-code'><code class='fenced-code-content'>8311_fix_vlans=1
+8311_internet_vlan=0
+8311_services_vlan=36
+
+8311_ipaddr=192.168.11.1
+8311_netmask=255.255.255.0
+8311_gateway=192.168.11.254
+8311_ping_ip=192.168.11.2
+
+8311_console_en=1
+8311_ethtool_speed=speed 2500 autoneg off duplex full
+8311_failsafe_delay=30
+8311_persist_root=0
+8311_root_pwhash=$1$BghTQV7M$ZhWWiCgQptC1hpUdIfa0e.
+8311_rx_los=0
+
+8311_cp_hw_ver_sync=1
+8311_device_sn=DM222XXXXXXXXXX
+8311_equipment_id=5690
+8311_gpon_sn=SMBSXXXXXXXX
+8311_hw_ver=Fast5689EBell
+8311_mib_file=/etc/mibs/prx300_1V.ini
+8311_reg_id_hex=00
+8311_sw_verA=SGC830007C
+8311_sw_verB=SGC830006E
+8311_vendor_id=SMBS
+</code></pre><br>
+<h3 id='ISP Fix fwenvs'>ISP Fix fwenvs</h3><br>
+<p><code class='code-inline'>8311_fix_vlans</code> - <b>Fix VLANs</b><br>
+Set to <code class='code-inline'>0</code> to disable the automatic fixes that are applied to VLANs.</p><br>
+<p><code class='code-inline'>8311_internet_vlan</code> - <b>Internet VLAN</b><br>
+Set the local VLAN ID to use for the Internet or <code class='code-inline'>0</code> to make the Internet untagged (and also remove VLAN 0) (0 to 4095). Defaults to <code class='code-inline'>0</code> (untagged).</p><br>
+<p><code class='code-inline'>8311_services_vlan</code> - <b>Services VLAN</b><br>
+Set the local VLAN ID to use for Services (ie TV/Home Phone) (1 to 4095). This fixes multi-service on Bell.</p><br>
+<h3 id='Management fwenvs'>Management fwenvs</h3><br>
+<p><code class='code-inline'>8311_ipaddr</code> - <b>IP Address</b><br>
+Set the management IP address. Defaults to <code class='code-inline'>192.168.11.1</code></p><br>
+<p><code class='code-inline'>8311_netmask</code> - <b>Subnet Mask</b><br>
+Set the management subnet mask. Defaults to <code class='code-inline'>255.255.255.0</code></p><br>
+<p><code class='code-inline'>8311_gateway</code> - <b>Gateway</b><br>
+Set the management gateway. Defaults to the IP address (ie. no default gateway)</p><br>
+<p><code class='code-inline'>8311_ping_ip</code> - <b>Ping IP</b><br>
+Sets an IP address to ping every 5 seconds, this can helps with reaching the stick. Defaults to the 2nd ip address in the configured management network (ie. 192.168.11.2).</p><br>
+<h3 id='Device fwenvs'>Device fwenvs</h3><br>
+<p><code class='code-inline'>8311_console_en</code> - <b>Serial console</b><br>
+Set to <code class='code-inline'>1</code> to enable the serial console, this will cause TX_FAULT to be asserted as it shares the same SFP pin.</p><br>
+<p><code class='code-inline'>8311_ethtool_speed</code> - <b>Ethtool Speed Settings</b><br>
+Set ethtool speed settings on the eth0_0 interface (ethtool -s).</p><br>
+<p><code class='code-inline'>8311_factory_mode</code> - <b>Factory Mode</b><br>
+Set to 1 to enable factory mode, otherwise factory mode will be automatically disabled on boot.</p><br>
+<p><code class='code-inline'>8311_failsafe_delay</code> - <b>Failsafe Delay</b><br>
+Sets the number of seconds that we will delay the startup of omcid for at bootup (30 to 300). Defaults to 30 seconds.</p><br>
+<p><code class='code-inline'>8311_lct_mac</code> - <b>LCT MAC Address</b><br>
+Set the MAC address on the LCT management interface.</p><br>
+<p><code class='code-inline'>8311_persist_root</code> - <b>Persist RootFS</b><br>
+Set to <code class='code-inline'>1</code> to allow the root file system to stay persistent (would also require that you modify the bootcmd fwenv). This is not recommended and should only be used for debug/testing purposes.</p><br>
+<p><code class='code-inline'>8311_root_pwhash</code> - <b>Root password hash</b><br>
+Allows you to set a custom root password by setting the hash.</p><br>
+<p><code class='code-inline'>8311_rx_los</code> - <b>RX_LOS Workaround</b><br>
+Set to <code class='code-inline'>0</code> to monitor the status of the RX_LOS pin to disable it any time it gets enabled. This will allow the stick to be accessible in devices which disable access to the port if RX_LOS is being asserted.</p><br>
+<h3 id='PON fwenvs'>PON fwenvs</h3><br>
+<p><code class='code-inline'>8311_cp_hw_ver_sync</code> - <b>Sync Circuit Pack Version</b><br>
+When set to <code class='code-inline'>1</code> and <code class='code-inline'>8311_hw_ver</code> is also set, will modify the configured mib file to set the Version field of any Circuit Pack MEs to match the Hardware version.</p><br>
+<p><code class='code-inline'>8311_device_sn</code> - <b>Device Serial Number</b><br>
+Sets the physical device S/N, this is more or less display only.</p><br>
+<p><code class='code-inline'>8311_equipment_id</code> - <b>Equipment ID</b><br>
+Sets the PON Equipment ID field in the ONU2-G ME (257).</p><br>
+<p><code class='code-inline'>8311_gpon_sn</code> - <b>GPON Serial Number / ONT ID</b><br>
+Sets the GPON Serial Number sent to the OLT in various MEs (4 letters, followed by 8 hex digits).</p><br>
+<p><code class='code-inline'>8311_hw_ver</code> - <b>Hardware Version</b><br>
+Set the Hardware version string sent to the OLT in various MEs (up to 14 characters).</p><br>
+<p><code class='code-inline'>8311_iphost_domain</code> - <b>IP Host Domain Name</b><br>
+Set the domain name sent to the OLT in ME 134 (up to 25 characters).</p><br>
+<p><code class='code-inline'>8311_iphost_hostname</code> - <b>IP Host Hostname</b><br>
+Set the hostname sent to the OLT in ME 134 (up to 25 characters).</p><br>
+<p><code class='code-inline'>8311_iphost_mac</code> - <b>IP Host MAC Address</b><br>
+Set the MAC address sent to the OLT in ME 134.</p><br>
+<p><code class='code-inline'>8311_loid</code> - <b>Logical ONU ID</b><br>
+Sets the Logical ONU ID presented to the OLT in ME 256 (up to 24 characters).</p><br>
+<p><code class='code-inline'>8311_lpwd</code> - <b>Logical Password</b><br>
+Sets the Logical Password prsented to the OLT in ME 256 (up to 12 characters).</p><br>
+<p><code class='code-inline'>8311_mib_file</code> - <b>MIB File</b><br>
+Sets the MIB file used by omcid. Defaults to <code class='code-inline'>/etc/mibs/prx300_1U.ini</code></p><br>
+<p><code class='code-inline'>8311_pon_slot</code> - <b>PON Slot</b><br>
+Sets the slot number that the UNI port is presented on, needed on some ISPs.</p><br>
+<p><code class='code-inline'>8311_reg_id_hex</code> - <b>Registration ID</b><br>
+Sets the Registration ID (up to 36 characters [72 hex]) sent to the OLT in hex format. This is where you would set a ploam password (which is contained in the last 12 characters).</p><br>
+<p><code class='code-inline'>8311_sw_verA</code> / <code class='code-inline'>8311_sw_verB</code> - <b>Software Versions</b><br>
+Sets the image specific software versions sent in the Software image MEs (7).</p><br>
+<p><code class='code-inline'>8311_vendor_id</code> - <b>Vendor ID</b><br>
+Sets the PON Vendor ID sent to the OLT, automatically derived from the GPON Serial Number if not set (4 letters).</p><br>
+<h2 id='Authentication'>Authentication</h2><br>
+<p>SSH host keys (all of <code class='code-inline'>/etc/dropbear</code>) and authorized_keys (all of <code class='code-inline'>/root/.ssh</code>) are now stored persistently. Previous UCI settings will be automatically migrated.</p><br>
+<p>The current root password (change with <code class='code-inline'>passwd</code>) can be persisted using the <code class='code-inline'>8311-persist-root-password.sh</code> command</p><br>
+<h2 id='Scripts'>Scripts</h2><br>
+<h3 id='build.sh'>build.sh</h3><br>
+<p>Tool for building new modded WAS-110 firmware images</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>Usage: ./build.sh [options]
+
+Options:
+-i --image &lt;filename&gt;           Specify stock local upgrade image file.
+-I --image-dir &lt;dir&gt;            Specify stock image directory (must contain bootcore.bin, kernel.bin, and rootfs.img).
+-o --image-out &lt;filename&gt;       Specify local upgrade image to output.
+-h --help                       This help text
+</code></pre><br>
+<h3 id='create.sh'>create.sh</h3><br>
+<p>Tool for creating new WAS-110 local upgrade images</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>Usage: ./create.sh [options]
+
+Options:
+-i --image &lt;filename&gt;           Specify local upgrade image file to create (required).
+-H --header &lt;filename&gt;          Specify filename of image header to base image off of (default: header.bin).
+-b --bootcore &lt;filename&gt;        Specify filename of bootcore image to place in created image (default: bootcore.bin).
+-k --kernel &lt;filename&gt;          Specify filename of kernel image to place in created image (default: kernel.bin).
+-r --rootfs &lt;filename&gt;          Specify filename of rootfs image to place in created image (default: rootfs.img).
+-V --image-version &lt;version&gt;    Specify version string to set on created image (14 characters max).
+-h --help                       This help text
+</code></pre><br>
+<h3 id='extract.sh'>extract.sh</h3><br>
+<p>Tool for extracting stock WAS-110 local upgrade images</p><br>
+<pre class='fenced-code'><code class='fenced-code-content'>Usage: ./extract.sh [options]
+
+Options:
+-i --image &lt;filename&gt;           Specify local upgrade image file to extract (required).
+-H --header &lt;filename&gt;          Specify filename to extract image header to (default: header.bin).
+-b --bootcore &lt;filename&gt;        Specify filename to extract bootcore image to (default: bootcore.bin).
+-k --kernel &lt;filename&gt;          Specify filename to extract kernel image to (default: kernel.bin).
+-r --rootfs &lt;filename&gt;          Specify filename to extract rootfs image to (default: rootfs.img).
+-h --help                       This help text
+</code></pre><br>
+<br>
+<p><span class='hashtag'><span class='hashtag-marker marker'>#</span>nbux<span class='hashtag-separator-marker marker'>/</span>orange</span> <span class='hashtag'><span class='hashtag-marker marker'>#</span>publish</span> <span class='hashtag'><span class='hashtag-marker marker'>#</span>blog<span class='hashtag-separator-marker marker'>/</span>cyasssw<span class='hashtag-separator-marker marker'>/</span>orange</span></p>
+        </div>
+    </body>
+</html>
