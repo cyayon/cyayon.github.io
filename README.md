@@ -44,41 +44,41 @@ For the more human side of me: [LinkedIn](https://www.linkedin.com/in/christophe
 
 ## Orange Tricks (French ISP)
 
-[Bring Your Own Router](/orange/Orange%20ISP%20Bring%20Your%20Own%20Router)  
+[Bring Your Own Router](orange/Orange%20ISP%20Bring%20Your%20Own%20Router)  
 
-[ONU GPON-ONU-34-20BI](/orange/Orange%20ISP%20ONU%20GPON-ONU-34-20BI)
+[ONU GPON-ONU-34-20BI](orange/Orange%20ISP%20ONU%20GPON-ONU-34-20BI)
 
-[ONU XGS-WAS-110](/orange/Orange%20ISP%20ONU%20XGS-WAS-110)  
+[ONU XGS-WAS-110](orange/Orange%20ISP%20ONU%20XGS-WAS-110)  
 
-[ONT GPON-LEOX-LXT-010H-D](/orange/Orange%20ISP%20ONT%20GPON-LEOX-LXT-010H-D)  
+[ONT GPON-LEOX-LXT-010H-D](orange/Orange%20ISP%20ONT%20GPON-LEOX-LXT-010H-D)  
 
 
 ## Linux Networking
 
-[Multi-WAN Firewall](/linux/Linux%20Multi-WAN%20Firewall)
+[Multi-WAN Firewall](linux/Linux%20Multi-WAN%20Firewall)
 
-[Multi-WAN Watchdog](/linux/Linux%20Multi-WAN%20Watchdog)
+[Multi-WAN Watchdog](linux/Linux%20Multi-WAN%20Watchdog)
 
-[systemd Bridge-VLAN-aware ](/Linux%20systemd%20Bridge-VLAN-aware)
+[systemd Bridge-VLAN-aware ](linux/Linux%20systemd%20Bridge-VLAN-aware)
 
 
 ## HomeAssistant (HAOS)
 
-[HAOS Dual-Homed Network](/haos/HAOS%20Dual-Homed%20Network)
+[HAOS Dual-Homed Network](haos/HAOS%20Dual-Homed%20Network)
 
 
 ## Mikrotik
 
-[DHCP Client Watchdog](/mikrotik/Mikrotik%20DHCP%20Client%20Watchdog)
+[DHCP Client Watchdog](mikrotik/Mikrotik%20DHCP%20Client%20Watchdog)
 
-[DHCP Client Configs](/mikrotik/Mikrotik%20DHCP%20Client%20Configs)
+[DHCP Client Configs](mikrotik/Mikrotik%20DHCP%20Client%20Configs)
 
 
 ## Media
 
-[Qobuz Playlists Backup](/media/Qobuz%20Playlists%20Backup)
+[Qobuz Playlists Backup](media/Qobuz%20Playlists%20Backup)
 
-[Spotify Playlists Backup](/media/Spotify%20Playlists%20Backup)
+[Spotify Playlists Backup](media/Spotify%20Playlists%20Backup)
 
 
 
