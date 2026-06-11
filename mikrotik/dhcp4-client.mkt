@@ -1,0 +1,57 @@
+# =============================================================================
+# nbux — Nothing But Unix, mostly by accident
+# -----------------------------------------------------------------------------
+# Author : Christophe Yayon
+# Purpose: mikrotik routerOS dhcp4 client script
+#
+# technical things, boring logic, predictable failures.
+# Simple enough to debug at 2 a.m. without a committee, a dashboard, or a prayer.
+# =============================================================================
+#
+
+
+:if ($bound=1) do={
+    #:local iface "vlan832-orange1.wan1"
+    :local iface $"interface"
+    
+    :local routetable "route-wan1"
+    :local commentregex "DHCLIENT4 orange1"
+    
+    :local leaseaddr $"lease-address"
+    :local gwaddr $"gateway-address"
+
+    :local check
+    :local checkcount
+    
+    /log info "dhcp4-client $iface script begin"
+    /log info "dhcp4-client def interface:$iface routetable:$routetable leaseaddr:$leaseaddr gwaddr:$gwaddr comment:($commentregex)"
+    
+    # multiwan
+    /routing rule set [find where action=lookup table=$routetable comment~$commentregex ] src-address=$"lease-address" comment="wan1 fib - $commentregex"
+    /ip route set [find where dst-address="0.0.0.0/0" routing-table=$routetable distance=1 ] gateway=$"gateway-address" comment="wan1 fib - $commentregex"
+    # recursive
+    #/ip route set [find where dst-address="1.0.0.1/32" scope=10 routing-table=main] gateway=$"gateway-address"
+    #/ip route set [find where dst-address="8.8.4.4/32" scope=10 routing-table=main] gateway=$"gateway-address"
+    #/ip route set [find where dst-address="9.9.9.10/32" scope=10 routing-table=main] gateway=$"gateway-address"
+    # not recursive
+    :set check [/ip route find where dst-address="0.0.0.0/0" routing-table=main distance=1]
+    :set checkcount [:len $check]
+    :if ($checkcount = 1) do={
+        /ip route set $check gateway=$"gateway-address" comment="wan1 def - $commentregex"
+    } else={
+        /log warning "dhcp4-client main default route distance:1 update skipped, expected 1 route and found $checkcount"
+    }
+    :set check [/ip route find where dst-address="0.0.0.0/0" routing-table=main distance=101]
+    :set checkcount [:len $check]
+    :if ($checkcount = 1) do={
+        /ip route set $check gateway=$"gateway-address" comment="wan1 persist - $commentregex"
+    } else={
+        /log warning "dhcp4-client persistent default route distance:101 update skipped, expected 1 route and found $checkcount"
+    }
+    # update routes oneshot (not tested)
+    #/ip route set [ find where immediate-gw~$"interface" dst-address=0.0.0.0/0 ] gateway=$"gateway-address"
+    # netwatch
+    /tool netwatch set [find where comment~$commentregex ] src-address=$"lease-address"
+    /log info "dhcp4-client $iface script finished"
+}
+

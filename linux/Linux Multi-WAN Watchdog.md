@@ -18,7 +18,7 @@ That distinction is important.
 
 Firewalling decides what is allowed. Routing decides where traffic actually goes.
 
-This post describes the design behind my [check-route.sh](check-route.sh) script, a shell-based route watchdog used on a Linux firewall router to monitor WAN paths, remove failed active routes, restore them when connectivity returns, and keep deterministic fallback routes in place.
+This post describes the design behind my [check-route.sh](https://codeberg.org/cyayon/cyasssw/src/branch/main/linux/check-route.sh) script, a shell-based route watchdog used on a Linux firewall router to monitor WAN paths, remove failed active routes, restore them when connectivity returns, and keep deterministic fallback routes in place.
 
 ---
 

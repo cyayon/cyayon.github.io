@@ -12,10 +12,10 @@ Src="$(cd "$Src" && pwd -P)" || exit 1
 Dst="$(cd "$Dst" && pwd -P)" || exit 1
 
 echo "Dummy:" 
-( cd "$Src" || exit 1 ; find . -mindepth 1 -maxdepth 1 -type d ! -name ".*" -print0 | rsync -avhni --from0 --files-from=- ./ "${Dst}/" )
+( cd "$Src" || exit 1 ; find . -mindepth 1 -maxdepth 1 -type d ! -name ".*" -print0 | rsync -avhrni --from0 --files-from=- --exclude='.DS_Store' ./ "${Dst}/" )
 echo
 echo "continue ?" ; read a
-( cd "$Src" || exit 1 ; find . -mindepth 1 -maxdepth 1 -type d ! -name ".*" -print0 | rsync -avhi --from0 --files-from=- ./ "${Dst}/" )
+( cd "$Src" || exit 1 ; find . -mindepth 1 -maxdepth 1 -type d ! -name ".*" -print0 | rsync -avhri --from0 --files-from=- --exclude='.DS_Store' ./ "${Dst}/" )
 
 echo "Index ${Src}/${Index} ${Dst}/${Index}"
 #cp "${Src}/${Index}" "${Dst}/${Index}" && sed -i "s/\.md)/)/g" "${Dst}/${Index}"
