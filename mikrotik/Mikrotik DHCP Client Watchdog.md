@@ -7,7 +7,7 @@ Sometimes the physical link stays up, but the upstream path is broken. Sometimes
 
 This is especially true on ISP networks where the router is connected through an ONT, a VLAN-tagged WAN interface, DHCPv4, DHCPv6-PD, and dynamically installed routes.
 
-For that kind of setup, I wrote a small RouterOS watchdog script [check-dhclient](https://codeberg.org/cyayon/cyasssw/src/branch/main/mikrotik/check-dhclient).
+For that kind of setup, I wrote a small RouterOS watchdog script [check-dhclient.mkt](https://codeberg.org/cyayon/cyasssw/src/branch/main/mikrotik/check-dhclient.mkt).
 
 Its purpose is deliberately simple:
 
