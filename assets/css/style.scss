@@ -1,0 +1,18 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.inner {
+  max-width: none;
+  width: min(1600px, calc(100% - 48px));
+}
+
+#main_content {
+  width: 100%;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
