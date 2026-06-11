@@ -1,16 +1,21 @@
+title: "Christophe Yayon"
+description: "Technical things, boring logic, predictable failures, and KISS."
+
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
 #remote_theme: pages-themes/hacker@v0.2.0
+
 plugins:
   - jekyll-relative-links
-  - jekyll-remote-theme
+#  - jekyll-remote-theme
+
 relative_links:
   enabled: true
   collections: true
+
 include:
-  - CONTRIBUTING.md
   - README.md
   - LICENSE.md
   - COPYING.md
-  - CODE_OF_CONDUCT.md
-  - CONTRIBUTING.md
-  - ISSUE_TEMPLATE.md
-  - PULL_REQUEST_TEMPLATE.md
