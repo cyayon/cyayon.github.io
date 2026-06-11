@@ -4,8 +4,7 @@
 @import "{{ site.theme }}";
 
 .inner {
-  max-width: none;
-  width: min(1600px, calc(100% - 48px));
+  max-width: 1040px;
 }
 
 #main_content {
