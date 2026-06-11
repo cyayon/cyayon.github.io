@@ -1,35 +1,13 @@
-# Technical things, boring logic, predictable failures, and KISS.
-## Christophe Yayon Simple Stupid Static Website
+## Technical things, boring logic, predictable failures, and a obsessive preference for KISS.
+### Christophe Yayon's Simple, Stupid, Static Website
 
 Infrastructure, systems, networking, automation and other perfectly reasonable ways to lose a weekend — with a strong preference for KISS: Keep It Simple, Stupid.
 
-Some random thoughts on my digital rabbit hole, where routers have names, logs have opinions, and “temporary fixes” tend to become infrastructure.
+Some random thoughts from my digital rabbit hole, where routers have names, logs have opinions, and “temporary fixes” tend to become infrastructure.
 
-This site is a curated entry point to my technical notes. The source lives on [Codeberg](https://codeberg.org/cyayon/cyasssw), because apparently even my static website needed an upstream.
+This site is a curated entry point to my technical life. No trackers. No database. No JavaScript framework. No Kubernetes cluster was harmed in the making of this.
 
-
-```text
-
-                    _        ____  _                 _      
-  ___ _   _  __ _  ( )___   / ___|(_)_ __ ___  _ __ | | ___ 
- / __| | | |/ _` | |// __|  \___ \| | '_ ` _ \| '_ \| |/ _ \
-| (__| |_| | (_| |   \__ \   ___) | | | | | | | |_) | |  __/
- \___|\__, |\__,_|   |___/  |____/|_|_| |_| |_| .__/|_|\___|
-      |___/                                   |_|           
- ____  _               _     _   ____  _        _   _      
-/ ___|| |_ _   _ _ __ (_) __| | / ___|| |_ __ _| |_(_) ___ 
-\___ \| __| | | | '_ \| |/ _` | \___ \| __/ _` | __| |/ __|
- ___) | |_| |_| | |_) | | (_| |  ___) | || (_| | |_| | (__ 
-|____/ \__|\__,_| .__/|_|\__,_| |____/ \__\__,_|\__|_|\___|
-                |_|                                        
-__        __   _         _ _       
-\ \      / /__| |__  ___(_) |_ ___ 
- \ \ /\ / / _ \ '_ \/ __| | __/ _ \
-  \ V  V /  __/ |_) \__ \ | ||  __/
-   \_/\_/ \___|_.__/|___/_|\__\___|
- 
-
-```
+The source lives on [Codeberg](https://codeberg.org/cyayon/cyasssw), because apparently even my static website needed an upstream.
 
 
 ## whoami
