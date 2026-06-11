@@ -1,4 +1,5 @@
-# Christophe Yayon Simple Stupid Static Website
+# Technical things, boring logic, predictable failures, and KISS.
+## Christophe Yayon Simple Stupid Static Website
 
 Infrastructure, systems, networking, automation and other perfectly reasonable ways to lose a weekend — with a strong preference for KISS: Keep It Simple, Stupid.
 
