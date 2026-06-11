@@ -1,8 +1,8 @@
-# Christophe Yayon's Simple, Stupid and Static Website
+# Christophe Yayon's Simple, Stupid, and Static Website
 
 Technical things, boring logic, predictable failures, and an obsessive preference for KISS.
 
-Infrastructure, systems, networking, automation and other perfectly reasonable ways to lose a weekend.
+Infrastructure, systems, networking, automation, and other perfectly reasonable ways to lose a weekend.
 
 Some random thoughts from my digital rabbit hole, where routers have names, logs have opinions, and “temporary fixes” tend to become infrastructure.
 
