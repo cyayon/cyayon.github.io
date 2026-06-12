@@ -727,4 +727,4 @@ Sometimes the best infrastructure code is not the most advanced one.
 It is the one you can still understand at 2 a.m. when the WAN is down.
 
 
-#publish #cyasssw/mikrotik
+#publish #blog/cyasssw/mikrotik

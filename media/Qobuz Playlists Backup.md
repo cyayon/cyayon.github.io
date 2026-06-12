@@ -628,4 +628,4 @@ API → JSON → files → backup
 
 No dashboard required.
 
-#publish #cyasssw/media
+#publish #blog/cyasssw/media

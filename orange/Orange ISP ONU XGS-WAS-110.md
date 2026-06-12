@@ -1,6 +1,6 @@
 # Orange ISP ONU XGS-WAS-110
 
-> **nbux / Orange tricks**  
+> **Orange tricks**  
 > Notes from the part of the home network where optics, OMCI, VLANs, DHCP options and ISP assumptions meet.  
 > KISS when possible. Preserve the logs when not.
 
@@ -976,4 +976,4 @@ Options:
 ```
 
 
-#nbux/orange #publish #cyasssw/orange
+#nbux/orange #publish #blog/cyasssw/orange

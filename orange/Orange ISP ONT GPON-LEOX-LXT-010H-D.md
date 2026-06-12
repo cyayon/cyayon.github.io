@@ -277,4 +277,4 @@ ${OMCID_BIN} -d1 -p$mib_file  -o$omcc_version -i$omci_iop_mask ${lct} -l/tmp/omc
 
 
 
-#nbux/orange #publish #cyasssw/orange
+#nbux/orange #publish #blog/cyasssw/orange

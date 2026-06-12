@@ -732,4 +732,4 @@ For an edge router, especially in a home-lab or small infrastructure environment
 This is KISS networking: simple enough to understand, robust enough to trust.
 
 
-#publish #cyasssw/mikrotik
+#publish #blog/cyasssw/mikrotik

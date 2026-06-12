@@ -484,4 +484,4 @@ firstboot
 reboot
 ```
 
-#nbux/orange #publish #cyasssw/orange
+#nbux/orange #publish #blog/cyasssw/orange

@@ -1,3 +1,4 @@
+# README
 # Christophe Yayon's Simple, Stupid, and Static Website
 
 Technical things, boring logic, predictable failures, and an obsessive preference for KISS.
@@ -66,3 +67,4 @@ For the more human side of me: [LinkedIn](https://www.linkedin.com/in/christophe
 
 > This site is mainly hosted on [Codeberg](https://codeberg.org/cyayon/cyasssw) and also mirrored to [GitHub](https://cyayon.github.io) for convenience.
 
+#blog/cyasssw #publish

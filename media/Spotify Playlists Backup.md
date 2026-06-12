@@ -592,4 +592,4 @@ Boring enough to run unattended.
 
 And if one day a playlist disappears, at least I will have something better than a vague memory and a suspicious feeling that the missing track had a blue cover.
 
-#publish #cyasssw/media
+#publish #blog/cyasssw/media

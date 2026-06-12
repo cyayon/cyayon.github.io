@@ -817,4 +817,4 @@ It is just Linux doing exactly what was asked.
 
 Which, when networking is involved, is already a small victory.
 
-#publish #cyasssw/linux
+#publish #blog/cyasssw/linux

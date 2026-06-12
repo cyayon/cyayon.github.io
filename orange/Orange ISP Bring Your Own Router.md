@@ -1555,4 +1555,4 @@ There are lot of sources which helped me to write this article. Here are the mos
 
 _Special thanks to [lafibre.info](https://lafibre.info) forum and its members !_
 
-#nbux/orange #nbux/mikrotik #publish #cyasssw/orange
+#nbux/orange #nbux/mikrotik #publish #blog/cyasssw/orange

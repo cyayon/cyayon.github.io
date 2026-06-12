@@ -501,4 +501,4 @@ But it is a robust way to make Home Assistant OS behave predictably in a segment
 
 For me, that is the difference between a configuration that merely works and a configuration that can be operated with confidence.
 
-#publish #cyasssw/haos
+#publish #blog/cyasssw/haos

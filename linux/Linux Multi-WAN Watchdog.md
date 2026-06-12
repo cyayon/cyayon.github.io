@@ -865,4 +865,4 @@ The result is a firewall router where failover is explicit, inspectable, and rev
 
 That is the kind of design I want at the center of my network.
 
-#publish #cyasssw/linux
+#publish #blog/cyasssw/linux
