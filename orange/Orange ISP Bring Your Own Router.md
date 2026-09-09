@@ -1,6 +1,6 @@
 # Orange ISP Bring Your Own Router
 
-Version 20260606
+Version 20260906
 
 This document describe how-to configure DHCP clients for ISP Orange in France. This could be used to remove the Livebox and prefer your own router…
 
@@ -532,85 +532,27 @@ add action=set-priority chain=output comment="orange1 icmp6 COS6" disabled=yes i
 add action=set-priority chain=output comment="orange1 arp COS6" disabled=yes log=yes log-prefix="orange1 COS6_ARP" mac-protocol=arp new-priority=6 out-interface=bridge-wan1 passthrough=yes
 ```
 
-- firewall mangle rules are ONLY for DHCPv6 client requests (IPv6 do not use RAW SOCKETS for DHCP) :
-
-```other
-/ipv6 firewall mangle
-add action=set-priority chain=output comment="orange1 icmp6 133RS COS6" dst-address=ff00::/8 icmp-options=133:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
-add action=set-priority chain=output comment="orange1 icmp6 136NA COS6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
-add action=set-priority chain=output comment="orange1 icmp6 135NS COS6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
-add action=set-priority chain=output comment="orange1 dhcp6 COS6" dst-port=547 new-priority=6 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=546
-```
-
-#### DSCP
-
-**This step is optional and obsoleted with last ROS (7.15-16) capabilities - see previous chapter.**
-
-This is optional in 2023, and not really required (DSCP 48 match with 6 on layer 2). Since ROS 7.15, it is possible to modify DSCP directly with Switch rules (see above).
-note : if it do not work with new-dscp=48, try new-dscp=6
-
-- original version :
-
-```other
-/ipv6 firewall mangle
-add action=change-dscp chain=output comment="orange1 icmp6 133RS DSCP6" dst-address=ff00::/8 icmp-options=133:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
-add action=change-dscp chain=output comment="orange1 icmp6 136NA DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
-add action=change-dscp chain=output comment="orange1 icmp6 135NS DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=icmpv6
-add action=change-dscp chain=output comment="orange1 dhcp6 DSCP6" dst-port=547 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=546
-```
-
-- better version with POSTROUTING (you could also use OUTPUT chain) :
-
-```other
-/ipv6 firewall mangle
-add action=set-priority chain=prio_orange_dhcp6 comment="dhcp6 COS6" new-priority=6 passthrough=yes
-add action=change-dscp chain=prio_orange_dhcp6 comment="dhcp6 DSCP6" new-dscp=48 passthrough=yes
-add action=accept chain=prio_orange_dhcp6 comment="ACCEPT"
-
-/ip firewall mangle
-add action=change-dscp chain=postrouting comment="dhcp4 DSCP6" dst-port=67 new-dscp=48 out-interface=bridge-wan1 passthrough=yes protocol=udp src-port=68
-
-/ipv6 firewall mangle
-add action=jump chain=postrouting comment="jump prio_orange_icmp6" dst-address=fe00::/7 jump-target=prio_orange_icmp6 out-interface=bridge-wan1 protocol=icmp6
-add action=jump chain=postrouting comment="jump prio_orange_dhcp6" dst-address=fe00::/7 dst-port=547 jump-target=prio_orange_dhcp6 out-interface=bridge-wan1 protocol=udp src-port=546
-# you could also change DSCP6(48) for all COS6 packets (and remove all change-dscp rules in prio_orange_* chains)
-#add action=change-dscp chain=postrouting comment="DSCP6 for all COS6" new-dscp=48 out-interface=bridge-wan1 passthrough=no priority=6
-
-/ipv6 firewall mangle
-add action=set-priority chain=prio_orange_icmp6 comment="icmp6 136NA COS6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-priority=6 passthrough=yes protocol=icmp6
-add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 136NA DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=136:0-255 new-dscp=48 passthrough=yes protocol=icmp6
-add action=set-priority chain=prio_orange_icmp6 comment="icmp6 135NS COS6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-priority=6 passthrough=yes protocol=icmp6
-add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 135NS DSCP6" dst-address=fe80::ba0:bab/128 icmp-options=135:0-255 new-dscp=48 passthrough=yes protocol=icmp6
-add action=set-priority chain=prio_orange_icmp6 comment="icmp6 133RS COS6" dst-address=fe00::/7 icmp-options=133:0-255 new-priority=6 passthrough=yes protocol=icmp6
-add action=change-dscp chain=prio_orange_icmp6 comment="icmp6 133RS DSCP6" dst-address=fe00::/7 icmp-options=133:0-255 new-dscp=48 passthrough=yes protocol=icmp6
-add action=accept chain=prio_orange_icmp6 comment="ACCEPT"
-```
-
-#### RouterOS 7.20+
-
-Since RouterOS version 7.20+, there is an option in dhcp client (ipv4) to set COS (vlan-priority). This option set the COS for RAW ipv4 sockets. Then, you could finaly use firewall mangle rules to set COS (and DSCP) for ipv6 (which are NOT RAW). No more switch rules or bridge filters are required.
+- with firewall mangle rules (Router0S 7.20+) :
 In the following code block, OUTPUT is used, but you could also use POSTROUTING chain…
 
 ```other
 # DO NOT FORGET TO SET VLAN-PRIORITY AND DSCP IN DHCP4 CLIENT
 /ip dhcp-client add dscp=48 interface=orange1 vlan-priority=6
 
+# passthrough is optional should NOT be an issue (to be verified)
 /ip firewall mangle
-add action=set-priority chain=prio_orange comment="dhcp COS6" new-priority=6 passthrough=yes
-add action=change-dscp chain=prio_orange comment="dhcp DSCP48" new-dscp=48 passthrough=yes
-add action=accept chain=prio_orange comment="ACCEPT"
+add action=jump chain=output jump-target=orange_prio protocol=udp out-interface=vlan832-orange1.wan1 src-port=68 dst-port=67 log=yes log-prefix="ORANGE DHCP"
+add action=set-priority chain=orange_prio new-priority=6 passthrough=yes log=yes log-prefix="ORANGE PRIO COS"
+add action=change-dscp chain=orange_prio new-dscp=48 passthrough=yes log=yes log-prefix="ORANGE PRIO DSCP"
+add action=accept chain=orange_prio log=yes log-prefix="ORANGE PRIO"
 
+# passthrough is optional should NOT be an issue (to be verified)
 /ipv6 firewall mangle
-add action=set-priority chain=prio_orange comment="dhcp COS6" new-priority=6 passthrough=yes
-add action=change-dscp chain=prio_orange comment="dhcp DSCP48" new-dscp=48 passthrough=yes
-add action=accept chain=prio_orange comment="ACCEPT"
-
-/ip firewall mangle
-add action=jump chain=output comment="orange dhcp4" dst-port=67 jump-target=prio_orange out-interface=orange1 protocol=udp src-port=68
-
-/ipv6 firewall mangle
-add action=jump chain=output comment="orange icmp6" dst-address=fe00::/7 jump-target=prio_orange out-interface=orange1 protocol=icmpv6
-add action=jump chain=output comment="orange dhcp6" dst-address=fe00::/7 dst-port=547 jump-target=prio_orange out-interface=orange1 protocol=udp src-port=546
+add action=jump chain=output jump-target=orange_prio protocol=icmpv6 dst-address=fe00::/7 out-interface=vlan832-orange1.wan1 log=yes log-prefix="ORANGE DHCP ICMP6"
+add action=jump chain=output jump-target=orange_prio protocol=udp dst-address=fe00::/7 out-interface=vlan832-orange1.wan1 src-port=546 dst-port=547 log=yes log-prefix="ORANGE DHCP"
+add action=set-priority chain=orange_prio new-priority=6 passthrough=yes log=yes log-prefix="ORANGE PRIO COS"
+add action=change-dscp chain=orange_prio new-dscp=48 passthrough=yes log=yes log-prefix="ORANGE PRIO DSCP"
+add action=accept chain=orange_prio log=yes log-prefix="ORANGE PRIO"
 ```
 
 **Note: ARP packets should also be modified (new-priority=6 and new-dscp=48), but it is not currently mandatory. There is also no specific setting to do this. Let’s see if DHCP(v4/v6) settings are sufficients…**
@@ -967,71 +909,133 @@ systemd[1]: Finished networkd-orange-env.service - Generate /etc/networkd-orange
 - ipv4
 
 ```
+/ip dhcp-client option add code=60 name="vendor-class-identifier" value="0x736167656d" # value="'sagem'"
+/ip dhcp-client option add code=90 name="authsend" value="0x00000000000000000000001A090000055801034101xxxxxxxxxxx"
+/ip dhcp-client option add code=77 name="userclass" comment="Value: '+FSVDSL_livebox.Internet.softathome.Livebox7'" value="0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837"
+/ip dhcp-client option add code=61 name="clientid_duid" value="0xff$(CLIENT_DUID)"
+/ip dhcp-client option add code=61 name="clientid" value="0x01$(CLIENT_MAC)"
+/ip dhcp-client option add code=12 value="$(HOSTNAME)"
+/ip dhcp-client add name="vlan832-orange1.wan1" interface=vlan832-orange1.wan1 add-default-route=no use-peer-dns=no use-peer-ntp=no dhcp-options=hostname,clientid,authsend,userclass,vendor-class-identifier dscp=48 vlan-priority=6 comment="Orange IPv4"
+
+
 /ip/dhcp-client/print detail
-	interface=vlan832-orange1.wan1 add-default-route=no use-peer-dns=no use-peer-ntp=no dhcp-options=hostname,clientid,authsend,userclass,vendor-class-identifier
-
-     script=
-	     :if ($bound=1) do={
-		    /log info "dhcp4-client script begin"
-		    # multiwan
-		    /routing rule set [find where action=lookup table=route-wan1 ] src-address=$"lease-address"
-		    ip route set [find where dst-address="0.0.0.0/0" routing-table=route-wan1 distance=1 ] gateway=$"gateway-address" comment="wan1 - FIB - dhclient"
-		    # recursive
-		    #/ip route set [find where dst-address="1.0.0.1/32" scope=10 routing-table=main] gateway=$"gateway-address"
-		    #/ip route set [find where dst-address="8.8.4.4/32" scope=10 routing-table=main] gateway=$"gateway-address"
-		    #/ip route set [find where dst-address="9.9.9.10/32" scope=10 routing-table=main] gateway=$"gateway-address"
-		    # not recursive
-		    /ip route set [find where dst-address="0.0.0.0/0" routing-table=main distance=1 ] gateway=$"gateway-address" comment="wan1 - def - dhclient"
-		    /ip route set [find where dst-address="0.0.0.0/0" routing-table=main distance=101 ] gateway=$"gateway-address" comment="wan1 - persist - dhclient"
-		    # update routes oneshot (not tested)
-			#/ip route set [ find where immediate-gw~$"interface"  dst-address=0.0.0.0/0 ] gateway=$"gateway-address"
-			# netwatch
-			/tool netwatch set [find where comment="wan1 - ipv4 - dhclient" ] src-address=$"lease-address"
-			/log info "dhcp4-client script finished"
-		}
-
-	status=bound address=xx.xx.xx.xx/24 gateway=xx.xx.xx.1 dhcp-server=80.xx.xx.xx primary-dns=xx.xx.xx.xx secondary-dns=xx.xx.xx.xx expires-after=5d5h16s
+Flags: X - DISABLED, I - INVALID, D - DYNAMIC
+ 0   ;;; orange1
+     name="vlan832-orange1.wan1" interface=vlan832-orange1.wan1 add-default-route=no default-route-tables=default check-gateway=none use-peer-dns=no use-peer-ntp=no
+     allow-reconfigure=no use-broadcast=both dhcp-options=hostname,clientid,authsend,userclass,vendor-class-identifier
+     script=:if ($bound=1) do={\n    #:local iface "vlan832-orange1.wan1"\n    :local iface $"interface"\n    \n    :local routetable "route-wan1"\n    :local commentregex
+       "DHCLIENT4 orange1"\n    \n    :local leaseaddr $"lease-address"\n    :local gwaddr $"gateway-address"\n\n    :local check\n    :local checkcount\n    \n    /log info
+       "dhcp4-client $iface script begin"\n    /log info "dhcp4-client def interface:$iface routetable:$routetable leaseaddr:$leaseaddr gwaddr:$gwaddr comment:($commentregex)"\n
+         \n    # multiwan\n    /routing rule set [find where action=lookup table=$routetable comment~$commentregex ] src-address=$"lease-address" comment="wan1 fib -
+       $commentregex"\n    /ip route set [find where dst-address="0.0.0.0/0" routing-table=$routetable distance=1 ] gateway=$"gateway-address" comment="wan1 fib -
+       $commentregex"\n    # recursive\n    #/ip route set [find where dst-address="1.0.0.1/32" scope=10 routing-table=main] gateway=$"gateway-address"\n    #/ip route set [find  
+       where dst-address="8.8.4.4/32" scope=10 routing-table=main] gateway=$"gateway-address"\n    #/ip route set [find where dst-address="9.9.9.10/32" scope=10 routing- 
+       table=main] gateway=$"gateway-address"\n    # not recursive\n    :set check [/ip route find where dst-address="0.0.0.0/0" routing-table=main distance=1]\n    :set
+       checkcount [:len $check]\n    :if ($checkcount = 1) do={\n        /ip route set $check gateway=$"gateway-address" comment="wan1 def - $commentregex"\n    } else={\n
+       /log warning "dhcp4-client main default route distance:1 update skipped, expected 1 route and found $checkcount"\n    }\n    :set check [/ip route find where dst-
+       address="0.0.0.0/0" routing-table=main distance=101]\n    :set checkcount [:len $check]\n    :if ($checkcount = 1) do={\n        /ip route set $check gateway=$"gateway-
+       address" comment="wan1 persist - $commentregex"\n    } else={\n        /log warning "dhcp4-client persistent default route distance:101 update skipped, expected 1 route
+       and found $checkcount"\n    }\n    # update routes oneshot (not tested)\n    #/ip route set [ find where immediate-gw~$"interface" dst-address=0.0.0.0/0 ]  
+       gateway=$"gateway-address"\n    # netwatch\n    /tool netwatch set [find where comment~$commentregex ] src-address=$"lease-address"\n    /log info "dhcp4-client $iface
+       script finished"\n}\n
+     status=bound address=xx.xx.xx.xx/24 gateway=xx.xx.xx.1 dhcp-server=80.xx.xx.xx primary-dns=xx.xx.xx.xx secondary-dns=xx.xx.xx.xx expires-after=5d5h16s
 
 
+# do not copy/paste raw values (only values)
 /ip/dhcp-client/option/print detail
- 0 name="vendor-class-identifier" code=60 value="0x736167656d" raw-value="736167656d"
- 1 name="userclass" code=77 value="0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836" raw-value="2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7836"
- 2 name="authsend" code=90 value="0x00000000000000000000001A090000055801034101xxxxxxxxxxx"
-     raw-value="00000000000000000000001a090000055801034101xxxxxxxxxx"
-3 name="clientid_duid" code=61 value="0xff$(CLIENT_DUID)" raw-value="ff"
-4 name="clientid" code=61 value="0x01$(CLIENT_MAC)" raw-value="01"
-5 name="hostname" code=12 value="$(HOSTNAME)" raw-value="xxxxxx"
+Flags: * - DEFAULT 
+ 0   name="vendor-class-identifier" code=60 value="0x736167656d" raw-value="736167656d" 
+ 1   name="userclass" code=77 value="0x2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837" 
+     raw-value="2b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837" 
+ 2   name="authsend" code=90 value="0x00000000000000000000001A090000055801034101xxxxxxxxxxx" 
+     raw-value="00000000000000000000001a090000055801034101xxxxxxxxxxxxx" 
+ 3 * name="clientid_duid" code=61 value="0xff$(CLIENT_DUID)" raw-value="ff" 
+ 4 * name="clientid" code=61 value="0x01$(CLIENT_MAC)" raw-value="01" 
+ 5 * name="hostname" code=12 value="$(HOSTNAME)" raw-value="xxxx" 
+
+
+# COS via mangle rules - passthrough is optional should NOT be an issue (to be verified)
+/ip firewall mangle
+add action=jump chain=output jump-target=orange_prio protocol=udp out-interface=vlan832-orange1.wan1 src-port=68 dst-port=67 log=yes log-prefix="ORANGE DHCP"
+add action=set-priority chain=orange_prio new-priority=6 passthrough=yes log=yes log-prefix="ORANGE PRIO COS"
+add action=change-dscp chain=orange_prio new-dscp=48 passthrough=yes log=yes log-prefix="ORANGE PRIO DSCP"
+add action=accept chain=orange_prio log=yes log-prefix="ORANGE PRIO"
 ```
 
 - ipv6
 
 ```
-/ipv6/dhcp-client/print detail
-	interface=vlan832-orange1.wan1 status=bound duid="0x000300xxxxxxxxx" dhcp-server-v6=fe80::ba0:bab request=prefix add-default-route=yes default-route-distance=1 use-peer-dns=no use-interface-duid=yes rapid-commit=no dhcp-options=authsend,userclass,class-identifier pool-name="pool6-wan1" pool-prefix-length=64 prefix-hint=::/0
+/ipv6 dhcp-client option add code=16 name="class-identifier" value="0x0000040e0005736167656d" # value="'sagem'"
+/ipv6 dhcp-client option add code=11 name="authsend" value="0x00000000000000000000001A090000055801034101xxxxxxxxxxx"
+/ipv6 dhcp-client option add code=15 name="userclass" value="0x002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837" comment="Value: 0x00 + '+FSVDSL_livebox.Internet.softathome.Livebox7'"
 
-	script=
-		:if ($"pd-valid" = 1) do={
-			/log info "dhcp6-client script begin"
-			:local iface "vlan832-orange1.wan1"
-			# infos
-			:local pdprefix $"pd-prefix"
-			:local naaddress $"na-address"
-			/log info "dhcp6-client infos interface:$iface pd-prefix:$pdprefix na-address:$naadress"
-			# netmap
-			##:set pdprefix ([:pick $"pd-prefix" 0 [:find $"pd-prefix" "/"]]."/56");
-			##/log info "dhcp6-client cleaned pd-prefix is $pdprefix"
-			/ipv6/firewall/nat set [find where out-interface=$iface ] to-address=$"pd-prefix"
-			## netwatch
-            ##/tool netwatch set [find where comment="wan1 - ipv6 - dhclient" ] src-address=$"na-address"
-            /log info "dhcp6-client script finished"
-        }
-    dhcp-options=authsend,userclass,class-identifier prefix=xx:xx:xx:xx::/56, 6d23h46m11s
+
+/ipv6 dhcp-client add interface=vlan832-orange1.wan1 status=bound request=prefix add-default-route=yes default-route-distance=1 use-peer-dns=no use-interface-duid=yes rapid-commit=no dhcp-options=authsend,userclass,class-identifier pool-name="pool6-wan1" pool-prefix-length=64 prefix-hint=::/0 comment="Orange IPv6"
+
+    
+/ipv6/dhcp-client/print detail
+Flags: D - DYNAMIC; X - DISABLED, I - INVALID 
+ 0    interface=vlan832-orange1.wan1 status=bound duid="0x00030001xxxxx" dhcp-server-v6=fe80::ba0:bab request=prefix accept-prefix-without-address=yes add-default-route=yes default-route-distance=1 
+      default-route-tables=main check-gateway=none use-peer-dns=no use-interface-duid=yes validate-server-duid=yes rapid-commit=no allow-reconfigure=no dhcp-options=authsend,userclass,class-identifier 
+      pool-name="pool6-wan1" pool-prefix-length=64 prefix-hint=::/0 prefix-address-lists="" 
+      script=:if ($"pd-valid" = 1) do={\n    :local iface "vlan832-orange1.wan1"\n    /log info "dhcp6-client $iface script begin"\n\n    :local ifaceinterco "vlan2-interco"\n    :local ulagwinterco "fd11:0:0:2::254"\n    
+       :local pool "pool6-wan1"\n    :local commentregex "DHCLIENT6 orange1"\n\n    :local guaiface "0:0:0:1::254/64"\n    :local guainterco "0:0:0:2::7/64"\n\n    :local pdprefix $"pd-prefix"\n    :local naaddress $"na-
+       address"\n    :local navalid $"na-valid"\n\n    :local prefixinterco\n    :local check\n    :local checkcount\n    :local checkpos\n\n    :set ulagwinterco ($ulagwinterco . "%" . $ifaceinterco)\n\n    /log info 
+       "dhcp6-client def interface:$iface|$guaiface interco:$ifaceinterco|$guainterco|(via $ulagwinterco) pool:$pool pd-prefix:$pdprefix comment:($commentregex) na-address:$naaddress na-valid:$navalid"\n\n    # ip6 addr 
+       wan1\n    /ipv6 address set [find where interface=$iface from-pool=$pool comment~$commentregex ] address=$guaiface comment="wan1 pool (ONLY tiergw) - $commentregex"\n\n    # ip6 addr interco\n    /ipv6 address set 
+       [find where interface=$ifaceinterco from-pool=$pool comment~$commentregex ] address=$guainterco comment="wan1 pool - interco (ONLY tiergw OPTION) - $commentregex"\n\n    #\n    # routes\n    #\n    # ip6 prefix route 
+       via ULA interco\n    :set check [ /ipv6 route find where gateway=$ulagwinterco comment~$commentregex ]\n    :set checkcount [:len $check]\n    :if ($checkcount = 1) do={\n        /ipv6 route set $check dst-
+       address=$"pd-prefix" comment="wan1 pool - prefix via ULA iface (ONLY tiergw) - $commentregex"\n    } else={\n        /log warning "dhcp6-client gua prefix route gateway:$ulagwinterco update skipped, expected 1 route 
+       and found $checkcount"\n    }\n\n    # ip6 prefix route via iface interco\n    :set check [ /ipv6 route find where gateway=$ifaceinterco comment~$commentregex ]\n    :set checkcount [:len $check]\n    :if 
+       ($checkcount = 1) do={\n        :delay 1\n        :set guainterco [ /ipv6 address get [ find where interface=$ifaceinterco from-pool=$pool comment~$commentregex ] address ]\n        :set checkpos [:find $guainterco 
+       "::"]\n        /log info "dhcp6-client interco:$ifaceinterco gateway:$ifaceinterco address:$guainterco pos:$checkpos"\n        :if ($checkpos > 0) do={\n            :set prefixinterco ([:pick $guainterco 0 $checkpos] 
+       . "::/64")\n            /log info "dhcp6-client interco:$ifaceinterco gateway:$ifaceinterco address:$guainterco prefix:$prefixinterco"\n            /ipv6 route set $check dst-address=$prefixinterco comment="wan1 pool 
+       - interco prefix via iface (ONLY tiergw) - $commentregex"\n        } else={\n            /log warning "dhcp6-client unable to derive interco prefix, address $guainterco does not contain ::"\n        }\n    } else={\n 
+              /log warning "dhcp6-client interco prefix route gateway:$ifaceinterco update skipped, expected 1 route and found $checkcount"\n    }\n\n    # multiwan\n    /routing rule set [ find where action=lookup 
+       table=route-wan1 comment~$commentregex ] src-address=$"pd-prefix" comment="wan1 fib - $commentregex"\n\n    # firewall address-list\n    /ipv6/firewall/address-list set [find where list=lan comment~$commentregex ] 
+       address=$"pd-prefix" comment="wan1 pool - $commentregex" dynamic=no\n\n    # firewall netmap\n    /ipv6/firewall/nat set [find where chain=srcnat action=netmap out-interface=$iface src-address="fd11::/56" 
+       comment~$commentregex ] to-address=$"pd-prefix" comment="wan1 netmap ULA - $commentregex"\n\n    # netwatch\n    :if ($navalid = 1) do={\n        /tool netwatch set [ find where type=icmp comment~$commentregex ] src-
+       address=$"na-address" comment="wan1 src - $commentregex"\n    } else={\n        /log info "dhcp6-client na-address not valid (na-valid $navalid), skipping netwatch src-address update"\n    }\n    /log info "dhcp6-
+       client $iface script finished"\n} 
+      dhcp-options=authsend,userclass,class-identifier prefix=2a01:xxxxxx::/56, 2d15h20m30s 
 
 
 /ipv6/dhcp-client/option/print detail
-0 name="class-identifier" code=16 value="0x0000040e0005736167656d" raw-value="0000040e0005736167656d"
-1 name="userclass" code=15 value="0x002b46535644534c5xxxxxxx" raw-value="002b46535644534c5f6c697665626f782e4xxxxx"
-2 name="authsend" code=11 value="0x00000000000000000000001A0900xxxxxx" raw-value="00000000000000000000001a0900xxx"
+Flags: * - DEFAULT 
+ 0   name="class-identifier" code=16 value="0x0000040e0005736167656d" raw-value="0000040e0005736167656d" 
+ 1   name="userclass" code=15 value="0x002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837" 
+     raw-value="002b46535644534c5f6c697665626f782e496e7465726e65742e736f66746174686f6d652e4c697665626f7837" 
+ 2   name="authsend" code=11 value="0x00000000000000000000001A090000055801034101xxxx" 
+     raw-value="00000000000000000000001a090000055801034101xxxxx" 
+
+
+# COS via mangle rules - passthrough is optional should NOT be an issue (to be verified)
+/ipv6 firewall mangle
+add action=jump chain=output jump-target=orange_prio protocol=icmpv6 dst-address=fe00::/7 out-interface=vlan832-orange1.wan1 log=yes log-prefix="ORANGE DHCP ICMP6"
+add action=jump chain=output jump-target=orange_prio protocol=udp dst-address=fe00::/7 out-interface=vlan832-orange1.wan1 src-port=546 dst-port=547 log=yes log-prefix="ORANGE DHCP"
+add action=set-priority chain=orange_prio new-priority=6 passthrough=yes log=yes log-prefix="ORANGE PRIO COS"
+add action=change-dscp chain=orange_prio new-dscp=48 passthrough=yes log=yes log-prefix="ORANGE PRIO DSCP"
+add action=accept chain=orange_prio log=yes log-prefix="ORANGE PRIO"
+
+
+/ipv6/firewall/mangle/print detail
+Flags: X - DISABLED, I - INVALID; D - DYNAMIC 
+ 0  D ;;; special dummy rule to show fasttrack6 counters
+      chain=prerouting action=passthrough 
+ 1  D ;;; special dummy rule to show fasttrack6 counters
+      chain=forward action=passthrough 
+ 2  D ;;; special dummy rule to show fasttrack6 counters
+      chain=postrouting action=passthrough 
+ 3 X  ;;; ORANGE DHCP ICMP6
+      chain=output action=jump jump-target=orange_prio protocol=icmpv6 dst-address=fe00::/7 out-interface=vlan832-orange1.wan1 log=yes log-prefix="ORANGE DHCP ICMP6" 
+ 4 X  ;;; ORANGE DHCP
+      chain=output action=jump jump-target=orange_prio protocol=udp dst-address=fe00::/7 out-interface=vlan832-orange1.wan1 src-port=546 dst-port=547 log=yes log-prefix="ORANGE DHCP" 
+ 5 X  ;;; ORANGE PRIO COS
+      chain=orange_prio action=set-priority new-priority=6 passthrough=yes log=yes log-prefix="ORANGE PRIO COS" 
+ 6 X  ;;; ORANGE PRIO DSCP
+      chain=orange_prio action=change-dscp new-dscp=48 passthrough=yes log=yes log-prefix="ORANGE PRIO DSCP" 
+ 7 X  ;;; ORANGE PRIO
+      chain=orange_prio action=accept log=yes log-prefix="ORANGE PRIO" 
 ```
 
 
